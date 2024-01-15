@@ -39,7 +39,7 @@ const companySchema=new Schema({
         type:String,
         required:true,
         trim:true,
-    },
+    }/* ,
     rate:{
         type:Number,
         required:true,
@@ -51,7 +51,7 @@ const companySchema=new Schema({
     customers:{
         type:[mongoose.Types.ObjectId],
         ref:"User"
-    }
+    } */
 
  },{timestamps:true})
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const accountSchema = new Schema(
     {
         email: {
             type: String,
@@ -27,13 +27,21 @@ const userSchema = new Schema(
             },
         },
         role: {
-            type: int,
+            type: Number,
             trim: true,
             required: true,
-        }
+        },
+        companyId: {
+            type: mongoose.Types.ObjectId,
+            ref: "Company",
+        },
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
     },
     {timestamps: true}
 )
 
-const userModel = mongoose.model("User",userSchema);
-module.exports = userModel;
+const accountModel = mongoose.model("Account",accountSchema);
+module.exports = accountModel;
