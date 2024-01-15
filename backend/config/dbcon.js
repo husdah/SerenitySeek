@@ -17,5 +17,5 @@ async function dbConnect(){
     });
 }
 
-dbConnect();
+//dbConnect();
 module.exports = dbConnect;
