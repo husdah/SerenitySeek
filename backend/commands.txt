@@ -4,3 +4,4 @@ npm i -D nodemon
 npm install dotenv
 npm install mongoose@latest
 npm install mongodb@latest
+npm install validator
