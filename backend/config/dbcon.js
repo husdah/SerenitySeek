@@ -18,4 +18,4 @@ async function dbConnect(){
 }
 
 dbConnect();
-//module.exports = dbConnect;
+module.exports = dbConnect;
