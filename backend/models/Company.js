@@ -6,7 +6,8 @@ const companySchema=new Schema({
         type:String,
         required:true,
         trim:true,
-        match:/[a-z A-Z]/
+        unique: [true, "Company name already exist!"],
+        match:/^[a-zA-Z ]+$/
     },
     description:{
         type:String,
@@ -47,10 +48,10 @@ const companySchema=new Schema({
         max:5,
         default:0
     },
-    customers:[{
-        type:mongoose.Types.ObjectId,
+    customers:{
+        type:[mongoose.Types.ObjectId],
         ref:"User"
-    }]
+    }
 
  },{timestamps:true})
 

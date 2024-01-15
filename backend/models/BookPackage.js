@@ -12,7 +12,8 @@ const bookPackageSchema = new Schema({
     }, 
     nbPeople: { 
         type: Number, 
-        required: true, 
+        required: true,
+        min: 1 
     }, 
     bookingStatus: { 
         type: String, 

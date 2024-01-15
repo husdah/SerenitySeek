@@ -10,6 +10,7 @@ const packageSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        unique: true,
         match: /[a-zA-Z]/,
     },
     country: {
@@ -18,6 +19,11 @@ const packageSchema = new Schema({
         trim: true,
     },
     destination: [{
+        name:{
+            type: String,
+            required: true,
+            trim: true,
+        },
         activities: [{
             name: {
                 type: String,

@@ -16,12 +16,13 @@ const blogSchema=new Schema({
     },
     caption:{
         type:String,
-        required:true
+        required:true,
+        trim: true
     },
-    gallery:[{
-        type:String,
+    gallery:{
+        type:[String],
         trim:true
-    }],
+    },
     likes:{
         type:Number 
     },
@@ -31,15 +32,14 @@ const blogSchema=new Schema({
             type:mongoose.Types.ObjectId,
             ref:"User"
         },
-        caption:{
+        message:{
             type:String,
             required:true,
             trim:true
         }
     }
    ]
-})
+},{timestamps:true})
 
-const blogModel=mongoose.model("Blog",blogSchema)
-
+const blogModel=mongoose.model("Blog",blogSchema);
 module.exports=blogModel;
