@@ -2,9 +2,13 @@ const bookPackageModel=require("../models/BookPackage")
 const mongoose=require("mongoose")
 
 //get all books
-const allBooks=async(req,res)=>{
+const companyBooks=async(req,res)=>{
+    const {id}=req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        res.status(400).json({message: "not a valid Id!"});
+    }
     try{
-        const books=await bookPackageModel.find();
+        const books=await bookPackageModel.find({companyId:id});
         return res.status(200).json(books);
     }catch(error){
         return res.status(400).json({error:error.message});
@@ -12,19 +16,19 @@ const allBooks=async(req,res)=>{
 }
 //book package
 const bookPackage=async(req,res)=>{
-    const {packageId,userId,nbPeople,bookingStatus,payment}=req.body;
+    const {companyId,packageId,userId,nbPeople,bookingStatus,payment}=req.body;
     const {status,method}=payment;
-    if(!packageId || !userId || !nbPeople || !method){
+    if(!companyId || !packageId || !userId || !nbPeople || !method){
         return res.status(400).json({message: "All fields are required!"});
     }
     
-    if(!mongoose.Types.ObjectId.isValid(packageId) || !mongoose.Types.ObjectId.isValid(userId))
+    if(!mongoose.Types.ObjectId.isValid(companyId) || !mongoose.Types.ObjectId.isValid(packageId) || !mongoose.Types.ObjectId.isValid(userId))
     {
         return res.status(400).json({msg:"Not a valid id"});
     }
     try{
         const bookPackage=await bookPackageModel.create({
-            packageId,userId,nbPeople,bookingStatus:"pending",payment:{
+            companyId,packageId,userId,nbPeople,bookingStatus:"pending",payment:{
                 status:"pending",method
             }
         })
@@ -46,13 +50,13 @@ const cancelBooking=async(req,res)=>{
 }
 
 //search for booked packages for a specific user
-const userPackages=async(req,res)=>{
+const userBookPackages=async(req,res)=>{
     const {id}=req.params;
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
     try{
-        const userPackages=await bookPackageModel.findOne({userId:id});
+        const userPackages=await bookPackageModel.find({userId:id});
         return res.status(200).json(userPackages);
     }catch(error){
         return res.status(400).json({error:error.message});
@@ -76,7 +80,7 @@ const updateBookPackage=async(req,res)=>{
 module.exports={
     bookPackage,
     cancelBooking,
-    userPackages,
+    userBookPackages,
     updateBookPackage,
-    allBooks
+    companyBooks
 };
