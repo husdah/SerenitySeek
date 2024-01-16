@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema; 
  
 const bookPackageSchema = new Schema({ 
+    companyId: { 
+        type: mongoose.Types.ObjectId, 
+        ref: 'Company', 
+        required:true
+    }, 
     packageId: { 
         type: mongoose.Types.ObjectId, 
         ref: 'Package', 
