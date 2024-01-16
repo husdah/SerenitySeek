@@ -5,3 +5,5 @@ npm install dotenv
 npm install mongoose@latest
 npm install mongodb@latest
 npm install validator
+npm install bcrypt
+npm install multer

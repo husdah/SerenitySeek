@@ -14,17 +14,6 @@ const companySchema=new Schema({
         required:true,
         trim:true
     },
-    phoneNumber:{
-        type:String,
-        required:true,
-        trim:true,
-        validation: {
-            validator: function(value){
-                return /^(03|71|70|76|78|79|81)\d{6}$/.test(value);
-            },
-            message: "Phone number is not valid!"
-        }
-    },
     location:{
         type:String,
         required:true,
@@ -32,18 +21,20 @@ const companySchema=new Schema({
     },
     logo:{
         type:String,
-        required:true,
+        required:false,
         trim:true,
     },
     license:{
         type:String,
         required:true,
         trim:true,
-    }/* ,
+    },
+    active: {
+        type: Boolean,
+        default: false
+    },
     rate:{
         type:Number,
-        required:true,
-        trim:true,
         min:0,
         max:5,
         default:0
@@ -51,7 +42,7 @@ const companySchema=new Schema({
     customers:{
         type:[mongoose.Types.ObjectId],
         ref:"User"
-    } */
+    }
 
  },{timestamps:true})
 
