@@ -9,6 +9,9 @@ app.use(express.json())
 const userRouter = require("./routes/userRouter");
 app.use("/user", userRouter);
 
+const blogRouter = require("./routes/blogRouter");
+app.use("/blogs",blogRouter);
+
 /* app.get('/',(req,res)=>{
     res.json({mssg:"welcome to the app"})
 }) */
