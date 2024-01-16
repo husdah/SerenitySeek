@@ -1,5 +1,6 @@
 const express=require('express');
 const dbConnect=require('./config/dbcon')
+const bookPackageRouter=require("./routes/bookPackageRouter")
 
 require('dotenv').config();
 
@@ -8,10 +9,7 @@ app.use(express.json())
 
 const userRouter = require("./routes/userRouter");
 app.use("/user", userRouter);
-
-/* app.get('/',(req,res)=>{
-    res.json({mssg:"welcome to the app"})
-}) */
+app.use("/package",bookPackageRouter);
 
 dbConnect()
 .then(() => {
