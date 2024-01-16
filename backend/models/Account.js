@@ -15,6 +15,17 @@ const accountSchema = new Schema(
                 message: "Invalid email format",
             },
         },
+        phoneNumber:{
+            type:String,
+            required:true,
+            trim:true,
+            validation: {
+                validator: function(value){
+                    return /^(03|71|70|76|78|79|81)\d{6}$/.test(value);
+                },
+                message: "Phone number is not valid!"
+            }
+        },
         password: {
             type: String,
             trim: true,

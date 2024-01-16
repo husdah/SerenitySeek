@@ -22,15 +22,17 @@ const signUpUser = async (req, res) =>{
         const addedUser = await userModel.create({
             Fname: Fname,
             Lname: Lname,
-            phoneNumber: phoneNumber,
         });
 
-        const addedAccount = await accountModel.create({
-            email: email,
-            password: hashedPassword,
-            role: 1,
-            userId: addedUser._id,
-        });
+        if(addedUser){
+            const addedAccount = await accountModel.create({
+                email: email,
+                phoneNumber: phoneNumber,
+                password: hashedPassword,
+                role: 1,
+                userId: addedUser._id,
+            });
+        }
 
         res.status(201).json({message: "User Added Succssfully!"});
     }catch(error){
@@ -40,7 +42,7 @@ const signUpUser = async (req, res) =>{
 
 const updateProfile =async (req, res) =>{
     const {id} = req.params;
-    const {Fname, Lname, phoneNumber, profilePic} = req.body;
+    const {Fname, Lname, profilePic} = req.body;
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
