@@ -9,6 +9,9 @@ app.use(express.json())
 const userRouter = require("./routes/userRouter");
 app.use("/user", userRouter);
 
+const blogRouter = require("./routes/blogRouter");
+app.use("/blogs",blogRouter);
+
 const packageRouter = require("./routes/packageRouter");
 app.use("/package", packageRouter);
 
