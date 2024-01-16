@@ -12,9 +12,8 @@ app.use("/user", userRouter);
 const packageRouter = require("./routes/packageRouter");
 app.use("/package", packageRouter);
 
-/* app.get('/',(req,res)=>{
-    res.json({mssg:"welcome to the app"})
-}) */
+const bookPackageRouter=require("./routes/bookPackageRouter")
+app.use("/package",bookPackageRouter);
 
 dbConnect()
 .then(() => {
