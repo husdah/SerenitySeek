@@ -2,9 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const packageSchema = new Schema({
-    companyId: {
+    /*companyId: {
         type: mongoose.Types.ObjectId,
         ref: "Company",
+    },*/
+    companyId: {
+        type: Number,
+        required: true,
+        trim: true,
     },
     name: {
         type: String,
@@ -36,14 +41,14 @@ const packageSchema = new Schema({
                 required: true,
                 trim: true,
             },
-            gallery: {
+            /*gallery: {
                 type: [String],
                 required: true,  
-            },
+            },*/
         }],
     }],
     pricePerOne: {
-        type: Number,
+        type: String, //change from number to string to add currency
         required: true,
     },
     discount: {
@@ -51,7 +56,7 @@ const packageSchema = new Schema({
     },
     coverImg: {
         type: String,
-        required: true,
+        //required: true,
     },
     description: {
         type: String,
@@ -60,7 +65,7 @@ const packageSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ["Culture", "aaaa"],
+        enum: ["Culture", "Tourism"],
         required: true,
         trim: true,
     },
@@ -69,7 +74,7 @@ const packageSchema = new Schema({
         required: true,
     },
     duration: {
-        type: string,
+        type: String,
         required: true,
     },
     hotel: [{
@@ -84,10 +89,10 @@ const packageSchema = new Schema({
             required: true,
             trim: true,
         },
-        gallery: {
+        /*gallery: {
             type: [String],
             required: true,  
-        },
+        },*/
         rating: {
             type: Number,
             required: true, 
