@@ -12,9 +12,11 @@ app.use("/user", userRouter);
 const blogRouter = require("./routes/blogRouter");
 app.use("/blogs",blogRouter);
 
-/* app.get('/',(req,res)=>{
-    res.json({mssg:"welcome to the app"})
-}) */
+const packageRouter = require("./routes/packageRouter");
+app.use("/package", packageRouter);
+
+const bookPackageRouter=require("./routes/bookPackageRouter")
+app.use("/package",bookPackageRouter);
 
 dbConnect()
 .then(() => {
