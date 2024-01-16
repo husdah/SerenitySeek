@@ -66,6 +66,16 @@ app.put("/api/uploadCompanyLogo/:id", (req, res) => {
     }
 });
 
+const blogRouter = require("./routes/blogRouter");
+app.use("/blogs",blogRouter);
+
+const packageRouter = require("./routes/packageRouter");
+app.use("/package", packageRouter);
+
+const bookPackageRouter=require("./routes/bookPackageRouter")
+app.use("/package",bookPackageRouter);
+
+
 dbConnect()
 .then(() => {
     // The database connection is successful, you can start your app logic here

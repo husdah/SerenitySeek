@@ -17,14 +17,15 @@ const blogSchema=new Schema({
     caption:{
         type:String,
         required:true,
-        trim: true
+        trim: true,
     },
     gallery:{
         type:[String],
         trim:true
     },
     likes:{
-        type:Number 
+        type:Number ,
+        default: 0
     },
    comments:[
     {
