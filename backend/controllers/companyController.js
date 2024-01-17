@@ -3,14 +3,15 @@ const companyModel = require("../models/Company");
 const accountModel = require("../models/Account");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const fs = require("fs").promises;
 
 const createCompany = async (req, res) =>{
-    const {name , description, phoneNumber, location, license, email, password} = req.body;
+    const {name , description, phoneNumber, location, email, password} = req.body;
 
-    if(!name || !description || !phoneNumber || !location || !license || !email || !password){
+    if(!name || !description || !phoneNumber || !location || !email || !password){
         return res.status(400).json({message: "All Fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(license) || validator.isEmpty(email) || validator.isEmpty(password)){
+    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(password)){
         return res.status(400).json({message: "All Fields are required!"});
     }
     if(!validator.isEmail(email)){
@@ -23,7 +24,7 @@ const createCompany = async (req, res) =>{
             name: name,
             description: description,
             location: location,
-            license: license,
+            license: req.file.filename,
         });
 
         if(addedCompany){

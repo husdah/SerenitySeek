@@ -10,8 +10,9 @@ const {
     deleteCompany,
     rateCompany 
 } = require("../controllers/companyController");
+const upload = require('../middlewares/multerMiddleware');
 
-router.post("/company", createCompany);
+router.post("/company", upload.single("license"), createCompany);
 router.get("/companies", getAllCompanies);
 router.get("/homeCompanies", getHomeCompanies);
 router.get("/company/:id", getCompanyById);
