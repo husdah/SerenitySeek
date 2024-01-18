@@ -23,6 +23,8 @@ app.use("/package", packageRouter);
 const bookPackageRouter=require("./routes/bookPackageRouter")
 app.use("/package",bookPackageRouter);
 
+const hotelRouter = require("./routes/hotelRouter")
+app.use("/hotel", hotelRouter);
 
 dbConnect()
 .then(() => {
