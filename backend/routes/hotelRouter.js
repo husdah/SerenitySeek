@@ -6,6 +6,6 @@ const { addHotel, deleteHotel, getAllHotels } = require('../controllers/hotelCon
 
 router.post("/hotel", upload.array('gallery'), addHotel);
 router.delete("/hotel/:id", deleteHotel);
-router.get("/hotel/:id", getAllHotels);
+router.get("/hotel/", getAllHotels);
 
 module.exports = router;
