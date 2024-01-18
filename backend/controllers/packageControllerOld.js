@@ -14,6 +14,10 @@ const addPackage = async (req, res) => {
         return res.status(400).json({message: "All fields are required!"});
     }
     try{
+        //differ the image according to fields name
+        const CoverImage = req.files.find((file) => file.fieldname === "coverImg");
+        const ActivityImage = req.files.find((file) => file.fieldname === "activityImage");
+
         const addPackage = await packageModel.create({
             companyId: companyId,
             hotelId: hotelId,
@@ -24,16 +28,17 @@ const addPackage = async (req, res) => {
                 activities: [{
                     name: activityName,
                     description: activityDescription,
+                    gallery: ActivityImage.filename,
                 }],
             }],
             pricePerOne: pricePerOne,
             discount: discount,
-            coverImg: req.file.filename,
+            coverImg: CoverImage.filename,
             description: description,
             type: type,
             startDate: startDate,
             duration: duration,
-            //gallery: req.files,
+            publish: publish,
             
         });
         res.status(201).json({message: "Package Added Succssfully!"});
