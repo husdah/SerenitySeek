@@ -4,6 +4,7 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const { default: mongoose } = require("mongoose");
 
+
 const signUpUser = async (req, res) =>{
     const {Fname, Lname, phoneNumber, email, password} = req.body;
     //here validation before add
@@ -88,6 +89,9 @@ const getAllUsers =async (req, res) =>{
 
 }
 
+const loginUser =async(req,res)=>{
+
+}
 module.exports = 
 {
     signUpUser,
