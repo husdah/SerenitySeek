@@ -46,7 +46,6 @@ const addPackage = async (req, res) => {
 //update a package according to its Id 
 const updatePackageById = async (req, res) => {
     const {id} = req.params;
-    const {name, country, destination, pricePerOne, coverImg, description, type, startDate, duration, hotel } = req.body;
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }

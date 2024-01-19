@@ -57,7 +57,7 @@ const getAllHotels = async (req, res) => {
             return res.status(400).json({message:"companyId parameter is required"});
         }
 
-        const hotels = await hotelModel.findOne({companyId : companyId});
+        const hotels = await hotelModel.find({companyId : companyId});
         if (!hotels) {
             return res.status(404).json({ message: 'No available hotels' });
         }
