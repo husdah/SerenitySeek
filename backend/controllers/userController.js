@@ -76,6 +76,10 @@ const updateProfile =async (req, res) =>{
     const {id} = req.params;
     const {Fname, Lname} = req.body;
 
+    if(req.user.role != 1 || id != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -122,6 +126,10 @@ const getUserInfoById =async (req, res) =>{
 
 const getAllUsers =async (req, res) =>{
 
+    if(req.user.role !=0){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+
     try{
         const users = await userModel.find();
         if(!users || users.length === 0){
@@ -134,9 +142,6 @@ const getAllUsers =async (req, res) =>{
 
 }
 
-const loginUser =async(req,res)=>{
-
-}
 module.exports = 
 {
     signUpUser,
@@ -144,4 +149,4 @@ module.exports =
     getUserInfoById,
     getAllUsers
     
-};git
+};

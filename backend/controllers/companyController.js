@@ -117,6 +117,10 @@ const updateCompanyInfo = async (req, res) =>{
     const {id} = req.params;
     const {name , description, location} = req.body;
 
+    if(req.user.role != 2 || id != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -140,6 +144,10 @@ const updateCompanyInfo = async (req, res) =>{
 const acceptCompany = async (req, res) =>{
     const {id} = req.params;
 
+    if(req.user.role != 0){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -156,6 +164,10 @@ const acceptCompany = async (req, res) =>{
 
 const deleteCompany = async (req, res) =>{
     const {id} = req.params;
+
+    if(req.user.role != 0){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
@@ -176,6 +188,10 @@ const deleteCompany = async (req, res) =>{
 const rateCompany = async (req, res) => {
     //const {companyId} = req.params;
     const {companyId,userId, rating } = req.body;
+
+    if(req.user.role != 1 || userId != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
 
     try {
         // Check if the user is a customer of the company
