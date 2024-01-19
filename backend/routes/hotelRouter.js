@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const upload = require('../middlewares/multerMiddleware')
 
-const { addHotel, deleteHotel, getAllHotels } = require('../controllers/hotelController');
+const upload = require('../middlewares/multerMiddleware');
 
-router.post("/hotel", upload.array('gallery'), addHotel);
-router.delete("/hotel/:id", deleteHotel);
-router.get("/hotel/", getAllHotels);
+const { addHotel, deleteHotel, getHotelsByCompanyId } = require('../controllers/hotelController');
+
+router.post("/addHotel", upload.array('gallery'), addHotel);
+router.delete("/delHotel/:id", deleteHotel);
+router.get("/getHotels", getHotelsByCompanyId);
 
 module.exports = router;

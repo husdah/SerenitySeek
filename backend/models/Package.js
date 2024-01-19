@@ -4,13 +4,13 @@ const fs       = require("fs").promises;
 
 const packageSchema = new Schema({
     companyId: {
-        type: mongoose.Types.ObjectId,
+        type: [mongoose.Types.ObjectId],
         ref: "Company",
     },
-    hotelId: {
+    hotelId: [{
         type: mongoose.Types.ObjectId,
-        ref: "Company",
-    },
+        ref: "Hotel",
+    }],
     name: {
         type: String,
         required: true,
@@ -52,7 +52,7 @@ const packageSchema = new Schema({
     },
     coverImg: {
         type: String,
-        required: true,
+        //required: true,
     },
     description: {
         type: String,
@@ -73,14 +73,6 @@ const packageSchema = new Schema({
         type: String,
         required: true,
     },
-    /*gallery: {
-        type: Array,
-        default: [],
-        required: true,  
-    },
-    publish: {
-        type: Boolean,
-    }*/
 },
 {timestamps: true});
 

@@ -8,7 +8,8 @@ const addHotel = async (req, res) => {
     const { companyId, name, location, rating } = req.body;
     
     //validation here
-    if(!companyId || !name || !location || !rating) {
+    // Check if req.files.gallery is present and not empty
+    if(!companyId || !name || !location || !rating || !req.files) {
         return res.status(400).json({message: "All Fields are required!"});
     }
     if(validator.isEmpty(companyId) || validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
@@ -48,15 +49,13 @@ const deleteHotel = async (req, res) => {
 }
 
 // get all Hotels for a specific company
-const getAllHotels = async (req, res) => {    
-    
+const getHotelsByCompanyId = async (req, res) => {    
     try{
         const companyId = req.query.companyId;
 
         if(!companyId){
             return res.status(400).json({message:"companyId parameter is required"});
         }
-
         const hotels = await hotelModel.find({companyId : companyId});
         if (!hotels) {
             return res.status(404).json({ message: 'No available hotels' });
@@ -71,6 +70,5 @@ const getAllHotels = async (req, res) => {
 module.exports = {
     addHotel,
     deleteHotel,
-    getAllHotels
-      
+    getHotelsByCompanyId 
 }

@@ -5,9 +5,12 @@ const fs = require("fs").promises;
 
 // add a package
 const addPackage = async (req, res) => {
-    const { companyId, hotelId, name, country, nameDestination, activityName, activityDescription, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    const { companyId, hotelId, name, nameDestination, activityName, activityDescription, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    
     //companyid get from param when company click on page package to add a new one
-    if(!name || !country || !pricePerOne || !type || !startDate || !duration ){
+    // Validate if required fields are present
+
+    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
         return res.status(400).json({message: "All fields are required!"});
     }
     else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
@@ -19,26 +22,25 @@ const addPackage = async (req, res) => {
             hotelId: hotelId,
             name: name,
             country: country,
-            destination: [{
-                name: nameDestination,
-                activities: [{
-                    name: activityName,
-                    description: activityDescription,
-                }],
-            }],
+            destination: destination.map(dest => ({
+                name: dest.name,
+                activities: dest.activities.map(activity => ({
+                    name: activity.name,
+                        description: activity.description,
+                })),
+            })),
             pricePerOne: pricePerOne,
             discount: discount,
-            coverImg: req.file.filename,
+            //coverImg: req.file.filename,
             description: description,
             type: type,
             startDate: startDate,
             duration: duration,
-            //gallery: req.files,
-            
         });
         res.status(201).json({message: "Package Added Succssfully!"});
-    }catch(error){
-        res.status(400).json({error: error.message});
+    }catch (error) {
+        console.error(error);
+        res.status(400).json({ error: "Failed to add the package. Please try again." });
     }
 }
 
