@@ -6,20 +6,54 @@ const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
 
 const createCompany = async (req, res) =>{
-    const {name , description, phoneNumber, location, email, password} = req.body;
+    const {name , description, location, phoneNumber, email, password, confirmPassword} = req.body;
+    const phoneNumberRegex = /^(03|71|70|76|78|79|81)\d{6}$/;
+    //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+{};:'",<.>\/?\\[\]`~])(.{8,})$/;
 
-    if(!name || !description || !phoneNumber || !location || !email || !password){
+    if(!name || !description || !phoneNumber || !location || !email || !password || !confirmPassword){
         return res.status(400).json({message: "All Fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(password)){
+    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(password)  || validator.isEmpty(confirmPassword)){
         return res.status(400).json({message: "All Fields are required!"});
     }
     if(!validator.isEmail(email)){
         return res.status(400).json({message: "Email is not valid"});
     }
+    if(!validator.isMobilePhone(phoneNumber)){
+        return res.status(400).json({message: "Phone Number is not valid"});
+    }
+    if(!phoneNumberRegex.test(phoneNumber)){
+        return res.status(400).json({message: "Phone Number is not valid"});
+    }
+    if(!validator.isStrongPassword(password)){
+        return res.status(400).json({message: "Please enter a stronger password"});
+    }
+    if(!validator.equals(confirmPassword,password)){
+        return res.status(400).json({message: "Confirmation password is invalid"});
+    }
     const salt = await bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    try{ 
+    try{
+        const checkName = await companyModel.findOne({name : name});
+        if(checkName){
+            return res.status(400).json({message: "Company Name Already Exist"});
+        }
+
+        // Check if req.file exists
+        if (!req.file) {
+            return res.status(400).json({ message: "Please upload your company license!" });
+        }
+
+        const checkEmail = await accountModel.findOne({email : email});
+        if(checkEmail){
+            return res.status(400).json({message: "Email Already Exist"});
+        }
+
+        const checkPhone = await accountModel.findOne({phoneNumber : phoneNumber});
+        if(checkPhone){
+            return res.status(400).json({message: "Phone Number Already Exist"});
+        }
+
         const addedCompany = await companyModel.create({
             name: name,
             description: description,
@@ -82,8 +116,12 @@ const getHomeCompanies = async (req, res) =>{
 const updateCompanyInfo = async (req, res) =>{
     const {id} = req.params;
     const {name , description, location} = req.body;
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
+    }
+    if(!name || !description || !location){
+        return res.status(400).json({message: "All Fields are required!"});
     }
     if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(location)){
         return res.status(400).json({message: "Fields cannot be empty!"});
@@ -101,6 +139,7 @@ const updateCompanyInfo = async (req, res) =>{
 
 const acceptCompany = async (req, res) =>{
     const {id} = req.params;
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -117,6 +156,7 @@ const acceptCompany = async (req, res) =>{
 
 const deleteCompany = async (req, res) =>{
     const {id} = req.params;
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -124,6 +164,8 @@ const deleteCompany = async (req, res) =>{
         const deleteCompany = await companyModel.findOneAndDelete({_id : id});
         if(!deleteCompany){
             return res.status(404).json({message : "Company Not Found"});
+        }else{
+            const deleteCompanyAcc = await accountModel.findOneAndDelete({companyId : id});
         }
         res.status(201).json({message : "Company Deleted Successfully!"});
     }catch(error){
@@ -132,8 +174,8 @@ const deleteCompany = async (req, res) =>{
 }
 
 const rateCompany = async (req, res) => {
-    const {companyId} = req.params;
-    const {userId, rating } = req.body;
+    //const {companyId} = req.params;
+    const {companyId,userId, rating } = req.body;
 
     try {
         // Check if the user is a customer of the company

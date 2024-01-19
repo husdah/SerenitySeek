@@ -1,5 +1,6 @@
 npm init -y
-npm install mongoose --save
+npm install mongoose
+npm install express
 npm i -D nodemon
 npm install dotenv
 npm install mongoose@latest
@@ -7,3 +8,4 @@ npm install mongodb@latest
 npm install validator
 npm install bcrypt
 npm install multer
+npm install jsonwebtoken

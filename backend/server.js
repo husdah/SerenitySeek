@@ -4,9 +4,10 @@ const dbConnect=require('./config/dbcon')
 
 require('dotenv').config();
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 const userRouter = require("./routes/userRouter");
-app.use("/user", userRouter);
+app.use("/api", userRouter);
 
 const companyRouter = require("./routes/companyRouter");
 app.use("/api", companyRouter);
