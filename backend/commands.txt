@@ -9,3 +9,14 @@ npm install validator
 npm install bcrypt
 npm install multer
 npm install jsonwebtoken
+
+
+// logout
+// reset password
+// activation accout
+// contact us
+// payment
+// refresh token
+// add validationToken middleware on needed router , and check role in controller if needed
+// complete book package + add user to customers array on company collection
+// check queries saved on  workspace postman

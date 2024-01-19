@@ -6,6 +6,9 @@ require('dotenv').config();
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+const loggerRouter = require("./routes/loggerRouter");
+app.use("/api", loggerRouter);
+
 const userRouter = require("./routes/userRouter");
 app.use("/api", userRouter);
 
