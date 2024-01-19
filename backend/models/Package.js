@@ -4,13 +4,13 @@ const fs       = require("fs").promises;
 
 const packageSchema = new Schema({
     companyId: {
-        type: [mongoose.Types.ObjectId],
+        type: mongoose.Types.ObjectId,
         ref: "Company",
     },
-    hotelId: [{
-        type: mongoose.Types.ObjectId,
+    hotelId: {
+        type: [mongoose.Types.ObjectId],
         ref: "Hotel",
-    }],
+    },
     name: {
         type: String,
         required: true,

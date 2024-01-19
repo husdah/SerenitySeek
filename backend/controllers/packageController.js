@@ -5,12 +5,12 @@ const fs = require("fs").promises;
 
 // add a package
 const addPackage = async (req, res) => {
-    const { companyId, hotelId, name, nameDestination, activityName, activityDescription, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    const { companyId, hotelId, name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
     
     //companyid get from param when company click on page package to add a new one
     // Validate if required fields are present
 
-    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
+    if(!companyId || !hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
         return res.status(400).json({message: "All fields are required!"});
     }
     else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
@@ -26,12 +26,12 @@ const addPackage = async (req, res) => {
                 name: dest.name,
                 activities: dest.activities.map(activity => ({
                     name: activity.name,
-                        description: activity.description,
+                    description: activity.description
                 })),
             })),
             pricePerOne: pricePerOne,
             discount: discount,
-            //coverImg: req.file.filename,
+            coverImg: req.file.filename,
             description: description,
             type: type,
             startDate: startDate,
@@ -48,8 +48,18 @@ const addPackage = async (req, res) => {
 //update a package according to its Id 
 const updatePackageById = async (req, res) => {
     const {id} = req.params;
+    const { name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    
+    //companyid get from param when company click on page package to add a new one
+    // Validate if required fields are present
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
+    }
+    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
+        return res.status(400).json({message: "All fields are required!"});
+    }
+    else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
+        return res.status(400).json({message: "All fields are required!"});
     }
     try{
         const updateProfile = await packageModel.findOneAndUpdate({_id : id},{...req.body});
