@@ -8,8 +8,8 @@ const packageSchema = new Schema({
         ref: "Company",
     },
     hotelId: {
-        type: mongoose.Types.ObjectId,
-        ref: "Company",
+        type: [mongoose.Types.ObjectId],
+        ref: "Hotel",
     },
     name: {
         type: String,
@@ -52,7 +52,7 @@ const packageSchema = new Schema({
     },
     coverImg: {
         type: String,
-        required: true,
+        //required: true,
     },
     description: {
         type: String,
@@ -73,14 +73,6 @@ const packageSchema = new Schema({
         type: String,
         required: true,
     },
-    /*gallery: {
-        type: Array,
-        default: [],
-        required: true,  
-    },
-    publish: {
-        type: Boolean,
-    }*/
 },
 {timestamps: true});
 
