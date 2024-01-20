@@ -12,10 +12,11 @@ const loginUser = async (req, res) => {
         return res.status(400).json({message: "All fields are required"});
     }
     const account = await accountModel.findOne({email});
-    if(account.verificationToken != null){
-        return res.status(401).json({message: "Please Activate your account"});
-    }
     if(account && (await bcrypt.compare(password, account.password))){
+
+        if(account.verificationToken != "verified"){
+            return res.status(401).json({message: "Please Activate your account"});
+        }
 
         let name, role, id; 
 

@@ -4,6 +4,8 @@ const accountModel = require("../models/Account");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
+const { verifyEmail } = require('./verifyEmailController');
+const crypto = require('crypto');
 
 const signUpUser = async (req, res) =>{
     const {Fname, Lname, phoneNumber, email, password, confirmPassword} = req.body;
@@ -62,10 +64,17 @@ const signUpUser = async (req, res) =>{
                 password: hashedPassword,
                 role: 1,
                 userId: addedUser._id,
+                verificationToken : crypto.randomBytes(16).toString('hex')
             });
+
+            if(addedAccount){
+                const link = `http://localhost:4000/api/EmailConfirm/${addedAccount.verificationToken}`;
+                await verifyEmail(email, link);
+                res.status(200).send({message : "User added. Please confirm your email"})
+            }
         }
 
-        res.status(201).json({message: "User Added Succssfully!"});
+       // res.status(201).json({message: "User Added Succssfully!"});
     }catch(error){
         res.status(400).json({error: error.message});
     }
