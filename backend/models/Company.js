@@ -7,7 +7,7 @@ const companySchema=new Schema({
         required:true,
         trim:true,
         unique: [true, "Company name already exist!"],
-        match:/^[a-zA-Z ]+$/
+        //match:/^[a-zA-Z ]+$/
     },
     description:{
         type:String,

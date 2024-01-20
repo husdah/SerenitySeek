@@ -50,6 +50,10 @@ const accountSchema = new Schema(
             type: mongoose.Types.ObjectId,
             ref: "User",
         },
+        verificationToken: {
+            type: String,
+            //required: true
+        }
     },
     {timestamps: true}
 )
