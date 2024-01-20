@@ -6,7 +6,7 @@ const fs = require("fs").promises;
 const updateCompanyLogo= async (req, res) =>{
     const { id } = req.params;
 
-    if(req.user.role !=2 || id != req.user.id){
+    if(id != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 
@@ -59,7 +59,7 @@ const updateCompanyLogo= async (req, res) =>{
 const updateUserProfilePic =async (req, res) =>{
     const { id } = req.params;
 
-    if(req.user.role !=1 || id != req.user.id){
+    if(id != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 

@@ -20,6 +20,8 @@ const validateToken = async(req,res,next)=>{
             req.user=decoded.user;
             next();
         })
+    }else {
+        return res.status(401).json({error:"User is not authorized"});
     } 
 }
 module.exports=validateToken;

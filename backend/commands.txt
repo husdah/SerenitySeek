@@ -9,12 +9,14 @@ npm install validator
 npm install bcrypt
 npm install multer
 npm install jsonwebtoken
+npm install nodemailer
 
 
 // logout
 // reset password
 // activation accout
 // contact us
+// add admin
 // payment
 // refresh token
 // add validationToken middleware on needed router , and check role in controller if needed
