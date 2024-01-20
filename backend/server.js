@@ -2,6 +2,7 @@ const express=require('express');
 const app=express();
 const dbConnect=require('./config/dbcon')
 const { addAdmin } = require('./controllers/addAdmin');
+const path =require('path');
 
 require('dotenv').config();
 app.use(express.json())
@@ -9,6 +10,13 @@ app.use(express.urlencoded({extended: false}))
 
 const emailVerifcationRouter = require('./routes/verificationRouter');
 app.use("/api", emailVerifcationRouter);
+
+// Set the view engine to EJS for testing
+app.set('view engine', 'ejs');
+// Set the views directory for testing
+app.set('views', path.join(__dirname, 'views'));
+const resetPasswordRouter = require('./routes/resetPasswordRouter');
+app.use("/password", resetPasswordRouter);
 
 const loggerRouter = require("./routes/loggerRouter");
 app.use("/api", loggerRouter);

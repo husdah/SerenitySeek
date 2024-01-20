@@ -10,7 +10,7 @@ npm install bcrypt
 npm install multer
 npm install jsonwebtoken
 npm install nodemailer
-
+npm install ejs    // for testing
 
 // logout
 // reset password

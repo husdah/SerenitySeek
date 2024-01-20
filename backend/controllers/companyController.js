@@ -4,7 +4,7 @@ const accountModel = require("../models/Account");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
-const { verifyEmail } = require('./mailController');
+const { verifyEmail } = require('./verifyEmailController');
 const crypto = require('crypto');
 
 const createCompany = async (req, res) =>{
@@ -76,7 +76,7 @@ const createCompany = async (req, res) =>{
             if(createAccount){
                 const link = `http://localhost:4000/api/EmailConfirm/${createAccount.verificationToken}`;
                 await verifyEmail(email, link);
-                res.status(200).send({message : "Email send. Please confirm your email"})
+                res.status(200).send({message : "Company Added. Please confirm your email"})
             }
         }
        // res.status(201).json({message : "Company Added Successfully"});
