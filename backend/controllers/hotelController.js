@@ -39,7 +39,7 @@ const deleteHotel = async (req, res) => {
     }
     const hotel =  await hotelModel.findOne({_id: id}); 
     const companyId = hotel.companyId;
-    if(req.user.role != 2 || companyId != req.user.id){
+    if(!companyId){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     try{

@@ -7,9 +7,6 @@ const fs = require("fs").promises;
 const addPackage = async (req, res) => {
     const { companyId, hotelId, name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
     
-    //companyid get from param when company click on page package to add a new one
-    // Validate if required fields are present
-
     if(!companyId || !hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
         return res.status(400).json({message: "All fields are required!"});
     }
@@ -17,6 +14,9 @@ const addPackage = async (req, res) => {
         return res.status(400).json({message: "All fields are required!"});
     }
     try{
+        if (!req.file) {
+            return res.status(400).json({ message: "Please upload a cover image!" });
+        }
         const addPackage = await packageModel.create({
             companyId: companyId,
             hotelId: hotelId,
@@ -39,8 +39,7 @@ const addPackage = async (req, res) => {
         });
         res.status(201).json({message: "Package Added Succssfully!"});
     }catch (error) {
-        console.error(error);
-        res.status(400).json({ error: "Failed to add the package. Please try again." });
+        return res.status(400).json({ error: "Failed to add the package. Please try again." });
     }
 }
 
@@ -49,28 +48,28 @@ const addPackage = async (req, res) => {
 const updatePackageById = async (req, res) => {
     const {id} = req.params;
     const { name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
-    
-    //companyid get from param when company click on page package to add a new one
-    // Validate if required fields are present
+    const companyId = req.user.id;
+    if(!companyId){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
-    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
+    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration){
         return res.status(400).json({message: "All fields are required!"});
     }
     else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
         return res.status(400).json({message: "All fields are required!"});
     }
     try{
-        const updateProfile = await packageModel.findOneAndUpdate({_id : id},{...req.body});
-        if(!updateProfile){
-            res.status(404).json({message: "Package Not Found!"});
+        const updatePackage = await packageModel.findOneAndUpdate({_id : id},{...req.body});
+        if(!updatePackage){
+            return res.status(404).json({message: "Package Not Found!"});
         }
         res.status(201).json({message: "Package Updated Succssfully!"});
     }catch(error){
-        res.status(400).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
-
 }
 
 //delete a specific package by using its Id
@@ -82,12 +81,12 @@ const deletePackage = async (req, res) => {
     try{
         const delPackage = await packageModel.findByIdAndDelete({_id : id});
         if(!delPackage){
-            res.status(404).json({message: "package Not Found!"});
+           return res.status(404).json({message: "package Not Found!"});
         }
         res.status(201).json({message: "Package Deleted Succssfully!"});
     }
     catch(error){
-        res.status(400).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 }
 
@@ -100,7 +99,7 @@ const getAllPackages = async (req, res) => {
         }
         res.status(200).json(package);
     }catch(error){
-        res.status(400).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 }
 
@@ -129,12 +128,12 @@ const getSomePackages = async (req, res) => {
         const packages = await packageModel.find().limit(count);
 
         if (!packages || packages.length === 0) {
-            res.status(404).json({ message: "No Available Packages!" });
+            return res.status(404).json({ message: "No Available Packages!" });
         }
 
         res.status(200).json(packages);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 } 
 
@@ -147,21 +146,21 @@ const getSomePackagesRandomly = async (req, res) => {
         ]);
 
         if (!packages || packages.length === 0) {
-            res.status(404).json({ message: "No Available Packages!" });
+            return res.status(404).json({ message: "No Available Packages!" });
         }
 
         res.status(200).json(packages);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 } 
 
 //select all packages of this company: bl search or filter by company
 const getPackagesByCompanyId = async (req, res) => {
     try {
-        const companyId = req.query.companyId; 
+        const companyId = req.user.id; 
         if (!companyId) {
-            return res.status(404).json({ message: 'companyId is required' });
+            return res.status(400).json({message:"companyId parameter is required"});
         }
         const packages = await packageModel.find({ companyId: companyId });
 
@@ -170,7 +169,7 @@ const getPackagesByCompanyId = async (req, res) => {
         }
         res.status(200).json(packages);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 }
 

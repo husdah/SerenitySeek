@@ -26,13 +26,13 @@ const blogRouter = require("./routes/blogRouter");
 app.use("/blogs",blogRouter);
 
 const packageRouter = require("./routes/packageRouter");
-app.use("/package", packageRouter);
+app.use("/api", packageRouter);
 
 const bookPackageRouter=require("./routes/bookPackageRouter")
 app.use("/package",bookPackageRouter);
 
 const hotelRouter = require("./routes/hotelRouter")
-app.use("/hotel", hotelRouter);
+app.use("/api", hotelRouter);
 
 const contactRouter = require("./routes/contactRouter")
 app.use("/api", contactRouter);
