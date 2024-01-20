@@ -1,4 +1,5 @@
 const bookPackageModel=require("../models/BookPackage")
+const companyModel=require("../models/Company")
 const mongoose=require("mongoose")
 
 //get all books
@@ -32,22 +33,44 @@ const bookPackage=async(req,res)=>{
                 status:"pending",method
             }
         })
-        return res.status(200).json(bookPackage);
+        try{
+        const customer=await companyModel.findOneAndUpdate(
+            { _id: companyId },
+            { $push: { customers: userId } });
+        return res.status(200).json(bookPackage);}
+        catch(error){
+            return res.status(400).json({error:error.message});
+        }
 
     }catch(error){
         return res.status(400).json({error:error.message});
     }
 }
 //cancel booking
-const cancelBooking=async(req,res)=>{
-    const {id}=req.params;
-    try{
-        const canceled=await bookPackageModel.findByIdAndDelete({_id:id});
-        return res.status(200).json({msg:"canceled succefully"});
-    }catch(error){
-        return res.status(400).json({error:error.message});
+const cancelBooking = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+     
+      const canceledBooking = await bookPackageModel.findByIdAndDelete({ _id: id });
+      const { userId, companyId } = canceledBooking;
+  
+      const otherBookings = await bookPackageModel.find({ userId: userId });
+  
+      if (!otherBookings || otherBookings.length === 0) {
+        await companyModel.findOneAndUpdate(
+          { _id: companyId },
+          { $pull: { customers: userId } }, 
+          { new: true, useFindAndModify: false }
+        );
+      }
+  
+      return res.status(200).json(canceledBooking);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-}
+  };
+  
 
 //search for booked packages for a specific user
 const userBookPackages=async(req,res)=>{
