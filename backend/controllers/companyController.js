@@ -4,6 +4,8 @@ const accountModel = require("../models/Account");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
+const { verifyEmail } = require('./mailController');
+const crypto = require('crypto');
 
 const createCompany = async (req, res) =>{
     const {name , description, location, phoneNumber, email, password, confirmPassword} = req.body;
@@ -67,10 +69,17 @@ const createCompany = async (req, res) =>{
                 phoneNumber: phoneNumber,
                 password: hashedPassword,
                 role: 2,
-                companyId: addedCompany._id
+                companyId: addedCompany._id,
+                verificationToken : crypto.randomBytes(16).toString('hex')
             });
+
+            if(createAccount){
+                const link = `http://localhost:4000/api/EmailConfirm/${createAccount.verificationToken}`;
+                await verifyEmail(email, link);
+                res.status(200).send({message : "Email send. Please confirm your email"})
+            }
         }
-        res.status(201).json({message : "Company Added Successfully!"});
+       // res.status(201).json({message : "Company Added Successfully"});
     }catch(error){
         return res.status(500).json({error : error.message});
     }
@@ -117,7 +126,7 @@ const updateCompanyInfo = async (req, res) =>{
     const {id} = req.params;
     const {name , description, location} = req.body;
 
-    if(req.user.role != 2 || id != req.user.id){
+    if(id != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 
@@ -144,10 +153,6 @@ const updateCompanyInfo = async (req, res) =>{
 const acceptCompany = async (req, res) =>{
     const {id} = req.params;
 
-    if(req.user.role != 0){
-        return res.status(400).json({message : "You are not authorized to access this request"});
-    }
-
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -164,10 +169,6 @@ const acceptCompany = async (req, res) =>{
 
 const deleteCompany = async (req, res) =>{
     const {id} = req.params;
-
-    if(req.user.role != 0){
-        return res.status(400).json({message : "You are not authorized to access this request"});
-    }
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
@@ -189,7 +190,7 @@ const rateCompany = async (req, res) => {
     //const {companyId} = req.params;
     const {companyId,userId, rating } = req.body;
 
-    if(req.user.role != 1 || userId != req.user.id){
+    if(userId != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 

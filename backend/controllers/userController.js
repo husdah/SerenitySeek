@@ -5,7 +5,6 @@ const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
 
-
 const signUpUser = async (req, res) =>{
     const {Fname, Lname, phoneNumber, email, password, confirmPassword} = req.body;
     const phoneNumberRegex = /^(03|71|70|76|78|79|81)\d{6}$/;
@@ -76,7 +75,7 @@ const updateProfile =async (req, res) =>{
     const {id} = req.params;
     const {Fname, Lname} = req.body;
 
-    if(req.user.role != 1 || id != req.user.id){
+    if(id != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 
@@ -125,10 +124,6 @@ const getUserInfoById =async (req, res) =>{
 }
 
 const getAllUsers =async (req, res) =>{
-
-    if(req.user.role !=0){
-        return res.status(400).json({message : "You are not authorized to access this request"});
-    }
 
     try{
         const users = await userModel.find();

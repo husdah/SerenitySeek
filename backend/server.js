@@ -1,10 +1,14 @@
 const express=require('express');
 const app=express();
 const dbConnect=require('./config/dbcon')
+const { addAdmin } = require('./controllers/addAdmin');
 
 require('dotenv').config();
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+
+const emailVerifcationRouter = require('./routes/verificationRouter');
+app.use("/api", emailVerifcationRouter);
 
 const loggerRouter = require("./routes/loggerRouter");
 app.use("/api", loggerRouter);
@@ -37,6 +41,8 @@ dbConnect()
     app.listen(process.env.PORT, () => {
         console.log('App is listening on port ' + process.env.PORT);
     });
+
+    addAdmin();
 })
 .catch((error) => {
     // Handle error (e.g., log the error or exit the application)

@@ -12,6 +12,9 @@ const loginUser = async (req, res) => {
         return res.status(400).json({message: "All fields are required"});
     }
     const account = await accountModel.findOne({email});
+    if(account.verificationToken != null){
+        return res.status(401).json({message: "Please Activate your account"});
+    }
     if(account && (await bcrypt.compare(password, account.password))){
 
         let name, role, id; 
@@ -23,7 +26,7 @@ const loginUser = async (req, res) => {
             role = 1;
         }
         else if(account.role == 2){ //company
-            id = company.companyId;
+            id = account.companyId;
             const company = await companyModel.findOne({_id: id});
             name = company.name;
             role = 2;
