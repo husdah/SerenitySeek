@@ -5,14 +5,15 @@ const fs         = require("fs").promises;
 
 // add hotel
 const addHotel = async (req, res) => {
-    const { companyId, name, location, rating } = req.body;
-    
-    //validation here
-    // Check if req.files.gallery is present and not empty
-    if(!companyId || !name || !location || !rating || !req.files) {
+    const companyId = req.user.id;
+    const { name, location, rating } = req.body;
+    if(req.user.role != 2 || !companyId){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+    if( !name || !location || !rating || !req.files) {
         return res.status(400).json({message: "All Fields are required!"});
     }
-    if(validator.isEmpty(companyId) || validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
+    if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
         return res.status(400).json({message: "All Fields are required!"});
     }
     try{
@@ -36,6 +37,11 @@ const deleteHotel = async (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
+    const hotel =  await hotelModel.findOne({_id: id}); 
+    const companyId = hotel.companyId;
+    if(req.user.role != 2 || companyId != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
     try{
         const delHotel = await hotelModel.findByIdAndDelete({_id : id});
         if(!delHotel){
@@ -49,11 +55,10 @@ const deleteHotel = async (req, res) => {
 }
 
 // get all Hotels for a specific company
-const getHotelsByCompanyId = async (req, res) => {    
+const getHotelsByCompanyId = async (req, res) => {        
     try{
-        const companyId = req.query.companyId;
-
-        if(!companyId){
+        const companyId = req.user.companyId; 
+        if(req.user.role != 2 || !companyId){
             return res.status(400).json({message:"companyId parameter is required"});
         }
         const hotels = await hotelModel.find({companyId : companyId});
