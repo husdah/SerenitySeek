@@ -16,6 +16,9 @@ const addHotel = async (req, res) => {
     if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
         return res.status(400).json({message: "All Fields are required!"});
     }
+    if (!validator.isNumeric(rating) || rating < 0 || rating > 5){
+        return res.status(400).json({message: "Rating must be a number between 0 and 5!"});
+    }
     try{
         const addHotel = await hotelModel.create ({
             companyId: companyId,
@@ -27,7 +30,7 @@ const addHotel = async (req, res) => {
         res.status(201).json({message:'Hotel added successfully!'});
     }
     catch(error){
-        res.status(500).json({error:error.message});
+        return res.status(500).json({error:error.message});
     }
 }
 
@@ -45,12 +48,12 @@ const deleteHotel = async (req, res) => {
     try{
         const delHotel = await hotelModel.findByIdAndDelete({_id : id});
         if(!delHotel){
-            res.status(404).json({message: "Not Found!"});
+            return res.status(404).json({message: "Not Found!"});
         }
         res.status(201).json({message: "Hotel Deleted Succssfully!"});
     }
     catch(error){
-        res.status(400).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 }
 
@@ -68,7 +71,7 @@ const getHotelsByCompanyId = async (req, res) => {
         res.status(200).json(hotels);
     }
     catch(error){
-        res.status(400).json({error:error.message});
+        return res.status(500).json({error:error.message});
     }
 }
 

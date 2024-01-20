@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { addPackage, updatePackageById, deletePackage, getAllPackages, getPackageDetailsById, getSomePackages, getSomePackagesRandomly, getPackagesByCompanyId } = require("../controllers/packageController");
+const { addPackage, updatePackageById, deletePackage, getAllPackages, getPackageDetailsById, getHomePackages, getPackagesByCompanyId } = require("../controllers/packageController");
 
 const upload = require('../middlewares/multerMiddleware');
 const validateToken = require('../middlewares/validateTokenHandler');
@@ -12,9 +12,8 @@ router.put("/package/:id", validateToken, isCompany, updatePackageById);
 router.delete("/package/:id", validateToken, isCompany, deletePackage);
 router.get("/package", getAllPackages);
 //router.get("/package/:id", getPackageDetailsById);
-//router.get("/package", getSomePackages);
-//router.get("/package", getSomePackagesRandomly);
-//router.get("/package", validateToken, isCompany, getPackagesByCompanyId);
+//router.get("/package", getHomePackages);
+//router.get("/package", validateToken, getPackagesByCompanyId);
 
 
 module.exports = router;

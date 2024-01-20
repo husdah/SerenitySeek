@@ -13,10 +13,11 @@ const addPackage = async (req, res) => {
     else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
         return res.status(400).json({message: "All fields are required!"});
     }
+    if (!req.file) {
+        return res.status(400).json({ message: "Please upload a cover image!" });
+    }
     try{
-        if (!req.file) {
-            return res.status(400).json({ message: "Please upload a cover image!" });
-        }
+        const companyId = req.user.id;
         const addPackage = await packageModel.create({
             companyId: companyId,
             hotelId: hotelId,
@@ -49,6 +50,7 @@ const updatePackageById = async (req, res) => {
     const {id} = req.params;
     const { name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
     const companyId = req.user.id;
+
     if(!companyId){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
@@ -58,11 +60,14 @@ const updatePackageById = async (req, res) => {
     if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration){
         return res.status(400).json({message: "All fields are required!"});
     }
-    else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
+    if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
         return res.status(400).json({message: "All fields are required!"});
     }
+    if (!req.file) {
+        return res.status(400).json({ message: "Please upload a cover image!" });
+    }
     try{
-        const updatePackage = await packageModel.findOneAndUpdate({_id : id},{...req.body});
+        const updatePackage = await packageModel.findOneAndUpdate({_id : id},{...req.body},{ new: true });
         if(!updatePackage){
             return res.status(404).json({message: "Package Not Found!"});
         }
@@ -75,6 +80,11 @@ const updatePackageById = async (req, res) => {
 //delete a specific package by using its Id
 const deletePackage = async (req, res) => {
     const {id} = req.params;
+    const companyId = req.user.companyId;
+
+    if(!companyId){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -93,13 +103,47 @@ const deletePackage = async (req, res) => {
 //select all packages to display them in package page
 const getAllPackages = async (req, res) => {
     try{
-        const package = await packageModel.find();
-        if(!package){
+        const packages = await packageModel.find();
+        if(!packages){
             res.status(404).json({message: "No Available Packages!"});
         }
         res.status(200).json(package);
     }catch(error){
         return res.status(500).json({error: error.message});
+    }
+}
+
+//select packages to display them in home page 
+const getHomePackages = async (req, res) => {
+    try {
+        const count = 4; // Set the default value to 5
+        const packages = await packageModel.find().limit(count);
+
+        if (!packages || packages.length === 0) {
+            return res.status(404).json({ message: "No Available Packages!" });
+        }
+
+        res.status(200).json(packages);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+} 
+
+//select all packages of this company: filter by companyId or company interface as table
+const getPackagesByCompanyId = async (req, res) => {
+    try {
+        const companyId = req.user.id; 
+        if (!companyId) {
+            return res.status(400).json({message:"companyId parameter is required"});
+        }
+        const packages = await packageModel.find({ companyId: companyId });
+
+        if (!packages || packages.length === 0) {
+            return res.status(404).json({ message: 'No packages found for this company' });
+        }
+        res.status(200).json(packages);
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
     }
 }
 
@@ -121,65 +165,15 @@ const getPackageDetailsById = async (req, res) => {
 
 }
 
-//select 2 packages to display them in home page 
-const getSomePackages = async (req, res) => {
-    try {
-        const count = 2; // Set the default value to 5
-        const packages = await packageModel.find().limit(count);
 
-        if (!packages || packages.length === 0) {
-            return res.status(404).json({ message: "No Available Packages!" });
-        }
-
-        res.status(200).json(packages);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-} 
-
-//select 2 packages randomly and with limited attributes to display them in home page
-const getSomePackagesRandomly = async (req, res) => {
-    try {
-        const packages = await packageModel.aggregate([
-            { $sample: { size: 2 } }, // To fetch randomly
-            { $project: { _id: 1, name: 1, description: 1 } } // To select only specified fields
-        ]);
-
-        if (!packages || packages.length === 0) {
-            return res.status(404).json({ message: "No Available Packages!" });
-        }
-
-        res.status(200).json(packages);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-} 
-
-//select all packages of this company: bl search or filter by company
-const getPackagesByCompanyId = async (req, res) => {
-    try {
-        const companyId = req.user.id; 
-        if (!companyId) {
-            return res.status(400).json({message:"companyId parameter is required"});
-        }
-        const packages = await packageModel.find({ companyId: companyId });
-
-        if (!packages || packages.length === 0) {
-            return res.status(404).json({ message: 'No packages found for this company' });
-        }
-        res.status(200).json(packages);
-    } catch (error) {
-        return res.status(400).json({ error: error.message });
-    }
-}
 
 module.exports = {
     addPackage,
     updatePackageById,
     deletePackage,
     getAllPackages,
-    getPackageDetailsById,
-    getSomePackages,
-    getSomePackagesRandomly,
-    getPackagesByCompanyId
+    getHomePackages,
+    getPackagesByCompanyId,
+    getPackageDetailsById
+    
 }
