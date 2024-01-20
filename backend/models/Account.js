@@ -52,7 +52,7 @@ const accountSchema = new Schema(
         },
         verificationToken: {
             type: String,
-            required: true
+            //required: true
         }
     },
     {timestamps: true}
