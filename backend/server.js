@@ -34,6 +34,9 @@ app.use("/package",bookPackageRouter);
 const hotelRouter = require("./routes/hotelRouter")
 app.use("/hotel", hotelRouter);
 
+const contactRouter = require("./routes/contactRouter")
+app.use("/api", contactRouter);
+
 dbConnect()
 .then(() => {
     // The database connection is successful, you can start your app logic here

@@ -7,7 +7,7 @@ const fs         = require("fs").promises;
 const addHotel = async (req, res) => {
     const companyId = req.user.id;
     const { name, location, rating } = req.body;
-    if(req.user.role != 2 || !companyId){
+    if(!companyId){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     if( !name || !location || !rating || !req.files) {
@@ -57,8 +57,8 @@ const deleteHotel = async (req, res) => {
 // get all Hotels for a specific company
 const getHotelsByCompanyId = async (req, res) => {        
     try{
-        const companyId = req.user.companyId; 
-        if(req.user.role != 2 || !companyId){
+        const companyId = req.user.id; 
+        if(!companyId){
             return res.status(400).json({message:"companyId parameter is required"});
         }
         const hotels = await hotelModel.find({companyId : companyId});
