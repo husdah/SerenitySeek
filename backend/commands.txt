@@ -11,8 +11,11 @@ npm install multer
 npm install jsonwebtoken
 npm install nodemailer
 npm install ejs    // for testing
+npm install helmet  //for security
+npm install cors  // for port security
 
 // logout
+// error handling  +security
 // reset password
 // activation accout
 // contact us
