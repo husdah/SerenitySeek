@@ -53,6 +53,9 @@ const accountSchema = new Schema(
         verificationToken: {
             type: String,
             required: true
+        },
+        refreshToken: {
+            type: String
         }
     },
     {timestamps: true}
