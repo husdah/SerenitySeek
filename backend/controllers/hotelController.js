@@ -13,11 +13,15 @@ const addHotel = async (req, res) => {
     if( !name || !location || !rating || !req.files) {
         return res.status(400).json({message: "All Fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
+    if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating) ) {
         return res.status(400).json({message: "All Fields are required!"});
     }
     if (!validator.isNumeric(rating) || rating < 0 || rating > 5){
         return res.status(400).json({message: "Rating must be a number between 0 and 5!"});
+    }
+    const checkName = await hotelModel.findOne({name : name});
+    if(checkName){
+        return res.status(400).json({message: "Name Already Exist"});
     }
     try{
         const addHotel = await hotelModel.create ({
@@ -40,9 +44,14 @@ const deleteHotel = async (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
+
     const hotel =  await hotelModel.findOne({_id: id}); 
     const companyId = hotel.companyId;
+    const companyIdToken = req.user.id;
     if(!companyId){
+        return res.status(400).json({message : "companyId for this hotel is required"});
+    }
+    if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     try{

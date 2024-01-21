@@ -5,21 +5,24 @@ const fs = require("fs").promises;
 
 // add a package
 const addPackage = async (req, res) => {
-    const { companyId, hotelId, name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
-    
-    if(!companyId || !hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration ){
-        return res.status(400).json({message: "All fields are required!"});
+    const { hotelId, name, country, destination, pricePerOne, discount, description, type, startDate, duration } = req.body;
+
+    if (!hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration) {
+        return res.status(400).json({ message: "All fields are required!" });
+    } 
+    if (validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration)) {
+        return res.status(400).json({ message: "All fields are required!" });
     }
-    else if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
-        return res.status(400).json({message: "All fields are required!"});
+    const checkName = await packageModel.findOne({name : name});
+    if(checkName){
+        return res.status(400).json({message: "Name Already Exist"});
     }
-    if (!req.file) {
-        return res.status(400).json({ message: "Please upload a cover image!" });
-    }
-    try{
-        const companyId = req.user.id;
+    /*if (!validator.isNumeric(pricePerOne) || !validator.isNumeric(discount)){
+        return res.status(400).json({message: "Should be a number"});
+    }*/
+    try {
         const addPackage = await packageModel.create({
-            companyId: companyId,
+            companyId: req.user.id,
             hotelId: hotelId,
             name: name,
             country: country,
@@ -38,51 +41,25 @@ const addPackage = async (req, res) => {
             startDate: startDate,
             duration: duration,
         });
-        res.status(201).json({message: "Package Added Succssfully!"});
-    }catch (error) {
+        res.status(201).json({ message: "Package Added Successfully!" });
+    } catch (error) {
+        //console.error("Error adding package:", error);
         return res.status(400).json({ error: "Failed to add the package. Please try again." });
-    }
-}
-
-
-//update a package according to its Id 
-const updatePackageById = async (req, res) => {
-    const {id} = req.params;
-    const { name, destination, country, pricePerOne, discount, description, type, startDate, duration } = req.body;
-    const companyId = req.user.id;
-
-    if(!companyId){
-        return res.status(400).json({message : "You are not authorized to access this request"});
-    }
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).json({message: "not a valid Id!"});
-    }
-    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration){
-        return res.status(400).json({message: "All fields are required!"});
-    }
-    if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
-        return res.status(400).json({message: "All fields are required!"});
-    }
-    if (!req.file) {
-        return res.status(400).json({ message: "Please upload a cover image!" });
-    }
-    try{
-        const updatePackage = await packageModel.findOneAndUpdate({_id : id},{...req.body},{ new: true });
-        if(!updatePackage){
-            return res.status(404).json({message: "Package Not Found!"});
-        }
-        res.status(201).json({message: "Package Updated Succssfully!"});
-    }catch(error){
-        return res.status(500).json({error: error.message});
     }
 }
 
 //delete a specific package by using its Id
 const deletePackage = async (req, res) => {
     const {id} = req.params;
-    const companyId = req.user.companyId;
+    
+    const package =  await packageModel.findOne({_id: id}); 
+    const companyId = package.companyId;
+    const companyIdToken = req.user.id;
 
     if(!companyId){
+        return res.status(400).json({message : "companyId is required"});
+    }
+    if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     if(!mongoose.Types.ObjectId.isValid(id)){
@@ -100,6 +77,40 @@ const deletePackage = async (req, res) => {
     }
 }
 
+//update a package according to its Id 
+const updatePackageById = async (req, res) => {
+    const {id} = req.params;
+    const { name, country, destination, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        res.status(400).json({message: "not a valid Id!"});
+    }
+    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration){
+        return res.status(400).json({message: "All fields are required!"});
+    }
+    if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
+        return res.status(400).json({message: "All fields are required!"});
+    }
+    const package =  await packageModel.findOne({_id: id}); 
+    const companyId = package.companyId;
+    const companyIdToken = req.user.id;
+    if(!companyId){
+        return res.status(400).json({message : "companyId is required"});
+    }
+    if(companyId != companyIdToken){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
+    try{
+        const updatePackage = await packageModel.findOneAndUpdate( {_id : id}, {...req.body});
+        if(!updatePackage){
+            return res.status(404).json({message: "Package Not Found!"});
+        }
+        res.status(201).json({message: "Package Updated Succssfully!"});
+    }catch(error){
+        console.error("Error adding package:", error);
+        return res.status(500).json({error: error.message});
+    }
+}
+
 //select all packages to display them in package page
 const getAllPackages = async (req, res) => {
     try{
@@ -107,7 +118,7 @@ const getAllPackages = async (req, res) => {
         if(!packages){
             res.status(404).json({message: "No Available Packages!"});
         }
-        res.status(200).json(package);
+        res.status(200).json(packages);
     }catch(error){
         return res.status(500).json({error: error.message});
     }
@@ -122,13 +133,11 @@ const getHomePackages = async (req, res) => {
         if (!packages || packages.length === 0) {
             return res.status(404).json({ message: "No Available Packages!" });
         }
-
         res.status(200).json(packages);
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
-} 
-
+}
 //select all packages of this company: filter by companyId or company interface as table
 const getPackagesByCompanyId = async (req, res) => {
     try {
@@ -150,6 +159,9 @@ const getPackagesByCompanyId = async (req, res) => {
 //select specific package to view details of each package for user when display it, or when editing
 const getPackageDetailsById = async (req, res) => {
     const {id} = req.params;
+    /*const package =  await packageModel.findOne({_id: id}); 
+    const companyId = package.companyId;
+    const companyIdToken = req.user.id;*/
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
