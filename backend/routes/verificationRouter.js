@@ -5,7 +5,7 @@ const accountModel = require('../models/Account');
 router.get('/EmailConfirm/:token', async(req, res) =>{
     try{
         const {token} = req.params;
-        const account = await accountModel.findOneAndUpdate({verificationToken: token},{verificationToken : null});
+        const account = await accountModel.findOneAndUpdate({verificationToken: token},{verificationToken : "verified"});
         if(account){
             return res.status(200).json({message: "Email verified successfully!"});
         }else{

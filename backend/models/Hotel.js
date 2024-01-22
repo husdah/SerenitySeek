@@ -11,7 +11,7 @@ const hotelSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
-        match: /[a-zA-Z]/,
+        //match: /[a-zA-Z]/,
     },
     location: {
         type: String,

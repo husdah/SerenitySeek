@@ -13,7 +13,7 @@ const addAdmin = async (req, res) =>{
             phoneNumber: "70085351",
             password : hashedPassword,
             role : 0,
-            verificationToken: null
+            verificationToken: "verified"
         });
 
         if(adminAccount){

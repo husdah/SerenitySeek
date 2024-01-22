@@ -13,8 +13,9 @@ const {
 const upload = require('../middlewares/multerMiddleware');
 const validateToken = require('../middlewares/validateTokenHandler');
 const { isAdmin, isCompany, isUser} = require('../middlewares/roleHandler');
+const ifHaveToken = require('../middlewares/tokenExist');
 
-router.post("/company", upload.single("license"), createCompany);
+router.post("/company", ifHaveToken , upload.single("license"), createCompany);
 router.get("/companies", getAllCompanies);
 router.get("/homeCompanies", getHomeCompanies);
 router.get("/company/:id", getCompanyById);

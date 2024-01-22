@@ -20,7 +20,8 @@ const blogSchema=new Schema({
         trim: true,
     },
     gallery:{
-        type:[String],
+        type:Array,
+        default:[],
         trim:true
     },
     likes:{

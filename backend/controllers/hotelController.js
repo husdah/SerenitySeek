@@ -7,14 +7,21 @@ const fs         = require("fs").promises;
 const addHotel = async (req, res) => {
     const companyId = req.user.id;
     const { name, location, rating } = req.body;
-    if(req.user.role != 2 || !companyId){
+    if(!companyId){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     if( !name || !location || !rating || !req.files) {
         return res.status(400).json({message: "All Fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating)) {
+    if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating) ) {
         return res.status(400).json({message: "All Fields are required!"});
+    }
+    if (!validator.isNumeric(rating) || rating < 0 || rating > 5){
+        return res.status(400).json({message: "Rating must be a number between 0 and 5!"});
+    }
+    const checkName = await hotelModel.findOne({name : name});
+    if(checkName){
+        return res.status(400).json({message: "Name Already Exist"});
     }
     try{
         const addHotel = await hotelModel.create ({
@@ -27,7 +34,7 @@ const addHotel = async (req, res) => {
         res.status(201).json({message:'Hotel added successfully!'});
     }
     catch(error){
-        res.status(500).json({error:error.message});
+        return res.status(500).json({error:error.message});
     }
 }
 
@@ -37,28 +44,33 @@ const deleteHotel = async (req, res) => {
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
+
     const hotel =  await hotelModel.findOne({_id: id}); 
     const companyId = hotel.companyId;
-    if(req.user.role != 2 || companyId != req.user.id){
+    const companyIdToken = req.user.id;
+    if(!companyId){
+        return res.status(400).json({message : "companyId for this hotel is required"});
+    }
+    if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
     try{
         const delHotel = await hotelModel.findByIdAndDelete({_id : id});
         if(!delHotel){
-            res.status(404).json({message: "Not Found!"});
+            return res.status(404).json({message: "Not Found!"});
         }
         res.status(201).json({message: "Hotel Deleted Succssfully!"});
     }
     catch(error){
-        res.status(400).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 }
 
 // get all Hotels for a specific company
 const getHotelsByCompanyId = async (req, res) => {        
     try{
-        const companyId = req.user.companyId; 
-        if(req.user.role != 2 || !companyId){
+        const companyId = req.user.id; 
+        if(!companyId){
             return res.status(400).json({message:"companyId parameter is required"});
         }
         const hotels = await hotelModel.find({companyId : companyId});
@@ -68,7 +80,7 @@ const getHotelsByCompanyId = async (req, res) => {
         res.status(200).json(hotels);
     }
     catch(error){
-        res.status(400).json({error:error.message});
+        return res.status(500).json({error:error.message});
     }
 }
 

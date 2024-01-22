@@ -1,10 +1,11 @@
 const blogModel = require('../models/Blog');
 const validator = require('validator');
+const fs = require('fs').promises;
 const {default:mongoose} = require('mongoose');
 
 //Add Blog
 const addBlog = async (req,res) => {
-    const {userId, location , companyId, caption, gallery, comments} = req.body;
+    const {userId, location , companyId, caption, comments} = req.body;
 
     if (!validator.isLength(caption, { min: 1, max: 255 })) {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
@@ -19,7 +20,7 @@ const addBlog = async (req,res) => {
             location : location,
             companyId : companyId,
             caption : caption,
-            gallery : gallery,
+            gallery : req.files,
             comments: comments || [],
         });
 
