@@ -32,7 +32,7 @@ const sendMail = async (req, res) => {
     if(!validator.isEmail(email)){
         return res.status(400).json({message: "Email is not valid"});
     }
-    if(!validator.isAlpha(subject)){
+    if(!validator.matches(subject, /^[a-zA-Z\s]+$/)){
         return res.status(400).json({message: "Subject is invalid!"});
     }
     if (!validator.isLength(message, { min: 1, max: 50 })) {
