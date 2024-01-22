@@ -4,7 +4,7 @@ const { loginUser, useRefreshToken, logout } = require("../controllers/loggerCon
 const ifHaveToken = require('../middlewares/tokenExist');
 const validateToken = require('../middlewares/validateTokenHandler');
 
-router.post("/login", ifHaveToken , loginUser);
+router.put("/login", ifHaveToken , loginUser);
 
 // Endpoint for refreshing access token using refresh token
 router.post("/refresh", useRefreshToken);
