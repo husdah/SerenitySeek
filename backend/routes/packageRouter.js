@@ -9,11 +9,11 @@ const { isCompany } = require('../middlewares/roleHandler');
 
 router.post("/package",  validateToken, isCompany, upload.single('coverImg'), addPackage);
 router.put("/package/:id", validateToken, isCompany, updatePackageById);
+router.get("/package/:id", getPackageDetailsById);
 router.delete("/package/:id", validateToken, isCompany, deletePackage);
-//router.get("/package", getAllPackages);
-//router.get("/package/:id", getPackageDetailsById);
-router.get("/package", getHomePackages);
-//router.get("/package", validateToken, getPackagesByCompanyId);
+router.get("/package", getAllPackages);
+router.get("/homePackage", getHomePackages);
+router.get("/packageForCompany", validateToken, isCompany, getPackagesByCompanyId);
 
 
 module.exports = router;

@@ -17,9 +17,6 @@ const addPackage = async (req, res) => {
     if(checkName){
         return res.status(400).json({message: "Name Already Exist"});
     }
-    /*if (!validator.isNumeric(pricePerOne) || !validator.isNumeric(discount)){
-        return res.status(400).json({message: "Should be a number"});
-    }*/
     try {
         const addPackage = await packageModel.create({
             companyId: req.user.id,
@@ -43,7 +40,7 @@ const addPackage = async (req, res) => {
         });
         res.status(201).json({ message: "Package Added Successfully!" });
     } catch (error) {
-        //console.error("Error adding package:", error);
+        console.error("Error adding package:", error);
         return res.status(400).json({ error: "Failed to add the package. Please try again." });
     }
 }
@@ -80,14 +77,14 @@ const deletePackage = async (req, res) => {
 //update a package according to its Id 
 const updatePackageById = async (req, res) => {
     const {id} = req.params;
-    const { name, country, destination, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    const { pricePerOne, discount, startDate, duration } = req.body;
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
-    if(!name || !country || !pricePerOne || !description || !type || !startDate || !duration){
+    if(!pricePerOne || !startDate || !duration){
         return res.status(400).json({message: "All fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
+    if(validator.isEmpty(pricePerOne) || validator.isEmpty(startDate) || validator.isEmpty(duration) ) {
         return res.status(400).json({message: "All fields are required!"});
     }
     const package =  await packageModel.findOne({_id: id}); 
@@ -138,6 +135,7 @@ const getHomePackages = async (req, res) => {
         return res.status(400).json({ error: error.message });
     }
 }
+
 //select all packages of this company: filter by companyId or company interface as table
 const getPackagesByCompanyId = async (req, res) => {
     try {
