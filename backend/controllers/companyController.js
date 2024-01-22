@@ -139,7 +139,12 @@ const updateCompanyInfo = async (req, res) =>{
     if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(location)){
         return res.status(400).json({message: "Fields cannot be empty!"});
     }
-    try{ 
+    try{
+        const checkName = await companyModel.findOne({ name: name, _id: { $ne: id } });
+        if (checkName) {
+            return res.status(400).json({ message: "Company Name Already Exists" });
+        }
+        
         const updateCompany = await companyModel.findOneAndUpdate({_id : id}, {...req.body});
         if(!updateCompany){
             return res.status(404).json({message : "Company Not Found"});
