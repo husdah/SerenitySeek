@@ -10,6 +10,9 @@ const addBlog = async (req,res) => {
     if (!validator.isLength(caption, { min: 1, max: 255 })) {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
     }
+    if (!Array.isArray(gallery) || gallery.some(image => !validator.isURL(image))) {
+        return res.status(400).json({ message: 'Invalid gallery format' });
+    }
 
     try{
         const addedBlog = await blogModel.create({
@@ -73,15 +76,27 @@ const updateBlog = async (req,res) => {
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
     }
+    if(id != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
+    }
 
     try{
-        const updateBlog = await blogModel.findOneAndUpdate(
-            {_id: id}, 
-            {...req.body},
-            { new: true, runValidators: true }
-            );
+        const blog = await blogModel.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found!" });
+        }
 
-        if(!updateBlog){
+        blog.location = location || blog.location;
+        blog.companyId = companyId || blog.companyId;
+        blog.caption = caption || blog.caption;
+    
+        if (comments && comments.length > 0) {
+            blog.comments.push(...comments);
+        }
+
+        const updatedBlog = await blog.save();
+
+        if(!updatedBlog){
             return res.status(404).json({message: "Not Found!"});
         }
 
@@ -97,6 +112,9 @@ const deleteBlog = async (req,res) => {
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
+    }
+    if(id != req.user.id){
+        return res.status(400).json({message : "You are not authorized to access this request"});
     }
 
     try{
