@@ -9,6 +9,10 @@ const addBlog = async (req,res) => {
     if (!validator.isLength(caption, { min: 1, max: 255 })) {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
     }
+    if (!Array.isArray(gallery) || gallery.some(image => !validator.isURL(image))) {
+        return res.status(400).json({ message: 'Invalid gallery format' });
+    }
+    
 
     try{
         const addedBlog = await blogModel.create({
