@@ -6,8 +6,8 @@ const upload = require('../middlewares/multerMiddleware');
 const validateToken = require('../middlewares/validateTokenHandler');
 const { isCompany } = require('../middlewares/roleHandler');
 
-router.post("/addHotel", validateToken, isCompany, upload.array('gallery'), addHotel);
-router.delete("/delHotel/:id", validateToken, isCompany, deleteHotel);
-router.get("/getHotels", validateToken, isCompany, getHotelsByCompanyId);
+router.post("/hotel", validateToken, isCompany, upload.array('gallery'), addHotel);
+router.delete("/hotel/:id", validateToken, isCompany, deleteHotel);
+router.get("/hotel", validateToken, isCompany, getHotelsByCompanyId);
 
 module.exports = router;

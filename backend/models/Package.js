@@ -16,7 +16,7 @@ const packageSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
-        match: /[a-zA-Z]/,
+        //match: /[a-zA-Z]/,
     },
     country: {
         type: String,
@@ -52,7 +52,7 @@ const packageSchema = new Schema({
     },
     coverImg: {
         type: String,
-        //required: true,
+        required: true,
     },
     description: {
         type: String,
