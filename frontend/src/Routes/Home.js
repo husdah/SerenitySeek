@@ -1,10 +1,12 @@
-import React from 'react'
-import Books from '../components/Books'
+import React from 'react';
+import Companies from '../components/Companies';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
-        <Books/>
+      <Companies/>
     </div>
   )
 }
+
+export default Home
