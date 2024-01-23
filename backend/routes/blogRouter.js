@@ -11,7 +11,7 @@ router.post("/blog",validateToken, upload.array('gallery') ,addBlog);
 router.get("/blog", getAllBlogs);
 router.get("/userBlog", getBlogsByUserId);
 router.put("/blog/:id", validateToken, updateBlog);
-router.delete("/blog/:id", validateToken, deleteBlog);
+router.delete("/blog/:id/:userId", validateToken, deleteBlog);
 
 
 module.exports = router;

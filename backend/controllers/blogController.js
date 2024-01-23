@@ -6,11 +6,12 @@ const {default:mongoose} = require('mongoose');
 //Add Blog
 const addBlog = async (req,res) => {
     const {userId, location , companyId, caption, comments} = req.body;
+    let gallery=req.files;
 
     if (!validator.isLength(caption, { min: 1, max: 255 })) {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
     }
-    if (!Array.isArray(gallery) || gallery.some(image => !validator.isURL(image))) {
+    if (!Array.isArray(gallery)) {
         return res.status(400).json({ message: 'Invalid gallery format' });
     }
 
@@ -76,10 +77,7 @@ const updateBlog = async (req,res) => {
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
     }
-    if(id != req.user.id){
-        return res.status(400).json({message : "You are not authorized to access this request"});
-    }
-
+    
     try{
         const blog = await blogModel.findById(id);
         if (!blog) {
@@ -108,12 +106,12 @@ const updateBlog = async (req,res) => {
 
 //Delete a Blog
 const deleteBlog = async (req,res) => {
-    const {id} = req.params;
+    const {id,userId} = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
     }
-    if(id != req.user.id){
+    if(userId != req.user.id){
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
 

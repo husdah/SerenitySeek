@@ -34,13 +34,19 @@ const bookPackage=async(req,res)=>{
             }
         })
         try{
-        const customer=await companyModel.findOneAndUpdate(
+            const company=await companyModel.findOne({_id:companyId});
+            const customer = await company.customers.some(customerId => customerId.equals(userId));
+           if(!customer){
+             const customer=await companyModel.findOneAndUpdate(
             { _id: companyId },
             { $push: { customers: userId } });
-        return res.status(200).json(bookPackage);}
-        catch(error){
-            return res.status(400).json({error:error.message});
-        }
+             }
+             return res.status(200).json(bookPackage);
+    }
+          catch(error){
+            return res.status(400).json({error:error.message}); 
+         }
+         
 
     }catch(error){
         return res.status(400).json({error:error.message});
