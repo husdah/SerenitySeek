@@ -54,6 +54,15 @@ const loginUser = async (req, res) => {
 
         account.refreshToken = refreshToken;
         await account.save();
+
+        // Set the refresh token in a cookie with httponly and secure flags
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: true,
+            maxAge: 7 * 24 * 60 * 60 * 1000, // Set the expiration time as needed
+            sameSite: 'strict', // Adjust according to your requirements
+        });
+
         return res.status(200).json({ accessToken, refreshToken });
     }
     else{
@@ -62,7 +71,7 @@ const loginUser = async (req, res) => {
 }
 
 const useRefreshToken = async (req, res) => {
-    const { refreshToken } = req.body;
+    const  refreshToken  = req.cookies.refreshToken;
 
     if (!refreshToken) {
         return res.status(401).json({ error: "Refresh token is required" });

@@ -13,6 +13,7 @@ npm install nodemailer
 npm install ejs    // for testing
 npm install helmet  //for security
 npm install cors  // for port security
+npm install cookie-parser
 
 // logout
 // error handling  +security

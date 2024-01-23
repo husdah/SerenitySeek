@@ -7,11 +7,14 @@ const { notFound, errorHandler } = require('./middlewares/errors');
 const path =require('path');
 const helmet = require('helmet');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(logger);  // display the requests in console
+// Use cookie-parser middleware
+app.use(cookieParser());
 
 //helmet: it adds headers to the request for more security
 app.use(helmet());
