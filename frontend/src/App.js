@@ -6,6 +6,7 @@ import Login from "./Routes/Login";
 import Register from "./Routes/Register";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
+import PaymentTest from "./Routes/PaymentTest";
 
 function App() {
   const { user } = useAuthContext()
@@ -16,6 +17,7 @@ function App() {
       <Route path="/Signup" element={!user ? <Signup/> : <Navigate to="/" />}/>
       <Route path="/Login" element={!user ? <Login/> : <Navigate to="/" />}/>
       <Route path="/Register/*" element={<Register />} />
+      <Route path="/paymentTest" element={<PaymentTest/>}/>
     </Routes>
     </>
   );

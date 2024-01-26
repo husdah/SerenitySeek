@@ -52,10 +52,10 @@ const PaymentTest = () => {
                 paidAmount: product.price * 100, 
               },
             });
+            console.log(response2);
             if(response2.status === 200){
-              console.log('sucess');
+              handleSuccess();
             }
-            handleSuccess();
           }
         } catch (error) {
           handleFailure();
