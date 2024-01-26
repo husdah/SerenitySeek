@@ -51,10 +51,13 @@ const sendMail = async (req, res) => {
     transporter.sendMail(mailMessage, (error, info) => {
         if (error) {
             //console.log(error);
-            return res.status(500).send("Internal Server Error");
+           // return res.status(500).send("Internal Server Error");
+           return res.status(200).json({ message: 'Internal Server Error' });
+           
         } else {
             //console.log("Email sent: " + info.response);
-            return res.status(200).send("Email sent successfully");
+            //return res.status(200).send("Email sent successfully");
+            return res.status(200).json({ message: 'Email sent successfully' });
         }
     });
 }
