@@ -13,47 +13,47 @@ const createCompany = async (req, res) =>{
     //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+{};:'",<.>\/?\\[\]`~])(.{8,})$/;
 
     if(!name || !description || !phoneNumber || !location || !email || !password || !confirmPassword){
-        return res.status(400).json({message: "All Fields are required!"});
+        return res.status(400).json({error: "All Fields are required!"});
     }
     if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(password)  || validator.isEmpty(confirmPassword)){
-        return res.status(400).json({message: "All Fields are required!"});
+        return res.status(400).json({error: "All Fields are required!"});
     }
     if(!validator.isEmail(email)){
-        return res.status(400).json({message: "Email is not valid"});
+        return res.status(400).json({error: "Email is not valid"});
     }
     if(!validator.isMobilePhone(phoneNumber)){
-        return res.status(400).json({message: "Phone Number is not valid"});
+        return res.status(400).json({error: "Phone Number is not valid"});
     }
     if(!phoneNumberRegex.test(phoneNumber)){
-        return res.status(400).json({message: "Phone Number is not valid"});
+        return res.status(400).json({error: "Phone Number is not valid"});
     }
     if(!validator.isStrongPassword(password)){
-        return res.status(400).json({message: "Please enter a stronger password"});
+        return res.status(400).json({error: "Please enter a stronger password"});
     }
     if(!validator.equals(confirmPassword,password)){
-        return res.status(400).json({message: "Confirmation password is invalid"});
+        return res.status(400).json({error: "Confirmation password is invalid"});
     }
     const salt = await bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     try{
         const checkName = await companyModel.findOne({name : name});
         if(checkName){
-            return res.status(400).json({message: "Company Name Already Exist"});
+            return res.status(400).json({error: "Company Name Already Exist"});
         }
 
         // Check if req.file exists
         if (!req.file) {
-            return res.status(400).json({ message: "Please upload your company license!" });
+            return res.status(400).json({ error: "Please upload your company license!" });
         }
 
         const checkEmail = await accountModel.findOne({email : email});
         if(checkEmail){
-            return res.status(400).json({message: "Email Already Exist"});
+            return res.status(400).json({error: "Email Already Exist"});
         }
 
         const checkPhone = await accountModel.findOne({phoneNumber : phoneNumber});
         if(checkPhone){
-            return res.status(400).json({message: "Phone Number Already Exist"});
+            return res.status(400).json({error: "Phone Number Already Exist"});
         }
 
         const addedCompany = await companyModel.create({
