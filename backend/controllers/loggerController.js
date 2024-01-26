@@ -9,13 +9,13 @@ require("dotenv").config();
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     if(!email || !password){
-        return res.status(400).json({message: "All fields are required"});
+        return res.status(400).json({error: "All fields are required"});
     }
     const account = await accountModel.findOne({email});
     if(account && (await bcrypt.compare(password, account.password))){
 
         if(account.verificationToken != "verified"){
-            return res.status(401).json({message: "Please Activate your account"});
+            return res.status(401).json({error: "Please Activate your account"});
         }
 
         let name, role, id; 
@@ -58,15 +58,14 @@ const loginUser = async (req, res) => {
         // Set the refresh token in a cookie with httponly and secure flags
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             maxAge: 7 * 24 * 60 * 60 * 1000, // Set the expiration time as needed
-            sameSite: 'strict', // Adjust according to your requirements
         });
 
         return res.status(200).json({ accessToken, refreshToken });
     }
     else{
-        return res.status(401).json({message: "Invalid Credentials"});
+        return res.status(401).json({error: "Invalid Credentials"});
     }
 }
 
@@ -129,7 +128,7 @@ const useRefreshToken = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
     
     if (!refreshToken) {
         return res.status(401).json({ error: "Refresh token is required" });
@@ -142,7 +141,7 @@ const logout = async (req, res) => {
 
     refreshTokenAccount.refreshToken = null;
     await refreshTokenAccount.save();
-    return res.json({ message: 'Logout successful' });
+    return res.status(201).json({ message: 'Logout successful' });
 };
 
 module.exports = 
