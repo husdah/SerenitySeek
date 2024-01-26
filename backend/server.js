@@ -31,6 +31,9 @@ app.set('views', path.join(__dirname, 'views'));
 const resetPasswordRouter = require('./routes/resetPasswordRouter');
 app.use("/password", resetPasswordRouter);
 
+const paymentRouter = require("./routes/PaymentTestRouter");
+app.use("/api", paymentRouter);
+
 const loggerRouter = require("./routes/loggerRouter");
 app.use("/api", loggerRouter);
 
