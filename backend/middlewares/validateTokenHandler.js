@@ -15,7 +15,7 @@ const validateToken = async(req,res,next)=>{
         jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decoded)=>{
             if(err)
             {
-                return res.status(401).json({error:"User is not authorized"});
+                return res.status(401).json({error:"User is not authorized2"});
             }
             req.user=decoded.user;
             next();

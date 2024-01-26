@@ -13,43 +13,43 @@ const signUpUser = async (req, res) =>{
     //here validation before add
     let body = req.body;
     if(!Fname || !Lname || !phoneNumber || !email || !password || !confirmPassword){
-        return res.status(400).json({message: "All fields are required!", body});
+        return res.status(422).json({error: "All fields are required!", body});
     }
     if(validator.isEmpty(Fname) || validator.isEmpty(Lname) || validator.isEmpty(phoneNumber) || validator.isEmpty(email) || validator.isEmpty(password)  || validator.isEmpty(confirmPassword)){
-        return res.status(400).json({message: "All fields are required!"});
+        return res.status(422).json({error: "All fields are required!"});
     }
     if(!validator.isAlpha(Fname)){
-        return res.status(400).json({message: "First Name is invalid!"});
+        return res.status(422).json({error: "First Name is invalid!"});
     }
     if(!validator.isAlpha(Lname)){
-        return res.status(400).json({message: "Last Name is invalid!"});
+        return res.status(422).json({error: "Last Name is invalid!"});
     }
     if(!validator.isEmail(email)){
-        return res.status(400).json({message: "Not A Valid Email!"});
+        return res.status(422).json({error: "Not A Valid Email!"});
     }
     if(!validator.isMobilePhone(phoneNumber)){
-        return res.status(400).json({message: "Phone Number is not valid"});
+        return res.status(422).json({error: "Phone Number is not valid"});
     }
     if(!phoneNumberRegex.test(phoneNumber)){
-        return res.status(400).json({message: "Phone Number is not valid"});
+        return res.status(422).json({error: "Phone Number is not valid"});
     }
     if(!validator.isStrongPassword(password)){
-        return res.status(400).json({message: "Please enter a stronger password"});
+        return res.status(422).json({error: "Please enter a stronger password"});
     }
     if(!validator.equals(confirmPassword,password)){
-        return res.status(400).json({message: "Confirmation password is invalid"});
+        return res.status(422).json({error: "Confirmation password is invalid"});
     }
     const salt = await bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     try{
         const checkEmail = await accountModel.findOne({email : email});
         if(checkEmail){
-            return res.status(400).json({message: "Email Already Exist"});
+            return res.status(422).json({error: "Email Already Exist"});
         }
 
         const checkPhone = await accountModel.findOne({phoneNumber : phoneNumber});
         if(checkPhone){
-            return res.status(400).json({message: "Phone Number Already Exist"});
+            return res.status(422).json({error: "Phone Number Already Exist"});
         }
 
         const addedUser = await userModel.create({
