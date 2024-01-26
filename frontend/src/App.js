@@ -7,6 +7,9 @@ import Register from "./Routes/Register";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import PaymentTest from "./Routes/PaymentTest";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Packages from "./components/Packages";
 
 function App() {
   const { user } = useAuthContext()
@@ -18,6 +21,9 @@ function App() {
       <Route path="/Login" element={!user ? <Login/> : <Navigate to="/" />}/>
       <Route path="/Register/*" element={<Register />} />
       <Route path="/paymentTest" element={<PaymentTest/>}/>
+      <Route path="/contact" element={<Contact/>} />
+      <Route path="/Footer" element={<Footer/>} />
+      <Route path="/Package" element={<Packages/>} />
     </Routes>
     </>
   );
