@@ -87,5 +87,5 @@ const getHotelsByCompanyId = async (req, res) => {
 module.exports = {
     addHotel,
     deleteHotel,
-    getHotelsByCompanyId 
+    getHotelsByCompanyId
 }

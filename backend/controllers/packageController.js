@@ -1,4 +1,5 @@
 const packageModel = require("../models/Package");
+const hotelModel = require("../models/Hotel");
 const validator = require("validator");
 const { default: mongoose } = require("mongoose");
 const fs = require("fs").promises;
@@ -155,11 +156,8 @@ const getPackagesByCompanyId = async (req, res) => {
 }
 
 //select specific package to view details of each package for user when display it, or when editing
-const getPackageDetailsById = async (req, res) => {
+/*const getPackageDetailsById = async (req, res) => {
     const {id} = req.params;
-    /*const package =  await packageModel.findOne({_id: id}); 
-    const companyId = package.companyId;
-    const companyIdToken = req.user.id;*/
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "not a valid Id!"});
     }
@@ -170,12 +168,38 @@ const getPackageDetailsById = async (req, res) => {
         }
         res.status(200).json(package);
     }catch(error){
-        res.status(400).json({error: error.message});
+        res.status(500).json({error: error.message});
     }
 
-}
+}*/
 
+//select specific package to view details of each package with related hotels info
+const getPackageDetailsById = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Not a valid Id!" });
+    }
 
+    try {
+        const package = await packageModel.findOne({ _id: id });
+        if (!package) {
+            return res.status(404).json({ message: "Package Not Found!" });
+        }
+        // Fetch details of hotels associated with the package
+        const hotelIds = package.hotelId; 
+        const hotels = await hotelModel.find({ _id: { $in: hotelIds } });
+
+        // Combine package details and hotel details
+        const packageDetails = {
+            ...package.toObject(), // Convert Mongoose document to plain JavaScript object
+            hotels: hotels,
+        };
+
+        res.status(200).json(packageDetails);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 module.exports = {
     addPackage,

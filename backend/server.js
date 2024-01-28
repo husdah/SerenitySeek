@@ -61,6 +61,9 @@ app.use("/api", hotelRouter);
 const contactRouter = require("./routes/contactRouter")
 app.use("/api", contactRouter);
 
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static('uploads'));
+
 //Error handler Middleware
 app.use(notFound);
 app.use(errorHandler);
