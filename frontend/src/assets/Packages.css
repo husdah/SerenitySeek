@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
 }
 
 .package-banner::after {
@@ -23,16 +23,14 @@
     opacity:0.2;
 }
 
-
-
 .filter-input {
     position: absolute;
     z-index: 2;
-    background: var(--dark);
+    background: var(--light);
     width: 75%;
     height: 50px;
     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-    border-radius: 12px;
+    border-radius: 6px;
     padding: 20px 20px 50px 20px;
     justify-content: center;
     margin: -30px 50px 0 50px;
@@ -43,21 +41,31 @@
     font-weight: bold;
     font-style: normal;
     text-transform: capitalize;
-    color: var(--danger);
+    color: var(--dark);
 }
 
 .filter-input .form-controller {
     border: none; 
-    background-color: var(--dark);
+    background-color: var(--light);
     font-size: 15px;
     margin: 0 50px 0 20px;
-    border-bottom: 1px solid var(--danger);
-    color: var(--light);
+    border-bottom: 2px solid var(--dark);
+    color: var(--dark);
 }
 
 .filter-input .form-controller:focus {
     outline: 0; 
 }
+
+h1.title {
+    font-size: 22px;
+    font-weight: bold;
+    font-style: italic;
+    text-transform: capitalize;
+    color: var(--dark);
+    margin: 120px 0 0 55px;
+    text-shadow: var(--primary) 1px 0 4px;
+} 
 
 .package-body {
     padding: 20px 41px;
@@ -71,16 +79,7 @@
     background-repeat: no-repeat;
 }
 
-h1.title {
-    font-size: 40px;
-    font-weight: bold;
-    font-style: italic;
-    text-transform: capitalize;
-    color: var(--dark);
-    margin-top: 80px;
-    text-align: center;
-    text-shadow: var(--primary) 1px 0 4px;
-} 
+
 .package-body .package-card {
     /*border: 1px solid #ccc; */
     padding: 20px;
@@ -102,23 +101,25 @@ h1.title {
 }
 
 .package-body .packageDetails {
-    background-color: var(--dark);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    background-color: var(--light);
     height: 200px;
     width: 100%;
     margin-top: -7px;
     padding: 20px 20px 0;
+    border-radius: 0 0 6px 6px;
 }
 
 .package-body .package-card h2,
 .package-body .package-card span {
     font-style: normal;
     text-transform: capitalize;
-    color: var(--light);
+    color: var(--dark);
 }
 
 .package-body .package-card h2{
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .package-body .package-card span,
@@ -129,15 +130,14 @@ h1.title {
 }
 .package-body .package-card p {
     padding: 10px 0;
-    color: var(--light);
+    color: var(--dark);
     line-height: 18px;
 }
 
 
 hr {
-    border: 1px solid #ccc; 
+    border: 1px dashed var(--danger);
     opacity: 0.5;
-    
 }
 
 .package-body .package-card .details {
@@ -149,6 +149,7 @@ hr {
 .package-body .package-card .details .package-price {
     text-align: right;
     font-style: italic;
+    color: var(--danger);
 }
 
 .package-body .package-card .package-btn {
@@ -158,7 +159,7 @@ hr {
     border-radius: 49px;
     font-size: 13px;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
     padding: 10px;
     width: 130px;
@@ -168,6 +169,9 @@ hr {
     margin-top: 10px;
 }
 
+.package-body .package-card .package-btn:hover{
+    background-color: var(--light);
+    border: 1px solid var(--danger);
+    color: var(--danger);
 
-
-
+}

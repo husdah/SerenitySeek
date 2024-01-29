@@ -1,6 +1,6 @@
 import React from 'react'
 import "./index.css"
-import "./Footer.css"
+import "../assets/Footer.css"
 import { MdEmail } from "react-icons/md";
 import { MdOutlinePlace } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";

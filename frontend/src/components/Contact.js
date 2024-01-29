@@ -7,18 +7,15 @@ import withReactContent from 'sweetalert2-react-content'
 
 
 export default function Contact() {
-    //useState(''): returns array of 2 elements, fname: current state value, setFname: function that can be used to update the state
-    const [fname, setFname] = useState(''); //fname hold the value of inputs fname
+    const [fname, setFname] = useState(''); 
     const [lname, setLname] = useState('');
     const [email, setEmail] = useState('');
     const [subject, setSubject] = useState('');
     const [message, setMessage] = useState('');
 
-    // errors: store validation error messages.
     const [errors, setErrors] = useState('');
 
     const validateForm = () => {
-        // declare an empty object
         const errors = {};
       
         const name_pattern = /^[a-zA-Z]+$/;
@@ -56,40 +53,18 @@ export default function Contact() {
         if(message === ""){
           errors.message = "This field is required!";
         }
-        
-
-        /* 
-          To display the error:
-          console.log(errors) 
-        */
-        
-        // Set Errors State and Return Validation 
-        setErrors(errors); // is used to update the state with the errors object.
+      
+        setErrors(errors); 
         
         const keysArray = Object.keys(errors);
-        /*
-          display the key object of error { fname: "this field is required"} only return fname
-          console.log("keys: " + keysArray); 
-        */
-        
-        // Return true if there are no errors, otherwise false
+
         return keysArray.length === 0;
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Validate the form data and get validation errors
         if(validateForm()){   
-            // Form data is valid, make an API call to send email 
             const formData = {fname, lname, email, subject, message};
-            /*
-              Dispaly the values of input
-              console.log(fname)
-              console.log(lname)
-              console.log(email)
-              console.log(subject)
-              console.log(message)
-            */
               const handleSuccess = () => {
                 MySwal.fire({
                     icon: 'success',
@@ -116,21 +91,13 @@ export default function Contact() {
                 });
               
                 if (response.status === 200) {
-                    // Parse the JSON response
                     const responseData = await response.json();
-                    //alert(responseData.message);
                     handleSuccess();
-
-                    
-                    //console.log('Email sent successfully');
-                    console.log(responseData.message);  // Log the parsed response data
+                    console.log(responseData.message); 
 
                 } else {
-                    // If there is an error, parse and log the error response
                     const errorData = await response.json();
-                    //alert(errorData.message);
                     handleFailure();
-                    //console.error('Failed to send email');
                     console.error(errorData.message);
 
                 }
@@ -139,6 +106,7 @@ export default function Contact() {
             }
         } 
     }
+
     const accordionItems = [
       { title: 'How can I book a vacation package?', content: 'Visit our website and browse through our exciting range of vacation packages. ' },
       { title: 'What destinations do you offer?', content: 'Our travel packages cover an extensive list of destinations worldwide, ranging from exotic beach getaways and cultural city experiences to thrilling adventure destinations.' },
@@ -146,6 +114,7 @@ export default function Contact() {
       { title: 'Can I get a refund if my plans change?', content: 'Our refund policy varies depending on the type of package and the timeframe of your cancellation. '},
       { title: 'Do you offer group discounts?', content: 'Our group discounts vary depending on the size of your group and the specific package you\'re interested in. '},
     ];
+    
     return (
         <div className='contact'>
             <div className="contact-banner">

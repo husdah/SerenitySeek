@@ -11,6 +11,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Packages from "./components/Packages";
 import SinglePackage from "./components/SinglePackage";
+import Table from "./components/Table"
 
 function App() {
   const { user } = useAuthContext()
@@ -25,6 +26,7 @@ function App() {
       <Route path="/contact" element={<Contact/>} />
       <Route path="/Footer" element={<Footer/>} />
       <Route path="/Package" element={<Packages/>} />
+      <Route path="/Table" element={<Table/>} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
     </Routes>
     </>

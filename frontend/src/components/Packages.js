@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import '../assets/Packages.css';
 import './index.css';
 import { Link } from 'react-router-dom';
-//import packageImg from '../Seek/photo1706186313.jpeg'
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function Packages() {
   const [packages, setPackages] = useState([]);
   const [countryFilter, setCountryFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [priceFilter, setPriceFilter] = useState('');
-  //const [destinationFilter, setDestinationFilter] = useState('');
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -29,24 +28,26 @@ export default function Packages() {
   }, []);
 
   const filteredPackages = packages.filter((packageItem) => {
-    //const destinations = packageItem.destination || [];
-
-    // Check if any of the criteria match
     return (
       packageItem.country.toLowerCase().includes(countryFilter.toLowerCase()) &&
       packageItem.type.toLowerCase().includes(typeFilter.toLowerCase()) &&
       packageItem.pricePerOne.toString().toLowerCase().includes(priceFilter.toLowerCase())
-      /*destinations.some(
-        (destination) =>
-          destination.name.toLowerCase().includes(destinationFilter.toLowerCase())
-      )*/
     );
   });
 
+  /* Function to display description only in 2 lines*/
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + '...';
+  };
+  
   return (
     <div className="container">
       <div className='package-banner'>
         <div className='package-titles'>
+          <h1 className='title'>A heaven of earth just for you</h1>
         </div>
       </div>
       <div className='filter-input'>
@@ -72,26 +73,25 @@ export default function Packages() {
           onChange={(e) => setPriceFilter(e.target.value)}
         />
       </div>
-      <h1 className='title'>A heaven of earth just for you</h1>
+      
       <div className='package-body'>
         {filteredPackages.map((packageItem) => {
           let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;
-          console.log(imageUrl);
           return(
             <div key={packageItem._id} className='package-card'>
               <h1>{packageItem.name}</h1>
               <div className='packageImg'>
-                <img src={imageUrl} className='Package-Img' alt={packageItem._id} />
-                {/*<img src={packageImg} className='Package-Img' alt={packageItem._id} />*/}
+                <img src={imageUrl} className='Package-Img' alt={packageItem.name + 'image'} crossOrigin="anonymous" />
               </div>
               <div className='packageDetails'>
-                <h2>{packageItem.country}</h2>
+
+                <h2><IoLocationSharp /> {packageItem.country}</h2>
                 {/*{packageItem.destination.map((destination) => (
                   <div key={destination._id}>
                     <p>{destination.name}</p>
                   </div>
                 ))}*/}
-                <p>{packageItem.description}</p>
+                <p>{truncateText(packageItem.description, 100)}</p>
                 <hr />
                 <div className='details'>
                   <span className='package-type'>{packageItem.type}</span>
@@ -107,7 +107,5 @@ export default function Packages() {
       </div>
       
     </div>
-
-
   );
 }

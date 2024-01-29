@@ -1,5 +1,6 @@
 const packageModel = require("../models/Package");
 const hotelModel = require("../models/Hotel");
+const CompanyModel = require("../models/Company");
 const validator = require("validator");
 const { default: mongoose } = require("mongoose");
 const fs = require("fs").promises;
@@ -181,11 +182,15 @@ const getPackageDetailsById = async (req, res) => {
     }
 
     try {
-        const package = await packageModel.findOne({ _id: id });
+          // Find the package and populate the companyId field with company details
+        const package = await packageModel
+          .findOne({ _id: id })
+          .populate('companyId', 'name');
+          
         if (!package) {
             return res.status(404).json({ message: "Package Not Found!" });
         }
-        // Fetch details of hotels associated with the package
+        
         const hotelIds = package.hotelId; 
         const hotels = await hotelModel.find({ _id: { $in: hotelIds } });
 
@@ -200,6 +205,8 @@ const getPackageDetailsById = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
 
 module.exports = {
     addPackage,
