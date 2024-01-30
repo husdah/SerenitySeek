@@ -13,13 +13,19 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(logger);  // display the requests in console
-// Use cookie-parser middleware
-app.use(cookieParser());
 
 //helmet: it adds headers to the request for more security
 app.use(helmet());
 // cors: used for port security
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+));
+
+// Use cookie-parser middleware
+app.use(cookieParser());
 
 // Serve static files from the "uploads" directory
 const Imgpath = require('path');
