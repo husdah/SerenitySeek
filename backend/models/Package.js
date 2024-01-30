@@ -61,7 +61,7 @@ const packageSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ["Culture", "Tourism"],
+        enum: ["Culture", "Tourism", "Relax", "Sport", "History"],
         required: true,
         trim: true,
     },

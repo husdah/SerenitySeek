@@ -11,6 +11,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 import PaymentTest from "./Routes/PaymentTest";
 import {jwtDecode} from 'jwt-decode';
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Packages from "./components/Packages";
 
 function App() {
   const { user } = useAuthContext()
@@ -27,7 +30,9 @@ function App() {
       <Route path="/password/reset-password/:userId/:token" element={<ResetPasswordForm/>} />
       <Route path="/password/reset-password/success" element={<ResetPasswordSuccess/>} />
       <Route path="/userProfile" element={user && jwtDecode(user.accessToken).user.role === 1  ? <UserProfile /> : <Navigate to="/" />} />
-
+      <Route path="/contact" element={<Contact/>} />
+      <Route path="/Footer" element={<Footer/>} />
+      <Route path="/Package" element={<Packages/>} />
     </Routes>
     </>
   );

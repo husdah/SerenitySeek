@@ -11,7 +11,7 @@ router.post("/package",  validateToken, isCompany, upload.single('coverImg'), ad
 router.put("/package/:id", validateToken, isCompany, updatePackageById);
 router.get("/package/:id", getPackageDetailsById);
 router.delete("/package/:id", validateToken, isCompany, deletePackage);
-router.get("/package", getAllPackages);
+router.get("/packages", getAllPackages);
 router.get("/homePackage", getHomePackages);
 router.get("/packageForCompany", validateToken, isCompany, getPackagesByCompanyId);
 
