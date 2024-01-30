@@ -38,7 +38,7 @@ useEffect(()=>{
             <p>Name: {company.name}</p>
             <p>Description: {company.description}</p>
             <p>Location: {company.location}</p>
-            <img  alt={company.name +" logo"} src=''></img>
+            <img  alt={company.name +" logo"} src='' crossOrigin="anonymous"></img>
         </div>
     ))}
     </div>

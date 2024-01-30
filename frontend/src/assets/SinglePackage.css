@@ -1,0 +1,91 @@
+.singlePackage-container {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    
+}
+.container-image {
+    border: 1px solid red;
+    width: 80%;
+    height: 70%;
+    margin: 40px auto;
+    border-radius: 4px;
+    /*background: url(../Seek/photo170635470910.jpeg);
+    background-position: bottom;
+    background-size: cover; 
+    object-fit: cover;
+    background-repeat: no-repeat;*/
+}
+.container-image .singlePackage-Img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+.container-details {
+    border: 1px solid green;
+    width: 100%;
+    height: 100%;
+    padding: 40px 40px 0 0 ;
+
+}
+
+.container-details .singlePackage-price {
+    color: var(--danger);
+}
+
+.singlePackage-priceIcon { 
+    font-size: 25px;
+    color: var(--danger)
+}
+.container-details .singlePackage-title {
+    font-family: 'Abril Fatface', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 10px;   
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.container-details .singlePackage-country {
+    font-size: 35px;
+    font-weight: bold;
+    color: var(--dark);
+    text-transform: capitalize;
+    margin-bottom: 15px;
+}
+
+.container-details .singlePackage-description {
+    font-size: 15px;
+    font-weight: 100;
+    color: var(--dark);
+    line-height: 28px;
+}
+.container-details .singlePackage-group {
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.singlePackage-durationIcon,
+.singlePackage-dateIcon,
+.singlePackage-typeIcon {
+    font-size: 40px;
+}
+
+.singlePackage-group p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--dark);
+}
+
+.hotel-star{
+    color: var(--danger);
+}
+
+.gallery-image {
+    height: 100px;
+    width: 100px;
+}

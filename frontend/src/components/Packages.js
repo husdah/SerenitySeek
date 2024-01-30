@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import '../assets/Packages.css';
+import './index.css';
+import { Link } from 'react-router-dom';
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function Packages() {
   const [packages, setPackages] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [selectedField, setSelectedField] = useState('name');
-
-  const fields = ['destination', 'type', 'name'];
-
-  const searchText = (event) => {
-    setFilter(event.target.value);
-  };
-
-  const selectField = (event) => {
-    setSelectedField(event.target.value);
-  };
+  const [countryFilter, setCountryFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [priceFilter, setPriceFilter] = useState('');
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -32,78 +27,85 @@ export default function Packages() {
     fetchPackages();
   }, []);
 
-  
-
   const filteredPackages = packages.filter((packageItem) => {
-  const destinations = packageItem.destination || [];
-  
-    // Check if any of the criteria match
-  return (
-      packageItem.name.toLowerCase().includes(filter.toLowerCase()) ||
-      packageItem.type.toLowerCase().includes(filter.toLowerCase()) ||
-      destinations.some(
-        (destination) =>
-          destination.name.toLowerCase().includes(filter.toLowerCase())
-      )
+    return (
+      packageItem.country.toLowerCase().includes(countryFilter.toLowerCase()) &&
+      packageItem.type.toLowerCase().includes(typeFilter.toLowerCase()) &&
+      packageItem.pricePerOne.toString().toLowerCase().includes(priceFilter.toLowerCase())
     );
   });
+
+  /* Function to display description only in 2 lines*/
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + '...';
+  };
   
   return (
     <div className="container">
-      <div>
-        <h1>Search filter</h1>
-        <select value={selectedField} onChange={selectField}>
-          {fields.map((field) => (
-            <option key={field} value={field}>
-              {field}
-            </option>
-          ))}
-        </select>
+      <div className='package-banner'>
+        <div className='package-titles'>
+          <h1 className='title'>A heaven of earth just for you</h1>
+        </div>
+      </div>
+      <div className='filter-input'>
+        <label>Country:</label>
         <input
           type="text"
           className="form-controller"
-          value={filter}
-          onChange={searchText}
+          value={countryFilter}
+          onChange={(e) => setCountryFilter(e.target.value)}
+        />
+        <label>Type:</label>
+        <input
+          type="text"
+          className="form-controller"
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
+        />
+        <label>Price:</label>
+        <input
+          type="text"
+          className="form-controller"
+          value={priceFilter}
+          onChange={(e) => setPriceFilter(e.target.value)}
         />
       </div>
-      {filteredPackages.map((packageItem) => (
-        <div key={packageItem._id}>
-          <p>Name: {packageItem.name}</p>
-          <p>Country: {packageItem.country}</p>
-          <p>Price: {packageItem.pricePerOne}</p>
-          <p>Description: {packageItem.description}</p>
-          <p>Type: {packageItem.type}</p>
-          <p>Start Date: {packageItem.startDate}</p>
-          <p>Duration: {packageItem.duration}</p>
+      
+      <div className='package-body'>
+        {filteredPackages.map((packageItem) => {
+          let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;
+          return(
+            <div key={packageItem._id} className='package-card'>
+              <h1>{packageItem.name}</h1>
+              <div className='packageImg'>
+                <img src={imageUrl} className='Package-Img' alt={packageItem.name + 'image'} crossOrigin="anonymous" />
+              </div>
+              <div className='packageDetails'>
 
-          {/* Displaying destinations */}
-          <h3>Destinations:</h3>
-          {packageItem.destination.map((destination) => (
-            <div key={destination._id}>
-              <p>Destination Name: {destination.name}</p>
-
-              {/* Displaying activities */}
-              <h4>Activities:</h4>
-              {destination.activities.map((activity) => (
-                <div key={activity._id}>
-                  <p>Activity Name: {activity.name}</p>
-                  <p>Activity Description: {activity.description}</p>
+                <h2><IoLocationSharp /> {packageItem.country}</h2>
+                {/*{packageItem.destination.map((destination) => (
+                  <div key={destination._id}>
+                    <p>{destination.name}</p>
+                  </div>
+                ))}*/}
+                <p>{truncateText(packageItem.description, 100)}</p>
+                <hr />
+                <div className='details'>
+                  <span className='package-type'>{packageItem.type}</span>
+                  <span className='package-price'>{packageItem.pricePerOne} $</span>
                 </div>
-              ))}
+                <Link to={`/SinglePackage/${packageItem._id}`}>
+                  <button className='package-btn'>More Details</button>
+                </Link>
+              </div>
             </div>
-          ))}
-
-          {/* Displaying cover image */}
-          <img
-            src={`http://localhost:4000/uploads/${packageItem.coverImg}`}
-            alt={packageItem.name}
-          />
-          <br />
-          <br />
-          <br />
-          <br />
-        </div>
-      ))}
+          )
+        })}
+      </div>
+      
     </div>
   );
 }

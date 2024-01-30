@@ -27,6 +27,10 @@ app.use(cors(
 // Use cookie-parser middleware
 app.use(cookieParser());
 
+// Serve static files from the "uploads" directory
+const Imgpath = require('path');
+app.use('/uploads', express.static(Imgpath.join(__dirname, 'uploads')));
+
 const emailVerifcationRouter = require('./routes/verificationRouter');
 app.use("/api", emailVerifcationRouter);
 
@@ -66,6 +70,8 @@ app.use("/api", hotelRouter);
 
 const contactRouter = require("./routes/contactRouter")
 app.use("/api", contactRouter);
+
+
 
 //Error handler Middleware
 app.use(notFound);
