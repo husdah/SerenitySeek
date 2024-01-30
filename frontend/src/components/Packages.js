@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/Packages.css';
-import './index.css';
 import { Link } from 'react-router-dom';
 import { IoLocationSharp } from "react-icons/io5";
 

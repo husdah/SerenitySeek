@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import "./index.css"
 import "../assets/Contact.css"
 import Accordion from './Accordion';
 import Swal from "sweetalert2";
