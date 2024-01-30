@@ -1,22 +1,21 @@
 import { useState } from 'react'
-import { useAuthContext } from './useAuthContext';
 import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
-export const useLogin = () => {
+export const useResetPassword= () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
-    const { dispatch }  = useAuthContext();
+    const { userId, token } = useParams();
 
-    const login = async (email, password) =>{
+    const ResetPassword = async (password,confirmPassword) =>{
         setIsLoading(true)
         setError(null)
 
         try{
-            const response = await fetch('http://localhost:4000/api/login', {
-                method: "PUT",
+            const response = await fetch(`http://localhost:4000/password/reset-password/${userId}/${token}`, {
+                method: "POST",
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({email, password}),
-                credentials: 'include'
+                body: JSON.stringify({password, confirmPassword})
             })
     
             const json = await response.json()
@@ -30,9 +29,18 @@ export const useLogin = () => {
                     confirmButtonText: 'OK'
                 });
             }
+
             if(response.ok){
-                localStorage.setItem('user', JSON.stringify(json))
-                dispatch({type: 'LOGIN', payload: json})
+                Swal.fire({
+                    title: 'Success!',
+                    text: json.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+                if (json.redirectTo) {
+                    window.location.href = json.redirectTo;
+                }
             }
     
             setIsLoading(false)
@@ -42,5 +50,5 @@ export const useLogin = () => {
         }
     }
 
-  return { login, error, isLoading}
+  return { ResetPassword, error, isLoading}
 }

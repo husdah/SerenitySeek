@@ -11,26 +11,48 @@ const createCompany = async (req, res) =>{
     const {name , description, location, phoneNumber, email, password, confirmPassword} = req.body;
     const phoneNumberRegex = /^(03|71|70|76|78|79|81)\d{6}$/;
     //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+{};:'",<.>\/?\\[\]`~])(.{8,})$/;
+    const oldImagePath = './uploads/' + req.file.filename;
 
     if(!name || !description || !phoneNumber || !location || !email || !password || !confirmPassword){
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "All Fields are required!"});
     }
     if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(phoneNumber) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(password)  || validator.isEmpty(confirmPassword)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "All Fields are required!"});
     }
     if(!validator.isEmail(email)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "Email is not valid"});
     }
     if(!validator.isMobilePhone(phoneNumber)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "Phone Number is not valid"});
     }
     if(!phoneNumberRegex.test(phoneNumber)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "Phone Number is not valid"});
     }
     if(!validator.isStrongPassword(password)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "Please enter a stronger password"});
     }
     if(!validator.equals(confirmPassword,password)){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({error: "Confirmation password is invalid"});
     }
     const salt = await bcrypt.genSaltSync(10);
@@ -38,6 +60,9 @@ const createCompany = async (req, res) =>{
     try{
         const checkName = await companyModel.findOne({name : name});
         if(checkName){
+            if (req.file) {
+                 await fs.unlink(oldImagePath);
+            }
             return res.status(400).json({error: "Company Name Already Exist"});
         }
 
@@ -48,11 +73,17 @@ const createCompany = async (req, res) =>{
 
         const checkEmail = await accountModel.findOne({email : email});
         if(checkEmail){
+            if (req.file) {
+                 await fs.unlink(oldImagePath);
+            }
             return res.status(400).json({error: "Email Already Exist"});
         }
 
         const checkPhone = await accountModel.findOne({phoneNumber : phoneNumber});
         if(checkPhone){
+            if (req.file) {
+                 await fs.unlink(oldImagePath);
+            }
             return res.status(400).json({error: "Phone Number Already Exist"});
         }
 
@@ -81,6 +112,9 @@ const createCompany = async (req, res) =>{
         }
        // res.status(201).json({message : "Company Added Successfully"});
     }catch(error){
+        if (req.file) {
+             await fs.unlink(oldImagePath);
+        }
         return res.status(500).json({error : error.message});
     }
 }

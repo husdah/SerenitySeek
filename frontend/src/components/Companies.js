@@ -7,6 +7,18 @@ export default function Companies() {
 useEffect(()=>{
     const fetchCompanies=async()=>{
         const response=await fetch("http://localhost:4000/api/companies")
+
+        const newAccessToken = response.headers.get('New-Access-Token');
+
+        // Check if a new access token is present
+        if (newAccessToken) {
+            // Update the access token in LocalStorage
+            localStorage.setItem('accessToken', newAccessToken);
+
+            // Now you can use the new access token for future requests
+            console.log('New access token saved:', newAccessToken);
+        }
+        
         const json=await response.json();
         console.log(json)
         if(response.ok)

@@ -12,9 +12,46 @@ code {
     monospace;
 }
 
-:root {
+/* :root {
   --light: #DAECF3;
   --primary: #1AA6B7;
   --dark: #022D41;
-  --danger: #FE424D;
+  --danger: #ffa500;
+} */
+
+/* :root {
+  --light: #DAECF3;
+  --primary: #1AA6B7;
+  --dark: #04344b;
+  --danger: #FFB100;
+} */
+
+/* #0a2342 
+001C30*/
+/* :root {
+  --light: #fffdf7;
+  --primary: #1AA6B7;
+  --dark: #06283B;
+  --danger: #FFB100;
+} */
+
+/* :root {
+  --light: #fffdf7;
+  --primary: #1AA6B7;
+  --dark: #b19cd9;
+  --danger: #69359c;
+}  */
+
+:root {
+  --light: #fffdf7;
+  --primary: #1AA6B7;
+  --dark: #0a2342;
+  --danger: #FFB100;
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
