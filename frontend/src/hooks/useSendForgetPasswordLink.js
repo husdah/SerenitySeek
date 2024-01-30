@@ -1,22 +1,19 @@
 import { useState } from 'react'
-import { useAuthContext } from './useAuthContext';
 import Swal from 'sweetalert2';
 
-export const useLogin = () => {
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(null);
-    const { dispatch }  = useAuthContext();
+export const useSendForgetPasswordLink= () => {
+    const [reset_error, setError] = useState(null);
+    const [reset_isLoading, setIsLoading] = useState(null);
 
-    const login = async (email, password) =>{
+    const sendForgetPasswordLink = async (email) =>{
         setIsLoading(true)
         setError(null)
 
         try{
-            const response = await fetch('http://localhost:4000/api/login', {
-                method: "PUT",
+            const response = await fetch('http://localhost:4000/password/forget-password', {
+                method: "POST",
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({email, password}),
-                credentials: 'include'
+                body: JSON.stringify({email})
             })
     
             const json = await response.json()
@@ -31,8 +28,12 @@ export const useLogin = () => {
                 });
             }
             if(response.ok){
-                localStorage.setItem('user', JSON.stringify(json))
-                dispatch({type: 'LOGIN', payload: json})
+                Swal.fire({
+                    title: 'Success!',
+                    text: json.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                });
             }
     
             setIsLoading(false)
@@ -42,5 +43,5 @@ export const useLogin = () => {
         }
     }
 
-  return { login, error, isLoading}
+  return { sendForgetPasswordLink, reset_error, reset_isLoading}
 }

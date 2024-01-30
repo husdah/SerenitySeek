@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
                 id: id,
                 role: role,
             }
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1m" });
 
         const refreshToken = jwt.sign({
             //payload
@@ -55,11 +55,11 @@ const loginUser = async (req, res) => {
         account.refreshToken = refreshToken;
         await account.save();
 
-        // Set the refresh token in a cookie with httponly and secure flags
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: false,
+            secure: true, // Set to true in a production environment with HTTPS
             maxAge: 7 * 24 * 60 * 60 * 1000, // Set the expiration time as needed
+            sameSite: 'None'
         });
 
         return res.status(200).json({ accessToken, refreshToken });
@@ -69,7 +69,7 @@ const loginUser = async (req, res) => {
     }
 }
 
-const useRefreshToken = async (req, res) => {
+/* const useRefreshToken = async (req, res) => {
     const  refreshToken  = req.cookies.refreshToken;
 
     if (!refreshToken) {
@@ -125,10 +125,10 @@ const useRefreshToken = async (req, res) => {
 
         res.json({ accessToken: newAccessToken });
     });
-};
+}; */
 
 const logout = async (req, res) => {
-    const { refreshToken } = req.cookies;
+    const  refreshToken  = req.cookies.refreshToken;
     
     if (!refreshToken) {
         return res.status(401).json({ error: "Refresh token is required" });
@@ -147,6 +147,5 @@ const logout = async (req, res) => {
 module.exports = 
 {
     loginUser,
-    useRefreshToken,
     logout
 };

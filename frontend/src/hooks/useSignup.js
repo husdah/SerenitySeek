@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
 
-    const signup = async (Fname, Lname, phoneNumber, email, password, confirmPassword) => {
+    const signup = async (Fname, Lname, phoneNumber, email, password, confirmPassword, onSuccess) => {
         setIsLoading(true);
         setError(null);
 
@@ -19,9 +20,23 @@ export const useSignup = () => {
 
             if (!response.ok) {
                 setError(json.error);
+                Swal.fire({
+                    title: 'Warning!',
+                    text: json.error,
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
             }
             if(response.ok){
-                setError(json.message);
+                Swal.fire({
+                    title: 'Success!',
+                    text: json.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+                // Call the onSuccess callback to handle additional actions on success
+                onSuccess();
             }
 
             setIsLoading(false);
