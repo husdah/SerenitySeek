@@ -1,26 +1,18 @@
-import { useState } from 'react';
 import Swal from 'sweetalert2';
 import {jwtDecode} from 'jwt-decode';
 import { useAuthContext } from '../hooks/useAuthContext'
 
-export const useUpdateUserInfo = () => {
-    const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(null);
+export const useRemoveProfileImg = () => {
     const { user, dispatch } = useAuthContext();
 
-    const updateInfo = async (Fname, Lname, phoneNumber, email) => {
-        setIsLoading(true);
-        setError(null);
-
+    const removeProfilePic = async () => {
         try {
             let userId = jwtDecode(user.accessToken).user.id;
-            const response = await fetch(`http://localhost:4000/api/user/${userId}`, {
+            const response = await fetch(`http://localhost:4000/api/removeUserPic/${userId}`, {
                 method: 'PUT',
-                headers: { 
-                    'Content-Type': 'application/json',
+                headers: {
                     'Authorization': `Bearer ${user.accessToken}`
                 },
-                body: JSON.stringify({ Fname, Lname, phoneNumber, email}),
                 credentials: 'include'
             });
 
@@ -41,7 +33,6 @@ export const useUpdateUserInfo = () => {
             }
 
             if (!response.ok) {
-                setError(json.error);
                 Swal.fire({
                     title: 'Warning!',
                     text: json.error,
@@ -57,13 +48,10 @@ export const useUpdateUserInfo = () => {
                     confirmButtonText: 'OK'
                 });
             }
-
-            setIsLoading(false);
         } catch (error) {
-            setIsLoading(false);
-            setError(error.message);
+            console.log(error.message);
         }
     };
 
-    return { updateInfo, isLoading, error };
+    return { removeProfilePic };
 };

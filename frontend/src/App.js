@@ -16,6 +16,8 @@ import Footer from "./components/Footer";
 import Packages from "./components/Packages";
 import SinglePackage from "./components/SinglePackage";
 import Table from "./components/Table"
+import TermsOfServices from "./Routes/TermsOfServices";
+import Logout from "./Routes/Logout";
 
 function App() {
   const { user } = useAuthContext()
@@ -37,6 +39,8 @@ function App() {
       <Route path="/Package" element={<Packages/>} />
       <Route path="/Table" element={<Table/>} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
+      <Route path="/TermsOfServices" element={<TermsOfServices/>} />
+      <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
     </Routes>
     </>
   );
