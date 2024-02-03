@@ -25,7 +25,14 @@ const validateToken = async (req, res, next) => {
 
                 jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, decoded) => {
                     if (err) {
-                        return res.status(403).json({ error: 'Invalid refresh token' });
+                        // Check if the error is due to token expiration
+                        if (err.name === 'TokenExpiredError') {
+                            // Token has expired, handle accordingly
+                            return res.status(200).json({ expired: true });
+                        } else {
+                            // Some other error occurred (e.g., invalid token)
+                            return res.status(403).json({ error: 'Invalid refresh token' });
+                        }
                     }
 
                     const accountIdDecoded = decoded.accountId;

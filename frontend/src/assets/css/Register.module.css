@@ -126,15 +126,44 @@
     color: red;
   }
   
-  .Rg_formFieldButton {
+/*   .Rg_formFieldButton {
     background-color: var(--danger);
     color: white;
     border: none;
     outline: none;
     border-radius: 25px;
-    padding: 15px 70px;
-    font-size: 0.8em;
+    padding: 15px 60px;
+    font-size: 1em;
     font-weight: 500;
+    cursor: pointer;
+
+  } */
+
+  .Rg_formFieldButton {
+    font-size: 1em;
+    font-weight: 500;
+    color: white;
+    background-color: var(--mainColor);
+    cursor: pointer;
+    text-align:center;
+    outline: none;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 25px;
+    padding: 15px 60px;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    text-transform: capitalize;
+  }
+  
+  .Rg_formFieldButton:hover {
+    background-position: 100% 0;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    box-shadow: 0 4px 15px 0 #fbb03b;
+    /* background-color: #fbb03b; */
   }
   
   .Rg_formFieldLink {
@@ -150,12 +179,12 @@
     font-size: 0.9em;
   }
   
-  .Rg_formFieldCheckbox {
+ /*  .Rg_formFieldCheckbox {
     position: relative;
     top: 1.5px;
     width: 18px;
     height: 18px;
-  }
+  } */
   
   .Rg_formFieldTermsLink {
     color: white;
@@ -169,3 +198,85 @@
   .Rg_socialMediaButtons {
     padding: 10px 100px 10px 0px;
   }  
+
+
+  /* check box */
+.check_container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin: 15px 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.check_container .inputChex {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+.check_container:hover .inputChex ~ .checkmark {
+  background-color: #ccc;
+}
+
+.check_container .inputChex:checked ~ .checkmark {
+  background-color: #996515;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.check_container .inputChex:checked ~ .checkmark:after {
+  display: block;
+}
+
+.check_container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.check{
+  display: flex;
+  justify-content:space-evenly;
+}
+  
+@media(max-width: 912px) {
+  .Rg_appAside {
+    display: none;
+  }
+
+  .Rg_appForm {
+    width: 100%;
+  }
+}
+
+@media(max-width: 320px) {
+  .Rg_formTitleLink {
+    font-size: 1.5em;
+  }
+}

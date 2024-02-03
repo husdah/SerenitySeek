@@ -9,7 +9,6 @@ import styles from '../assets/css/Register.module.css'; // Import the Register.m
 
 const CompanySignupForm = () => {
   const { signup, error, isLoading } = useSignup();
-  const [emptyFields, setEmptyFields] = useState([]);
   const [isValidName, setIsValidName] = useState(true);
   const [isValidDescription, setIsValidDescription] = useState(true);
   const [isValidLocation, setIsValidLocation] = useState(true);
@@ -67,7 +66,6 @@ const CompanySignupForm = () => {
     setIsValidPassword(true);
     setIsValidConfirmPassword(true);
     setIsValidLicense(true);
-    setEmptyFields([]);
 
     // Destructure the state to get individual values
     const { Cname, description, location, phoneNumber, email, password, confirmPassword } = state;
@@ -105,8 +103,6 @@ const CompanySignupForm = () => {
       emptyValues.push('licenseFile');
       setIsValidLicense(false);
     }
-
-    setEmptyFields(emptyValues);
 
     // Check if there are no validation errors before calling signup
     if (emptyValues.length === 0 && isValidEmail && isValidName && isValidDescription && isValidLocation && isValidPhoneNumber && isValidPassword && isValidConfirmPassword && isValidLicense) {
@@ -260,7 +256,7 @@ const CompanySignupForm = () => {
           {!isValidLicense && <p className={styles.Rg_error}>Please enter company license.</p>}
         </div>
 
-        <div className={styles.Rg_formField}>
+        {/* <div className={styles.Rg_formField}>
           <label className={styles.Rg_formFieldCheckboxLabel}>
             <input
               className={styles.Rg_formFieldCheckbox}
@@ -270,9 +266,27 @@ const CompanySignupForm = () => {
               onChange={() => setHasAgreed(!hasAgreed)}
             />
             I agree all statements in{' '}
-            <a href="null" className={styles.Rg_formFieldTermsLink}>
+            <a href="/TermsOfServices" className={styles.Rg_formFieldTermsLink}>
               terms of service
             </a>
+          </label>
+        </div> */}
+
+        <div className={styles.Rg_formField}>
+          <label className={styles.Rg_formFieldCheckboxLabel +" " +styles.check_container}>
+            <input
+              /* className={styles.Rg_formFieldCheckbox} */
+              className={styles.inputChex}
+              type="checkbox"
+              name="hasAgreed"
+              checked={hasAgreed}
+              onChange={() => setHasAgreed(!hasAgreed)}
+            />
+            I agree all statements in{' '}
+            <a href="/TermsOfServices" className={styles.Rg_formFieldTermsLink}>
+              terms of service
+            </a>
+            <span className={styles.checkmark}></span>
           </label>
         </div>
 

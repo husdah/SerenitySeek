@@ -187,7 +187,8 @@
 }
 
 .Lg_button:hover {
-    box-shadow: 0px 0px 18px 15px rgba(0,0,0,0.15);
+    /* box-shadow: 0px 0px 18px 15px rgba(0,0,0,0.15); */
+    box-shadow: 0 4px 15px 0 #fbb03b;
 }
 
 .Lg_full_width {

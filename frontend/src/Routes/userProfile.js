@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/css/userProfile.css'; // Import your CSS file
-import { FaUser, FaAt, FaLock, FaPhone } from "react-icons/fa"
+import styles from '../assets/css/userProfile.module.css'; // Import your CSS file
+import { FaUser, FaAt, FaLock, FaPhone, FaCamera, FaTrash } from "react-icons/fa"
 import Profile  from '../assets/images/ProfilePlaceholder.jpg';
 import { useLogout } from '../hooks/useLogout'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -9,18 +9,24 @@ import Swal from 'sweetalert2';
 import validator from 'validator';
 import { useUpdateUserInfo } from '../hooks/useUpdateUserInfo';
 import { useUpdatePassword } from '../hooks/useUpdatePassword';
+import { useUpdateProfileImg } from '../hooks/useUpdateProfileImg';
+import { useRemoveProfileImg } from '../hooks/useRemoveUserProfile';
 
 const UserProfile = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const { logout } = useLogout()
-    const { updateInfo, error, isLoading} = useUpdateUserInfo();
-    const { updatePassword, error_pass, isLoading_pass} =useUpdatePassword();
+    const { updateInfo, isLoading} = useUpdateUserInfo();
+    const { updatePassword, isLoading_pass} =useUpdatePassword();
+    const { updateProfilePic } = useUpdateProfileImg();
+    const { removeProfilePic } = useRemoveProfileImg();
     const { user, dispatch } = useAuthContext()
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [profilePic, setprofilePic] = useState('');
+
 
     const [isValidUsername, setIsValidUsername] = useState(true);
     const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
@@ -65,6 +71,11 @@ const UserProfile = () => {
             const json=await response.json();
             console.log(json)
 
+            if (json.expired) {
+                // Handle expiration of refreshToken on the client side
+                window.location.href = 'http://localhost:3000/LogoutAndRedirect';
+            }
+
             if(!response.ok){
                 Swal.fire({
                     title: 'Warning!',
@@ -78,10 +89,11 @@ const UserProfile = () => {
             {
                 if (json) {
                     // Access attributes
-                    const { Fname, Lname, email, phoneNumber } = json;
+                    const { Fname, Lname, email, phoneNumber , profilePic } = json;
                     setUserName(Fname +" " +Lname);
                     setEmail(email);
                     setPhoneNumber(phoneNumber);
+                    setprofilePic(profilePic);
 
                 } else {
                     // Handle the case when user attribute is not present
@@ -90,7 +102,7 @@ const UserProfile = () => {
             }
         }
         fetchUserInfo();
-    },[])
+    },[user, dispatch])
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -160,68 +172,111 @@ const UserProfile = () => {
         }
       };  
 
+      const handlePicChange = async (e) => {
+        // handle file input change
+        const file = e.target.files[0];
+        
+        // Call your function with the file value
+        if (file) {
+            // Add your logic here, for example:
+            console.log("File added:", file);
+            const newProfilePicUrl = await updateProfilePic(file);
+
+            // Update the profilePic state with the new URL
+            setprofilePic(newProfilePicUrl);
+        }
+    };
+
+    const handlePicRemove = async (e) => {
+        if (profilePic) {
+            removeProfilePic();
+            setprofilePic(null); 
+        }
+    };
+
     return (
-        <div className='up_Body'>
-            <div className={`up_wrapper ${isSignUp ? 'up_animated_signup' : 'up_animated_signin'}`}>
-                <div className="up_form_container up_sign_up">
-                    <form action="#" onSubmit={handleUpdate}>
-                        <div className='up_Header'>
-                            <h2>Profile</h2>
-                            <button type='button' onClick={handleLogout}  className="up_btn_log">Logout</button>
+        <div className={styles.up_Body}>
+            <div className={`${styles.up_wrapper} ${isSignUp ? styles.up_animated_signup : styles.up_animated_signin}`}>
+                <div className={`${styles.up_form_container} ${styles.up_sign_up} ${styles.up_form_containerProfile}`}>
+                    
+                    <form className={styles.up_formHeader +" " +styles.up_form}>
+                        <div className={styles.up_Header}>
+                            <h2 className={styles.up_h2}>Profile</h2>
+                            {/* className={styles.up_btn_log} */}
+                            <button type='button' onClick={handleLogout} className={styles.bn632_hover +" " +styles.bn27 +" " +styles.btn_log}>Logout</button>
+                        </div>
+
+                        
+                        <div className={styles.profile_pic}>
+                            <div className={styles.flex}>
+                            <label className={styles._label} htmlFor="file">
+                                <span className={styles.profileSpan}><FaCamera></FaCamera></span>
+                                <span className={styles.profileSpan}>Change</span>
+                            </label>
+                            <label className={styles._label2} onClick={handlePicRemove}>
+                                <span className={styles.profileSpan}><FaTrash></FaTrash></span>
+                                <span className={styles.profileSpan}>Remove</span>
+                            </label>
+                            </div>
+                            <input className={styles.profileInput} id="file" type="file" onChange={handlePicChange}/>
+                            <img className={styles.profileImg} alt='profile' src={profilePic ? 'http://localhost:4000/uploads/' +profilePic : Profile} crossOrigin="anonymous" id="output"/>
                         </div>
                         
-                        <div className="up_form_group up_ImgContainer">
-                            <img className='up_profile' alt='profile' src={Profile}></img>
-                        </div>
-                        <div className="up_form_group">
-                            <input 
-                                type="text" 
-                                value={userName} 
-                                onChange={(e) => {setUserName(e.target.value);}}
+                       
+
+                    </form>
+
+
+                    <form className={styles.up_form} action="#" onSubmit={handleUpdate}>
+                        <div className={styles.up_form_group}>
+                            <input
+                                type="text"
+                                value={userName}
+                                onChange={(e) => { setUserName(e.target.value); }}
                                 required
-                                className={!isValidUsername ? 'up_formInputError' : ''}
+                                className={!isValidUsername ? styles.up_formInputError : styles.up_formInput}
                                 onFocus={() => setIsValidUsername(true)}
                             />
-                            <i><FaUser></FaUser></i>
-                            <label className={!isValidUsername ? 'up_labelError' : ''}>
+                            <i className={styles.up_i}><FaUser /></i>
+                            <label className={!isValidUsername ? styles.up_labelError : styles.up_label}>
                                 {isValidUsername ? 'username' : 'enter valid username'}
                             </label>
                         </div>
-                        <div className="up_form_group">
-                            <input 
-                                type="email" 
+                        <div className={styles.up_form_group}>
+                            <input
+                                type="email"
                                 required
-                                value={email} 
-                                onChange={(e) => {setEmail(e.target.value);}}
-                                className={!isValidEmail ? 'up_formInputError' : ''}
+                                value={email}
+                                onChange={(e) => { setEmail(e.target.value); }}
+                                className={!isValidEmail ? styles.up_formInputError : styles.up_formInput}
                                 onFocus={() => setIsValidEmail(true)}
                             />
-                            <i><FaAt></FaAt></i>
-                            <label className={!isValidEmail ? 'up_labelError' : ''}>
+                            <i className={styles.up_i}><FaAt /></i>
+                            <label className={!isValidEmail ? styles.up_labelError : styles.up_label}>
                                 {isValidEmail ? 'email' : 'enter valid email'}
                             </label>
                         </div>
-                        <div className="up_form_group">
-                            <input 
-                                type="text" 
+                        <div className={styles.up_form_group}>
+                            <input
+                                type="text"
                                 required
-                                value={phoneNumber} 
-                                onChange={(e) => {setPhoneNumber(e.target.value);}}
-                                className={!isValidPhoneNumber ? 'up_formInputError' : ''}
+                                value={phoneNumber}
+                                onChange={(e) => { setPhoneNumber(e.target.value); }}
+                                className={!isValidPhoneNumber ? styles.up_formInputError : styles.up_formInput}
                                 onFocus={() => setIsValidPhoneNumber(true)}
                             />
-                            <i><FaPhone></FaPhone></i>
-                            <label className={!isValidPhoneNumber ? 'up_labelError' : ''}>
+                            <i className={styles.up_i}><FaPhone /></i>
+                            <label className={!isValidPhoneNumber ? styles.up_labelError : styles.up_label}>
                                 {isValidPhoneNumber ? 'phone' : 'enter valid phone'}
                             </label>
                         </div>
-                        <button type="submit" disabled={isLoading} className="up_btn">
+                        <button type="submit" disabled={isLoading} className={styles.bn632_hover +" " +styles.bn27}>
                             Update
                         </button>
-                        <div className="up_link">
+                        <div className={styles.up_link}>
                             <p>
                                 Forget your Password?
-                                <span className="up_signin_link" onClick={toggleForm}>
+                                <span className={styles.up_signin_link +" " +styles.up_linkClick} onClick={toggleForm}>
                                     {' '}
                                     reset
                                 </span>
@@ -229,47 +284,48 @@ const UserProfile = () => {
                         </div>
                     </form>
                 </div>
-                <div className="up_form_container up_sign_in">
-                    <form action="#" onSubmit={handleReset}>
-                        <h2>Reset Password</h2>
-                        <div className="up_form_group">
-                            <input 
+                <div className={`${styles.up_form_container} ${styles.up_sign_in}`}>
+                    <form className={styles.up_form} action="#" onSubmit={handleReset}>
+                        <h2 className={styles.up_h2}>Reset Password</h2>
+                        <div className={styles.up_form_group}>
+                            <input
                                 type="password"
                                 required
-                                value={password} 
-                                onChange={(e) => {setPassword(e.target.value);}}
-                                className={!isValidPassword ? 'up_formInputError' : ''}
+                                value={password}
+                                onChange={(e) => { setPassword(e.target.value); }}
+                                className={!isValidPassword ? styles.up_formInputError : styles.up_formInput}
                                 onFocus={() => setIsValidPassword(true)}
-                             />
-                            <i><FaLock></FaLock></i>
-                            <label className={!isValidPassword ? 'up_labelError' : ''}>
+                            />
+                            <i className={styles.up_i}><FaLock /></i>
+                            <label className={!isValidPassword ? styles.up_labelError : styles.up_label}>
                                 {isValidPassword ? 'password' : 'enter strong password'}
                             </label>
                         </div>
-                        <div className="up_form_group">
-                            <input 
-                                type="password" 
+                        <div className={styles.up_form_group}>
+                            <input
+                                type="password"
                                 required
-                                value={confirmPassword} 
-                                onChange={(e) => {setConfirmPassword(e.target.value);}}
-                                className={!isValidConfirmPassword ? 'up_formInputError' : ''}
+                                value={confirmPassword}
+                                onChange={(e) => { setConfirmPassword(e.target.value); }}
+                                className={!isValidConfirmPassword ? styles.up_formInputError : styles.up_formInput}
                                 onFocus={() => setIsValidConfirmPassword(true)}
                             />
-                            <i><FaLock></FaLock></i>
-                            <label className={!isValidConfirmPassword ? 'up_labelError' : ''}>
+                            <i className={styles.up_i}><FaLock /></i>
+                            <label className={!isValidConfirmPassword ? styles.up_labelError : styles.up_label}>
                                 confirm password
                             </label>
                         </div>
                         {/* <div className="up_forgot_pass">
                             <a href="#">forgot password?</a>
                         </div> */}
-                        <button type="submit" className="up_btn">
+                        {/* className={styles.up_btn} */}
+                        <button type="submit" className={styles.bn632_hover +" " +styles.bn27} disabled={isLoading_pass}>
                             Reset
                         </button>
-                        <div className="up_link">
+                        <div className={styles.up_link}>
                             <p>
                                 View Profile Info?
-                                <span className="up_signup_link" onClick={toggleForm}>
+                                <span className={styles.up_signup_link +" " +styles.up_linkClick} onClick={toggleForm}>
                                     {' '}
                                     view
                                 </span>

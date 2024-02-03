@@ -8,7 +8,6 @@ import styles from '../assets/css/Register.module.css'; // Import the Register.m
 
 const TravelerSignUpForm = () => {
   const { signup, error, isLoading } = useSignup();
-  const [emptyFields, setEmptyFields] = useState([]);
   const [isValidFname, setIsValidFname] = useState(true);
   const [isValidLname, setIsValidLname] = useState(true);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(true);
@@ -54,7 +53,6 @@ const TravelerSignUpForm = () => {
     setIsValidEmail(true);
     setIsValidPassword(true);
     setIsValidConfirmPassword(true);
-    setEmptyFields([]);
 
     // Destructure the state to get individual values
     const { Fname, Lname, phoneNumber, email, password, confirmPassword } = state;
@@ -84,8 +82,6 @@ const TravelerSignUpForm = () => {
       emptyValues.push('confirmPassword');
       setIsValidConfirmPassword(false);
     }
-
-    setEmptyFields(emptyValues);
 
     // Check if there are no validation errors before calling signup
     if (emptyValues.length === 0 && isValidEmail && isValidFname && isValidLname && isValidPhoneNumber && isValidPassword && isValidConfirmPassword) {

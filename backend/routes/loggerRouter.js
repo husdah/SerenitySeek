@@ -9,6 +9,6 @@ router.put("/login", ifHaveToken , loginUser);
 // Endpoint for refreshing access token using refresh token
 /* router.post("/refresh", useRefreshToken); */
 
-router.put('/logout', validateToken , logout);
+router.put('/logout' , logout);
 
 module.exports = router;

@@ -31,6 +31,10 @@ const loginUser = async (req, res) => {
             const company = await companyModel.findOne({_id: id});
             name = company.name;
             role = 2;
+
+            if(!company.active){
+                return res.status(401).json({error: "Your Company Still haven't get the accept from the Admin"});
+            }
         }
         else{
             id = account._Id;
@@ -50,7 +54,7 @@ const loginUser = async (req, res) => {
         const refreshToken = jwt.sign({
             //payload
             accountId: account._id,
-        }, process.env.REFRESH_TOKEN_SECRET);
+        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
 
         account.refreshToken = refreshToken;
         await account.save();

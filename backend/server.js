@@ -34,10 +34,8 @@ app.use('/uploads', express.static(Imgpath.join(__dirname, 'uploads')));
 const emailVerifcationRouter = require('./routes/verificationRouter');
 app.use("/api", emailVerifcationRouter);
 
-// Set the view engine to EJS for testing
-app.set('view engine', 'ejs');
-// Set the views directory for testing
-app.set('views', path.join(__dirname, 'views'));
+/* app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); */
 const resetPasswordRouter = require('./routes/resetPasswordRouter');
 app.use("/password", resetPasswordRouter);
 

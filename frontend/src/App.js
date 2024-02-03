@@ -12,6 +12,8 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import PaymentTest from "./Routes/PaymentTest";
 import {jwtDecode} from 'jwt-decode';
 import Contact from "./components/Contact";
+import TermsOfServices from "./Routes/TermsOfServices";
+import Logout from "./Routes/Logout";
 import Packages from "./pages/Packages";
 import SinglePackage from "./pages/SinglePackage";
 import CompanyDashboard from "./Routes/CompanyDashboard";
@@ -35,6 +37,8 @@ function App() {
       <Route path="/Package" element={<Packages/>} />
       <Route path="/Dashboard/*" element={<CompanyDashboard />} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
+      <Route path="/TermsOfServices" element={<TermsOfServices/>} />
+      <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
     </Routes>
     </>
   );
