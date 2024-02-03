@@ -10,7 +10,7 @@ const LoggerComponent = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, error, isLoading } = useLogin();
-  const { sendForgetPasswordLink, reset_error, reset_isLoading} = useSendForgetPasswordLink();
+  const { sendForgetPasswordLink, reset_error} = useSendForgetPasswordLink();
 
   const [isValidEmail, setIsValidEmail] = useState(true)
   const [isValidPassword, setIsValidPassword] = useState(true)
