@@ -12,10 +12,9 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import PaymentTest from "./Routes/PaymentTest";
 import {jwtDecode} from 'jwt-decode';
 import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import Packages from "./components/Packages";
-import SinglePackage from "./components/SinglePackage";
-import Table from "./components/Table"
+import Packages from "./pages/Packages";
+import SinglePackage from "./pages/SinglePackage";
+import CompanyDashboard from "./Routes/CompanyDashboard";
 
 function App() {
   const { user } = useAuthContext()
@@ -33,9 +32,8 @@ function App() {
       <Route path="/password/reset-password/success" element={<ResetPasswordSuccess/>} />
       <Route path="/userProfile" element={user && jwtDecode(user.accessToken).user.role === 1  ? <UserProfile /> : <Navigate to="/" />} />
       <Route path="/contact" element={<Contact/>} />
-      <Route path="/Footer" element={<Footer/>} />
       <Route path="/Package" element={<Packages/>} />
-      <Route path="/Table" element={<Table/>} />
+      <Route path="/Dashboard/*" element={<CompanyDashboard />} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
     </Routes>
     </>
