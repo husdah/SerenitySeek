@@ -17,6 +17,7 @@ import Logout from "./Routes/Logout";
 import Packages from "./pages/Packages";
 import SinglePackage from "./pages/SinglePackage";
 import CompanyDashboard from "./Routes/CompanyDashboard";
+import NotFoundPage from "./Routes/404NotFound";
 
 function App() {
   const { user } = useAuthContext()
@@ -54,6 +55,9 @@ function App() {
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
       <Route path="/TermsOfServices" element={<TermsOfServices/>} />
       <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
+      
+      {/* last route */}
+      <Route path="*" element={<NotFoundPage/>} />
     </Routes>
     </>
   );
