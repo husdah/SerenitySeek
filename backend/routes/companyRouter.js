@@ -8,7 +8,8 @@ const {
     updateCompanyInfo, 
     acceptCompany, 
     deleteCompany,
-    rateCompany 
+    rateCompany ,
+    updatePassword
 } = require("../controllers/companyController");
 const upload = require('../middlewares/multerMiddleware');
 const validateToken = require('../middlewares/validateTokenHandler');
@@ -22,6 +23,7 @@ router.get("/company/:id", getCompanyById);
 router.put("/company/:id", validateToken , isCompany , updateCompanyInfo);
 router.put("/companyAccept/:id", validateToken, isAdmin , acceptCompany);
 router.put("/companyRate", validateToken , isUser , rateCompany);
+router.put("/companyUpdatePassword/:id", validateToken , isCompany , updatePassword);
 router.delete("/company/:id", validateToken, isAdmin , deleteCompany);
 
 module.exports = router;
