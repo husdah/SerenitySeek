@@ -122,11 +122,21 @@ const createCompany = async (req, res) =>{
 const getCompanyById = async (req, res) =>{
     const {id} = req.params;
     try{
-        const company = await companyModel.find({_id : id});
+        const company = await companyModel.findOne({_id : id});
         if(!company){
-            return res.status(404).json({message : "Company Not Found"});
+            return res.status(404).json({error : "Company Not Found"});
         }
-        res.status(200).json(company);
+        const account = await accountModel.findOne({companyId: id});
+        if(!account){
+            res.status(404).json({error: "Company Account Not Found!"});
+        }
+        res.status(200).json({
+            name: company.name, 
+            description: company.description, 
+            location: company.location,
+            logo: company.logo, 
+            email: account.email, 
+            phoneNumber: account.phoneNumber});
     }catch(error){
         return res.status(500).json({error : error.message});
     }
@@ -158,32 +168,53 @@ const getHomeCompanies = async (req, res) =>{
 
 const updateCompanyInfo = async (req, res) =>{
     const {id} = req.params;
-    const {name , description, location} = req.body;
+    const {name , description, location, email, phoneNumber} = req.body;
+    const phoneNumberRegex = /^(03|71|70|76|78|79|81)\d{6}$/;
 
     if(id != req.user.id){
-        return res.status(400).json({message : "You are not authorized to access this request"});
+        return res.status(400).json({error : "You are not authorized to access this request"});
     }
 
     if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).json({message: "not a valid Id!"});
+        res.status(400).json({error: "not a valid Id!"});
     }
     if(!name || !description || !location){
-        return res.status(400).json({message: "All Fields are required!"});
+        return res.status(400).json({error: "All Fields are required!"});
     }
-    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(location)){
-        return res.status(400).json({message: "Fields cannot be empty!"});
+    if(validator.isEmpty(name) || validator.isEmpty(description) || validator.isEmpty(location) || validator.isEmpty(email) || validator.isEmpty(phoneNumber)){
+        return res.status(400).json({error: "Fields cannot be empty!"});
+    }
+    if(!validator.isEmail(email)){
+        return res.status(400).json({error: "Email is not valid"});
+    }
+    if(!validator.isMobilePhone(phoneNumber) || !phoneNumberRegex.test(phoneNumber)){
+        return res.status(400).json({error: "Phone Number is not valid"});
     }
     try{
         const checkName = await companyModel.findOne({ name: name, _id: { $ne: id } });
         if (checkName) {
             return res.status(400).json({ message: "Company Name Already Exists" });
         }
-        
-        const updateCompany = await companyModel.findOneAndUpdate({_id : id}, {...req.body});
-        if(!updateCompany){
-            return res.status(404).json({message : "Company Not Found"});
+
+        const checkEmail = await accountModel.findOne({ email: email, companyId: { $ne: id } });
+        if (checkEmail) {
+            return res.status(400).json({ error: "Email Already Exists" });
         }
-        res.status(201).json({message : "Company Updated Successfully!"});
+        const checkPhone = await accountModel.findOne({ phoneNumber: phoneNumber, companyId: { $ne: id } });
+        if (checkPhone) {
+            return res.status(400).json({ error: "Phone Number Already Exists" });
+        }
+
+        const updateAccount = await accountModel.findOneAndUpdate({companyId: id},{email: email, phoneNumber: phoneNumber});
+        if(!updateAccount){
+            return res.status(404).json({error: "Company Account Not Found!"});
+        }
+        
+        const updateCompany = await companyModel.findOneAndUpdate({_id : id}, {name: name, description: description, location: location});
+        if(!updateCompany){
+            return res.status(404).json({error : "Company Not Found"});
+        }
+        return res.status(201).json({message : "Company Info Updated Successfully!"});
     }catch(error){
         return res.status(500).json({error : error.message});
     }
@@ -262,6 +293,41 @@ const rateCompany = async (req, res) => {
     }
 };
 
+const updatePassword=async (req, res) =>{
+    const {id} = req.params;
+    const {password, confirmPassword} = req.body;
+
+    if(id != req.user.id){
+        return res.status(400).json({error : "You are not authorized to access this request"});
+    }
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        res.status(400).json({error: "not a valid Id!"});
+    }
+    if(!password || !confirmPassword){
+        return res.status(422).json({error: "All fields are required!", body});
+    }
+    if(!validator.isStrongPassword(password)){
+        return res.status(422).json({error: "Please enter a stronger password"});
+    }
+    if(!validator.equals(confirmPassword,password)){
+        return res.status(422).json({error: "Confirmation password is invalid"});
+    }
+    const salt = await bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+   
+    try{
+        const updateAccount = await accountModel.findOneAndUpdate({companyId: id},{password: hashedPassword});
+        if(!updateAccount){
+            return res.status(404).json({error: "Company Account Not Found!"});
+        }
+        res.status(201).json({message: "Password Updated Succssfully!"});
+    }catch(error){
+        res.status(400).json({error: error.message});
+    }
+
+}
+
 
 module.exports = 
 {
@@ -272,5 +338,6 @@ module.exports =
     updateCompanyInfo,
     acceptCompany,
     deleteCompany,
-    rateCompany
+    rateCompany,
+    updatePassword
 };

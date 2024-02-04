@@ -141,6 +141,11 @@
     border-radius: var(--borderRadius);
 }
 
+.Lg_form_group__input::placeholder{
+    font-weight: 300;
+    color: rgba(255, 255, 255, .5);
+}
+
 .Lg_form_group__input_error{
     border: 1px solid red;
 }
@@ -232,9 +237,9 @@
     right: 0;
 }
 
-::-webkit-input-placeholder {
+/* ::-webkit-input-placeholder {
     font-weight: 300;
-    color: rgba(255, 2505, 255, .5);
+    color: rgba(255, 255, 255, .5);
 }
 
 ::-moz-placeholder {
@@ -250,7 +255,7 @@
 :-moz-placeholder {
     font-weight: 300;
     color: rgba(255, 255, 255, .5);
-}
+} */
 
 .Lg_tooltip {
     padding: 7px;
