@@ -69,7 +69,8 @@ app.use("/api", hotelRouter);
 const contactRouter = require("./routes/contactRouter")
 app.use("/api", contactRouter);
 
-
+const chatRouter = require("./routes/chatRouter");
+app.use("/api/chat", chatRouter);
 
 //Error handler Middleware
 app.use(notFound);

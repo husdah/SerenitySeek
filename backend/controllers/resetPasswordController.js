@@ -29,8 +29,12 @@ const sendForgetPasswordLink = async(req, res) =>{
             subject: "Reset Password",
             text: "reset:",
             html: `
-            <div>
-            <a href="${link}">Click here to reset your password</a>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #3498db;">Password Reset Request</h2>
+                <p>We received a request to reset your password. Click the link below to reset your password:</p>
+                <a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                <p>If you didn't request a password reset, please ignore this email. Your password will remain unchanged.</p>
+                <p style="color: #888; font-size: 12px;">This email was sent from SerenitySeek Website. If you did not request a password reset, please ignore this email.</p>
             </div>`
         });
         console.log("mail send successfuly");
