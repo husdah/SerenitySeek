@@ -5,31 +5,42 @@ const validator = require("validator");
 const { default: mongoose } = require("mongoose");
 const fs = require("fs").promises;
 
-// add a package
+// Add Package
 const addPackage = async (req, res) => {
-    const { hotelId, name, country, destination, pricePerOne, discount, description, type, startDate, duration } = req.body;
-
+    const { hotelId, name, country, destinations, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    console.log('Request Body:', req.body);
+    console.log('Received destination array:', destinations);
+    console.log('Processed destination array:', destinations.map(dest => ({
+        name: dest.destinationName,
+        activities: dest.activities.map(activity => ({
+            name: activity.name,
+            description: activity.description,
+        })),
+    })));
     if (!hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration) {
         return res.status(400).json({ message: "All fields are required!" });
-    } 
+    }
+
     if (validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration)) {
         return res.status(400).json({ message: "All fields are required!" });
     }
-    const checkName = await packageModel.findOne({name : name});
-    if(checkName){
-        return res.status(400).json({message: "Name Already Exist"});
+
+    const checkName = await packageModel.findOne({ name: name });
+    if (checkName) {
+        return res.status(400).json({ message: "Name Already Exists" });
     }
+
     try {
         const addPackage = await packageModel.create({
             companyId: req.user.id,
             hotelId: hotelId,
             name: name,
             country: country,
-            destination: destination.map(dest => ({
-                name: dest.name,
+            destination: destinations.map(dest => ({
+                name: dest.destinationName,
                 activities: dest.activities.map(activity => ({
-                    name: activity.name,
-                    description: activity.description
+                    name: activity.activityName,
+                    description: activity.activityDescription,
                 })),
             })),
             pricePerOne: pricePerOne,
@@ -40,12 +51,14 @@ const addPackage = async (req, res) => {
             startDate: startDate,
             duration: duration,
         });
+
         res.status(201).json({ message: "Package Added Successfully!" });
     } catch (error) {
         console.error("Error adding package:", error);
         return res.status(400).json({ error: "Failed to add the package. Please try again." });
     }
 }
+
 
 //delete a specific package by using its Id
 const deletePackage = async (req, res) => {
@@ -113,6 +126,8 @@ const updatePackageById = async (req, res) => {
 //select all packages to display them in package page
 const getAllPackages = async (req, res) => {
     try{
+        /*const today = new Date();
+        const packages = await packageModel.find({ startDate: { $gte: today } });*/
         const packages = await packageModel.find();
         if(!packages){
             res.status(404).json({message: "No Available Packages!"});

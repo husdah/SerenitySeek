@@ -1,0 +1,324 @@
+.package_banner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.package_banner .overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(47, 106, 127);
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    mix-blend-mode: hard-light;
+}
+
+.package_banner video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    object-fit: cover;
+}
+
+.package_banner .homeContent {
+    width: 100%;
+    height: max-content;
+    padding: 8rem 3rem 3rem;
+    display: flex;
+    row-gap: 3rem;
+    flex-direction: column;
+    align-items: Stretch;
+    justify-content: center;
+    margin: auto;
+    color: var(--light);
+    z-index: 100;
+}
+
+.package_banner .homeContent .textDiv .smallText { 
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.package_banner .homeContent .textDiv .homeTitle {
+    position: relative;
+    font-size: 1.8rem;
+}
+
+.package_banner .homeContent .cardDiv {
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    gap: 0.2rem;
+}
+
+.package_banner .homeContent .grid {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+}
+
+.flex {
+    display: flex;
+}
+
+.cardDiv label,
+.cardDiv .label_total .total {
+    display: block;
+    color: var(--dark);
+    padding-bottom: 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.cardDiv .label_total {
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+
+}
+ 
+.cardDiv .input {
+    width: 80%;
+    padding: 0 1rem;
+    height: 40px;
+    background: #ccc;
+    border-radius: 3rem;
+}
+
+.cardDiv input {
+    background: none;
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.cardDiv input::placeholder {
+    font-size: 13px;
+    color: var(--dark) !important;
+}
+
+.icon, 
+.locationIcon {
+    color: var(--dark);
+    font-size: 18px;
+}
+
+.locationIcon {
+    margin-top: 7px;
+}
+
+input[type=range] {
+    background-color: var(--primary);
+}
+
+.cardDiv .searchOptions {
+    position: absolute;
+    background-color: var(--primary);
+    width: max-content;
+    bottom: -0.7rem;
+    column-gap: 0.8rem;
+    padding: 5px 1rem;
+    border-radius: 3rem;
+    left: 55%;
+    cursor: pointer;
+    transform: translate(-50%);
+    justify-content: center;
+}
+
+.cardDiv .searchOptions .icon {
+    font-size: 18px;
+}
+
+.cardDiv .searchOptions span{
+    font-size: 13px;
+}
+
+.package_body {
+    padding: 20px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.package_body .package_card {
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.discount{
+    z-index: 8;
+    position: absolute;
+    width: 85px;
+    height: 55px;
+    background-color: var(--danger);
+    top: 50px;
+    left: -13px;
+    clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+}
+
+.discountText {
+    color: var(--dark);
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+.package_body .Package_Img {
+    width: 100%;
+    height: 250px;
+    border-radius: 6px 6px 0 0;
+}
+
+.package_body .packageDetails {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /*box-shadow: 0 2px 4px rgba(140, 140, 141, 0.549);*/
+    background-color: #fff;
+    height: 240px;
+    margin-top: -7px;
+    padding: 10px 20px 0;
+    border-radius: 0 0 6px 6px;
+} 
+
+.packageDestination h1 {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: capitalize;
+    color: var(--dark);
+    margin-bottom: 5px;
+}
+
+.packageDestination h2 {
+    font-size: 18px;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: capitalize;
+    color: var(--dark);
+}
+
+.fees {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.fees .package_price span {
+    float: right;
+    font-size: 15px;
+}
+
+.package_price_del {
+    text-decoration-line: line-through;
+    margin-left: 5px;
+}
+
+.package_desc {
+    height: 35px;
+}
+
+.package_body .package_card p {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 18px;
+}
+
+.package_body .package_card .package_btn {
+    color: var(--light);
+    background-color: var(--primary);
+    border: none;
+    border-radius: 49px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    padding: 10px;
+    width: 130px;
+    height: 35px;
+    cursor: pointer;
+    transition: transform .4s;
+    margin-top: 10px;
+}
+
+.package_body .package_card .package_btn:hover{
+    background-color: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+/* Responsive on width 1024px */
+@media(max-width:1024px) {
+    .package_body {
+        padding: 20px;
+        gap: 0rem;
+    }
+
+    .package_body .package_card {
+        padding: 10px;
+    }
+
+    .packageDestination h1 {
+        font-size: 18px;
+    }
+
+    .package_body .packageDetails {
+        height: 250px;
+    }
+
+    .package_desc {
+        height: 50px;
+    }
+}
+
+/* Responsive on width 768px */
+@media(max-width:768px) {
+    .package_body {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+
+/* Responsive on width 600px */
+@media(max-width:600px) {
+    .package_body {
+        grid-template-columns: repeat(1, 1fr); 
+        padding: 50px;
+    }
+
+    .package_banner .homeContent .grid {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Responsive on width 425px */
+@media(max-width:425px) {
+    .package_body {
+        padding: 20px;
+    }
+}
+
+/* Responsive on width 320px */
+@media(max-width:320px) {
+    .package_body .packageDetails {
+        height: 280px;
+    }
+}

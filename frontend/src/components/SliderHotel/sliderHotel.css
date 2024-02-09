@@ -12,19 +12,23 @@
 }
 
 .defaultHotels .swiper-slide {
+  border: 1px solid green;
   width: 300px;
 } 
 
 .twoHotels .swiper-slide {
   width: 360px;
+  border: 1px solid green;
 } 
 
 .threeHotels .swiper-slide {
   width: 360px;
+  border: 1px solid green;
 } 
 
 .fourHotels .swiper-slide {
   width: 300px;
+  border: 1px solid green;
 } 
 
 .swiper-slide img {
@@ -40,4 +44,12 @@
 
 .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: -4px !important;
+}
+
+/* Responsive on width 1024px */
+@media(max-width:1024px) {
+  .swiper {
+    width: 90%;
+  }
+
 }

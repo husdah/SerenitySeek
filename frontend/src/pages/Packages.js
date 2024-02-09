@@ -1,38 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import '../assets/css/Packages.css';
-import { Link } from 'react-router-dom';
-import { IoLocationSharp } from "react-icons/io5";
-import { HiOutlineClipboardCheck } from "react-icons/hi";
-import video from '../assets/videos/splash.mp4';
+import React, { useState, useEffect } from 'react'
+import Styles from '../assets/css/Packages.module.css'
+import video from '../assets/videos/splash.mp4'
+import { FaLocationDot } from "react-icons/fa6"
+import { HiOutlineClipboardCheck } from "react-icons/hi"
+import { Link } from 'react-router-dom'
 
 export default function Packages() {
-  const [packages, setPackages] = useState([]);
+  const [packages, setPackages]           = useState([]);
   const [countryFilter, setCountryFilter] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(5000);
+  const [selectedDate, setSelectedDate]   = useState('');
+  const [maxPrice, setMaxPrice]           = useState(5000);
 
+  /* Fetch Packages */
   useEffect(() => {
     const fetchPackages = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/packages');
         const json = await response.json();
-        console.log(json);
+        /* console.log(json); */
         if (response.ok) {
           setPackages(json);
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('An error occurred while fetching data', error);
       }
     };
-
     fetchPackages();
   }, []);
 
+  /* Function to check if the selected date is exactly in mongodb */
+  const isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
+
+  /* Filter Packages*/
   const filteredPackages = packages.filter((packageItem) => {
+    const packageStartDate = new Date(packageItem.startDate);
+    const selectedDateObj = selectedDate ? new Date(selectedDate) : null;
+    
     return (
       packageItem.country.toLowerCase().includes(countryFilter.toLowerCase()) &&
       packageItem.pricePerOne <= maxPrice &&
-      (!selectedDate || new Date(packageItem.startDate) >= new Date(selectedDate))
+      (!selectedDateObj || isSameDay(packageStartDate, selectedDateObj))
     );
   });
 
@@ -45,48 +59,53 @@ export default function Packages() {
   };
 
   return (
-    <div className="container">
-      <section className='package-banner'>
-        <div className='overlay'></div>
+    <div className={Styles.container}>
+      <section className={Styles.package_banner}>
+        <div className={Styles.overlay}></div>
         <video src={video} muted autoPlay loop type='video/mp4'></video>
 
-        <div className='homeContent container'>
-          <div className='textDiv'>
-            <span className='smallText'>
+        <div className={`${Styles.homeContent} ${Styles.container}`}>
+          <div className={Styles.textDiv}>
+            <span className={Styles.smallText}>
               Our Packages
             </span>
-            <h1 className='homeTitle'>
+            <h1 className={Styles.homeTitle}>
               Search Your Holiday
             </h1>
           </div>
 
-          <div className='cardDiv grid'>
+          <div className={`${Styles.cardDiv} ${Styles.grid}`}>
 
-            <div className='destinationInput'>
+            <div className={Styles.destinationInput}>
               <label htmlFor='city'>Search Your Destination:</label>
-              <div className='input flex'>
-                <input type="text" placeholder='Enter name here....' value={countryFilter}
-                  onChange={(e) => setCountryFilter(e.target.value)} />
-                <IoLocationSharp className='locationIcon' />
+              <div className={`${Styles.input} ${Styles.flex}`}>
+                <input 
+                  type="text" 
+                  placeholder='Enter name here....' 
+                  value={countryFilter}
+                  onChange={(e) => setCountryFilter(e.target.value)} 
+                />
+                <FaLocationDot className={Styles.locationIcon} />
               </div>
             </div>
 
-            <div className='dateInput'>
+            <div className={Styles.dateInput}>
               <label htmlFor='date'>Select Your Date:</label>
-              <div className='input flex'>
-                <input type="date"
+              <div className={`${Styles.input} ${Styles.flex}`}>
+                <input 
+                  type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
                 />
               </div>
             </div>
 
-            <div className='priceInput'>
-              <div className='label_total flex'>
+            <div className={Styles.priceInput}>
+              <div className={`${Styles.label_total} ${Styles.flex}`}>
                 <label htmlFor='price'> Max price: </label>
-                <span className='total'>$ {maxPrice}</span>
+                <span className={Styles.total}>$ {maxPrice}</span>
               </div>
-              <div className='input flex'>
+              <div className={`${Styles.input} ${Styles.flex}`}>
                 <input
                   type='range'
                   max='1000'
@@ -96,47 +115,47 @@ export default function Packages() {
                 />
               </div>
             </div>
-
           </div>
         </div>
       </section>
-      <div className='package-body'>
-        {filteredPackages.map((packageItem) => {
+
+      <div className={Styles.package_body}>
+        {filteredPackages && filteredPackages.map((packageItem) => {
           let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;
           return (
-            <div key={packageItem._id} className='package-card'>
+            <div key={packageItem._id} className={Styles.package_card}>
               {packageItem.discount &&   
-                <div className='discount'><span className='discountText'>{packageItem.discount}%</span></div>
+                <div className={Styles.discount}><span className={Styles.discountText}>{packageItem.discount}%</span></div>
               }
-              <div className='packageImg'>
+              <div className={Styles.packageImg}>
               
-                <img src={imageUrl} className='Package-Img' alt={packageItem.name + 'image'} crossOrigin="anonymous" />
+                <img src={imageUrl} className={Styles.Package_Img} alt={packageItem.name + 'image'} crossOrigin="anonymous" />
               </div>
-              <div className='packageDetails'>
-                <div className='packageDestination'>
+              <div className={Styles.packageDetails}>
+                <div className={Styles.packageDestination}>
                   <h1>{packageItem.name}</h1>
-                  <h2><IoLocationSharp /> {packageItem.country}</h2>
+                  <h2><FaLocationDot /> {packageItem.country}</h2>
                 </div>
-                <div className='fees'>
-                  <div className='package-type'>
+                <div className={Styles.fees}>
+                  <div className={Styles.package_type}>
                     <span>{packageItem.type}</span>
                   </div>
                   {packageItem.discount ?
-                    <div className='package-price'>
-                      <span className='package-price-del'>{packageItem.pricePerOne}$</span>
+                    <div className={Styles.package_price}>
+                      <span className={Styles.package_price_del}>{packageItem.pricePerOne}$</span>
                       <span>{(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)}$</span>
                     </div>
                     :
-                    <div className='package-price'>
+                    <div className={Styles.package_price}>
                       <span>{packageItem.pricePerOne}$</span>
                     </div>
                   }
                 </div>
-                <div className='package-desc'>
+                <div className={Styles.package_desc}>
                   <p>{truncateText(packageItem.description, 100)}</p>
                 </div>
                 <Link to={`/SinglePackage/${packageItem._id}`}>
-                  <button className='package-btn'>Details <HiOutlineClipboardCheck /></button>
+                  <button className={Styles.package_btn}>Details <HiOutlineClipboardCheck /></button>
                 </Link>
               </div>
             </div>

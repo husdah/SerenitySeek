@@ -1,11 +1,12 @@
 .PageContent{
-    padding-left: 12px;
+    border: 1px solid red;
+    padding: 0 12px;
     position: Absolute;
-    left: 15.5%;
-    top: 17%;
+    left: 16%;
+    top: 4px;
     background-color: #fff;
     border-radius: 4px;
-    width: 83.2%;
+    width: 81%;
     margin-bottom: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
