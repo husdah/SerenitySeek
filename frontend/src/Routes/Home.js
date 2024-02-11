@@ -1,10 +1,15 @@
 import React from 'react';
-import Companies from '../components/Companies';
+import Banner from '../components/banner/Banner';
+import AboutUs from '../components/aboutUs/AboutUs';
+import Destinations from '../components/destinations/Destinations'
+
 
 const Home = () => {
   return (
     <div>
-      <Companies/>
+      <Banner></Banner>
+      <AboutUs></AboutUs>
+      <Destinations></Destinations>
     </div>
   )
 }

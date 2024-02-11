@@ -1,0 +1,68 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+.banner {
+  height: 100vh;
+  justify-content: space-between;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.banner-section2 {
+  display: flex;
+}
+
+.banner-section2 > div:nth-child(1) {
+  margin-left: 100px;
+  margin-top: 100px;
+  width: 50%;
+  color: white;
+  font-weight: 600;
+  font-size: 40px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 0.5s;
+}
+
+.banner-section2 > div:nth-child(2) {
+  width: 50%;
+  margin-right: 100px;
+  margin-top: 250px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 1s;
+}
+.banner-section2 .desc
+{
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.banner-section2 .explore {
+  padding: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #FFB100;
+  border: none;
+  margin-top: 5px;
+  border-radius: 10px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 1.5s;
+}
+
+
+.banner-section2 .explore:hover {
+  cursor: pointer;
+  background-color: #FFA000;
+}
+
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
