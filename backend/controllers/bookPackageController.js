@@ -1,4 +1,4 @@
-const bookPackageModel=require("../models/BookPackage")
+const bookPackageModel=require("../models/BookPackageModel")
 const companyModel=require("../models/Company")
 const mongoose=require("mongoose")
 
@@ -16,42 +16,63 @@ const companyBooks=async(req,res)=>{
     }
 }
 //book package
-const bookPackage=async(req,res)=>{
-    const {companyId,packageId,userId,nbPeople,bookingStatus,payment}=req.body;
-    const {status,method}=payment;
-    if(!companyId || !packageId || !userId || !nbPeople || !method){
-        return res.status(400).json({message: "All fields are required!"});
+const bookPackage = async (req, res) => {
+    const { companyId, packageId, userId, nbPeople, paidAmount } = req.body;
+  
+    if (!companyId || !packageId || !userId || !nbPeople || !paidAmount) {
+      return res.status(400).json({ message: "All fields are required!" });
     }
-    
-    if(!mongoose.Types.ObjectId.isValid(companyId) || !mongoose.Types.ObjectId.isValid(packageId) || !mongoose.Types.ObjectId.isValid(userId))
-    {
-        return res.status(400).json({msg:"Not a valid id"});
+  
+    if (
+      !mongoose.Types.ObjectId.isValid(companyId) ||
+      !mongoose.Types.ObjectId.isValid(packageId) ||
+      !mongoose.Types.ObjectId.isValid(userId)
+    ) {
+      return res.status(400).json({ msg: "Not a valid id" });
     }
-    try{
-        const bookPackage=await bookPackageModel.create({
-            companyId,packageId,userId,nbPeople,bookingStatus:"pending",payment:{
-                status:"pending",method
-            }
-        })
-        try{
-            const company=await companyModel.findOne({_id:companyId});
-            const customer = await company.customers.some(customerId => customerId.equals(userId));
-           if(!customer){
-             const customer=await companyModel.findOneAndUpdate(
+  
+    try {
+      const existingBooking = await bookPackageModel.findOne({
+        packageId,
+        userId,
+      });
+  
+      if (existingBooking) {
+        return res.status(400).json({
+          message: "User has already booked this package.",
+        });
+      }
+  
+      const newBooking = await bookPackageModel.create({
+        companyId,
+        packageId,
+        userId,
+        nbPeople,
+        paidAmount,
+      });
+  
+      try {
+        const company = await companyModel.findOne({ _id: companyId });
+        const customer = await company.customers.some((customerId) =>
+          customerId.equals(userId)
+        );
+  
+        if (!customer) {
+          const updatedCompany = await companyModel.findOneAndUpdate(
             { _id: companyId },
-            { $push: { customers: userId } });
-             }
-             return res.status(200).json(bookPackage);
+            { $push: { customers: userId } }
+          );
+        }
+  
+        return res.status(200).json(newBooking);
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
-          catch(error){
-            return res.status(400).json({error:error.message}); 
-         }
-         
-
-    }catch(error){
-        return res.status(400).json({error:error.message});
-    }
-}
+  };
+  
 //cancel booking
 const cancelBooking = async (req, res) => {
     const { id } = req.params;

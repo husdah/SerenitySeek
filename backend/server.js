@@ -13,23 +13,34 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(logger);  // display the requests in console
-// Use cookie-parser middleware
-app.use(cookieParser());
 
 //helmet: it adds headers to the request for more security
 app.use(helmet());
 // cors: used for port security
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true
+    }
+));
+
+// Use cookie-parser middleware
+app.use(cookieParser());
+
+// Serve static files from the "uploads" directory
+const Imgpath = require('path');
+app.use('/uploads', express.static(Imgpath.join(__dirname, 'uploads')));
 
 const emailVerifcationRouter = require('./routes/verificationRouter');
 app.use("/api", emailVerifcationRouter);
 
-// Set the view engine to EJS for testing
-app.set('view engine', 'ejs');
-// Set the views directory for testing
-app.set('views', path.join(__dirname, 'views'));
+/* app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); */
 const resetPasswordRouter = require('./routes/resetPasswordRouter');
 app.use("/password", resetPasswordRouter);
+
+const paymentRouter = require("./routes/PaymentTestRouter");
+app.use("/api", paymentRouter);
 
 const loggerRouter = require("./routes/loggerRouter");
 app.use("/api", loggerRouter);
@@ -57,6 +68,9 @@ app.use("/api", hotelRouter);
 
 const contactRouter = require("./routes/contactRouter")
 app.use("/api", contactRouter);
+
+const chatRouter = require("./routes/chatRouter");
+app.use("/api/chat", chatRouter);
 
 //Error handler Middleware
 app.use(notFound);

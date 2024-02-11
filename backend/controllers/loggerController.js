@@ -9,13 +9,13 @@ require("dotenv").config();
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     if(!email || !password){
-        return res.status(400).json({message: "All fields are required"});
+        return res.status(400).json({error: "All fields are required"});
     }
     const account = await accountModel.findOne({email});
     if(account && (await bcrypt.compare(password, account.password))){
 
         if(account.verificationToken != "verified"){
-            return res.status(401).json({message: "Please Activate your account"});
+            return res.status(401).json({error: "Please Activate your account"});
         }
 
         let name, role, id; 
@@ -31,6 +31,10 @@ const loginUser = async (req, res) => {
             const company = await companyModel.findOne({_id: id});
             name = company.name;
             role = 2;
+
+            if(!company.active){
+                return res.status(401).json({error: "Your Company Still haven't get the accept from the Admin"});
+            }
         }
         else{
             id = account._Id;
@@ -45,32 +49,31 @@ const loginUser = async (req, res) => {
                 id: id,
                 role: role,
             }
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1m" });
 
         const refreshToken = jwt.sign({
             //payload
             accountId: account._id,
-        }, process.env.REFRESH_TOKEN_SECRET);
+        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
 
         account.refreshToken = refreshToken;
         await account.save();
 
-        // Set the refresh token in a cookie with httponly and secure flags
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: true,
+            secure: true, // Set to true in a production environment with HTTPS
             maxAge: 7 * 24 * 60 * 60 * 1000, // Set the expiration time as needed
-            sameSite: 'strict', // Adjust according to your requirements
+            sameSite: 'None'
         });
 
         return res.status(200).json({ accessToken, refreshToken });
     }
     else{
-        return res.status(401).json({message: "Invalid Credentials"});
+        return res.status(401).json({error: "Invalid Credentials"});
     }
 }
 
-const useRefreshToken = async (req, res) => {
+/* const useRefreshToken = async (req, res) => {
     const  refreshToken  = req.cookies.refreshToken;
 
     if (!refreshToken) {
@@ -126,10 +129,10 @@ const useRefreshToken = async (req, res) => {
 
         res.json({ accessToken: newAccessToken });
     });
-};
+}; */
 
 const logout = async (req, res) => {
-    const { refreshToken } = req.body;
+    const  refreshToken  = req.cookies.refreshToken;
     
     if (!refreshToken) {
         return res.status(401).json({ error: "Refresh token is required" });
@@ -142,12 +145,11 @@ const logout = async (req, res) => {
 
     refreshTokenAccount.refreshToken = null;
     await refreshTokenAccount.save();
-    return res.json({ message: 'Logout successful' });
+    return res.status(201).json({ message: 'Logout successful' });
 };
 
 module.exports = 
 {
     loginUser,
-    useRefreshToken,
     logout
 };

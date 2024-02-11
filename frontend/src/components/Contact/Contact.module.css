@@ -1,0 +1,201 @@
+.contact {
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contactContainer {
+    width: 100%;
+    max-width: 820px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.contactInfo {
+    padding: 20px;
+}
+
+.contactInfo .title {
+    color: var(--dark);
+}
+
+.contactDetails img {
+    height: 250px;
+    width: 280px;
+}
+
+.socialMedia {
+    padding: 2rem 0 0 0;
+}
+
+.socialMedia p {
+    color: var(--dark);
+    font-weight: bold;
+}
+
+.socialIcons {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.socialIcons a {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background: linear-gradient(45deg, var(--dark), var(--primary));
+    color: #fff;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 0.5rem;
+    transition: 0.3s;
+}
+
+.socialIcons a:hover {
+    transform: scale(1.05);
+}
+
+.contactForm {
+    background-color: var(--dark);
+    position: relative;
+
+}
+
+.contactForm::before{
+    content: "";
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    background-color: var(--dark);
+    transform: rotate(45deg);
+    top: 50px;
+    left: -13px;
+}  
+
+.circleOne, 
+.circleTwo {
+    border-radius: 50%;
+    background: linear-gradient(135deg, transparent 20%, #1AA6B7);
+    position: absolute;
+}
+
+.circleOne {
+    width: 130px;
+    height: 130px;
+    top: 130px;
+    right: -40px;
+} 
+
+.circleTwo {
+    width: 80px;
+    height: 80px;
+    top: 10px;
+    right: 30px;
+} 
+
+.contact_form {
+    padding: 0.5rem 2.2rem;
+    z-index: 10;
+    overflow: hidden;
+    position: relative;
+}
+
+.contactFormTitle {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.input_control {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.input_control input {
+    width: 70%;
+    outline: none;
+    border: 1px solid var(--light);
+    background: none;
+    padding: 0.6rem 1.2rem;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #ccc;
+}
+
+.contactTextarea {
+    width: 70%;
+    outline: none;
+    border: 1px solid var(--light);
+    background: none;
+    padding: 0.6rem 1.2rem;
+    color: #fff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-radius: 25px;
+    transition: 0.3s;
+    resize: none;
+    overflow-y: auto;
+}
+
+.input_control .contactTextarea {
+    padding: 0.6rem 1.3rem;
+    transform: translateY(0);
+}
+
+.contact_btn {
+    color: var(--light);
+    background-color: var(--danger);
+    border: none;
+    border-radius: 49px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    padding: 10px;
+    width: 100px;
+    height: 35px;
+    cursor: pointer;
+    transition: transform .4s;
+    margin-top: 10px;
+}
+
+.contact_btn:hover {
+    transform: scale(1.1);
+}
+
+span.error {
+    font-size: 12px;
+    color: red;
+}
+
+/* Responsive on width 425px */
+@media(max-width:425px) {
+    .contactContainer {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Responsive on width 320px */
+@media(max-width:320px) {
+    .contactDetails img {
+        height: 200px;
+        width: 200px;
+    }
+}

@@ -3,13 +3,12 @@ import Banner from '../components/banner/Banner';
 import AboutUs from '../components/aboutUs/AboutUs';
 import Destinations from '../components/destinations/Destinations'
 
-
 const Home = () => {
   return (
     <div>
-      <Banner></Banner>
-      <AboutUs></AboutUs>
-      <Destinations></Destinations>
+      <Banner />
+      <AboutUs />
+      <Destinations />
     </div>
   )
 }
