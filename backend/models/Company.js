@@ -34,10 +34,16 @@ const companySchema=new Schema({
         default: false
     },
     rate:{
-        type:Number,
-        min:0,
-        max:5,
-        default:0
+        value: {
+            type:Number,
+            min:0,
+            max:5,
+            default:0
+        },
+        raters: {
+            type:[mongoose.Types.ObjectId],
+            ref:"User"
+        }
     },
     customers:{
         type:[mongoose.Types.ObjectId],

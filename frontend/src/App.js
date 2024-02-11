@@ -19,6 +19,7 @@ import SinglePackage from "./pages/SinglePackage";
 import CompanyDashboard from "./Routes/CompanyDashboard";
 import NotFoundPage from "./Routes/404NotFound";
 import ChatApp from "./Routes/ChatApp";
+import CompanyInfo from "./Routes/CompanyInfo";
 
 function App() {
   const { user } = useAuthContext()
@@ -57,6 +58,7 @@ function App() {
       <Route path="/TermsOfServices" element={<TermsOfServices/>} />
       <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
       <Route path="/ChatApp" element={user ? <ChatApp/> : <Navigate to="/Login" />} />
+      <Route path="/CompanyInfo/*" element={<CompanyInfo/>} />
       
       {/* last route */}
       <Route path="*" element={<NotFoundPage/>} />

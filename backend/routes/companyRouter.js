@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { 
     createCompany, 
-    getCompanyById, 
+    getCompanyById,
+    getCompanyByName,
     getAllCompanies, 
     getHomeCompanies, 
     updateCompanyInfo, 
@@ -20,6 +21,7 @@ router.post("/company", ifHaveToken , upload.single("license"), createCompany);
 router.get("/companies", getAllCompanies);
 router.get("/homeCompanies", getHomeCompanies);
 router.get("/company/:id", getCompanyById);
+router.get("/companyInfo/:Cname", getCompanyByName);
 router.put("/company/:id", validateToken , isCompany , updateCompanyInfo);
 router.put("/companyAccept/:id", validateToken, isAdmin , acceptCompany);
 router.put("/companyRate", validateToken , isUser , rateCompany);
