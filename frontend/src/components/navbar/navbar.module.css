@@ -5,7 +5,7 @@
     padding-right: 20px;
 
 }
-header{
+.header{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -14,7 +14,7 @@ header{
     background:white;
     border-radius: 15px;
 }
-nav a
+.nav a
 {
     margin: 0 2rem;
     text-decoration: none;
@@ -22,12 +22,12 @@ nav a
     font-weight: 600;
     font-size: 17px;
 }
-nav a:hover
+.nav a:hover
 {
     
     color: blue;
 }
-header .nav-btn
+.header .nav_btn
 {
     padding: 5px;
     cursor: pointer;
@@ -37,7 +37,7 @@ header .nav-btn
     visibility: hidden;
     opacity: 0;
 }
-header button
+.header button
 {
     padding: 10px;
     font-size: 20px;
@@ -48,12 +48,17 @@ header button
     border-radius: 10px;
 }
 
+.header img{
+    width: 75px;
+    height: 75px;
+}
+
 @media only screen and (max-width:1024px){
-    header .nav-btn{
+    .header .nav_btn{
         visibility: visible;
         opacity: 1;
     }
-    header nav{
+    .header .nav{
         position: fixed;
         top: 0;
         left:0;
