@@ -1,13 +1,14 @@
 import React from 'react';
-import Companies from '../components/Companies';
-import Navbar from '../components/Navbar'
-/* import '../assets/css/tailwind.css'; */
+import Banner from '../components/banner/Banner';
+import AboutUs from '../components/aboutUs/AboutUs';
+import Destinations from '../components/destinations/Destinations'
 
 const Home = () => {
   return (
     <div>
-      <Navbar/>
-      <Companies/>
+      <Banner />
+      <AboutUs />
+      <Destinations />
     </div>
   )
 }
