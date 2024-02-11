@@ -46,11 +46,6 @@
     background-image: url('../images/natureBanner.jpeg');
 }
 
-.honeymoonBanner {
-    background-image: url('../images/honeymoonBanner.jpeg');
-    background-position: center;
-}
-
 .familyBanner {
     background-image: url('../images/familyBanner.jpg');
     background-position: bottom center;
@@ -62,7 +57,8 @@
 }
 
 .combinationBanner {
-    background-image: url('../images/combinationBanner.jpg');
+    background-image: url('../images/combinationBanner.jpeg');
+    background-position: center center;
 }
 
 .singlePackage_country {

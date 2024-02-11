@@ -31,42 +31,55 @@ export default function Contact() {
       setState((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleOnFocus = (fieldName) => {
+      setEmptyFields('');
+      switch (fieldName) {
+        case 'fname':
+          setIsValidFirstName(true);
+          break;
+        case 'lname':
+          setIsValidLastName(true);
+          break;
+        case 'email':
+          setIsValidEmail(true);
+          break;
+        case 'subject':
+          setIsValidSubject(true);
+          break;
+        case 'message':
+          setIsValidMessage(true);
+          break;
+        default:
+          break;
+      }
+    };
+    
     /* Action on submit  */
     const handleSubmit = async (e) => {
       e.preventDefault();
-  
-      /* Reset validation states */
-      setIsValidFirstName(true);
-      setIsValidLastName(true);
-      setIsValidEmail(true);
-      setIsValidSubject(true);
-      setIsValidMessage(true);
 
-      setEmptyFields([]);
-  
-      /* Destructure the state to get individual values */
       const { fname, lname, email, subject, message } = state;
-  
-      let emptyValues = [];
-      if (!fname || validator.isEmpty(fname) || !validator.isAlpha(fname)) {
-        emptyValues.push('First Name');
-        setIsValidFirstName(false);
+
+       /* Reset validation states */
+       setIsValidFirstName(true);
+       setIsValidLastName(true);
+       setIsValidEmail(true);
+       setIsValidSubject(true);
+       setIsValidMessage(true);
+
+      if (!fname || !lname || !email || !subject || !message || validator.isEmpty(fname) || validator.isEmpty(lname) || validator.isEmpty(email) || validator.isEmpty(subject) || validator.isEmpty(message) ) {
+        setEmptyFields('This field is required.');
+        return;
       }
-      if (!lname || validator.isEmpty(lname) || !validator.isAlpha(fname)) {
-        emptyValues.push('Last Name');
-        setIsValidLastName(false);
-      }
-      if (!email || validator.isEmpty(email) || !validator.isEmail(email)) {
-        emptyValues.push('Email');
-        setIsValidEmail(false);
-      }
-      if (!subject || validator.isEmpty(subject) || !validator.matches(subject, /^[a-zA-Z\s]+$/)) {
-        emptyValues.push('Subject');
-        setIsValidSubject(false);
-      }
-      if (!message || validator.isEmpty(message) || !validator.isLength(message, { min: 1, max: 50 })) {
-        emptyValues.push('Message');
-        setIsValidMessage(false);
+
+      setIsValidFirstName(validator.isAlpha(fname));
+      setIsValidLastName(validator.isAlpha(lname));
+      setIsValidEmail(validator.isEmail(email));
+      setIsValidSubject(validator.matches(subject, /^[a-zA-Z\s]+$/));
+      setIsValidMessage(validator.isLength(message, { min: 1, max: 50 }));
+
+      if (!isValidFirstName || !isValidLastName || !isValidEmail || !isValidSubject || !isValidMessage) {
+        return;
       }
 
       const MySwal = withReactContent(Swal);
@@ -75,15 +88,6 @@ export default function Contact() {
         MySwal.fire({
           icon: 'success',
           title: responseData.message,
-          time: 4000,
-        });
-        handleClearForm();
-      };
-
-      const handleFailure = (errorData) => {
-        MySwal.fire({
-          icon: 'error',
-          title: errorData.message,
           time: 4000,
         });
       };
@@ -99,12 +103,6 @@ export default function Contact() {
         });
       }
 
-      /* Check the validation */
-      if (emptyValues.length > 0) {
-        setEmptyFields(emptyValues);
-        return;
-      }
-
       try {
         const response = await fetch('http://localhost:4000/api/contact', {
           method: 'POST',
@@ -113,15 +111,16 @@ export default function Contact() {
           },
           body: JSON.stringify(state),
         });
-  
+
+        const responseData = await response.json();
+
         if (response.status === 200) {
-          const responseData = await response.json();
           handleSuccess(responseData);
+          handleClearForm();
           console.log(responseData.message);
-        } else {
-          const errorData = await response.json();
-          handleFailure(errorData);
-          console.error(errorData.message);
+        } 
+        else {
+          console.error(responseData.message);
         }
       } 
       catch (error) {
@@ -163,9 +162,10 @@ export default function Contact() {
                       name="fname" 
                       value={state.fname}
                       onChange={handleChange}
-                      onFocus={() => setIsValidFirstName(true)} 
+                      onFocus={() => handleOnFocus('fname')} 
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidFirstName && <span className={Styles.error}>Contains only letters.</span>}
                   </div>
 
@@ -176,9 +176,10 @@ export default function Contact() {
                       name="lname"  
                       value={state.lname}
                       onChange={handleChange}
-                      onFocus={() => setIsValidLastName(true)}
+                      onFocus={() => handleOnFocus('lname')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidLastName && <span className={Styles.error}>Contains only letters.</span>}
                   </div>
 
@@ -189,9 +190,10 @@ export default function Contact() {
                       name="email" 
                       value={state.email}
                       onChange={handleChange}
-                      onFocus={() => setIsValidEmail(true)}
+                      onFocus={() => handleOnFocus('email')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidEmail && <span className={Styles.error}>example@gmail.com</span>}
                   </div>
 
@@ -202,9 +204,10 @@ export default function Contact() {
                       name="subject" 
                       value={state.subject}
                       onChange={handleChange}
-                      onFocus={() => setIsValidSubject(true)}
+                      onFocus={() => handleOnFocus('subject')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidSubject && <span className={Styles.error}>The subject must be clear</span>}
                   </div>
 
@@ -215,9 +218,10 @@ export default function Contact() {
                       name="message" 
                       value={state.message}
                       onChange={handleChange}
-                      onFocus={() => setIsValidMessage(true)}
+                      onFocus={() => handleOnFocus('message')}
                     ></textarea>
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidMessage && <span className={Styles.error}>The message must be clear</span>}
                   </div>
 

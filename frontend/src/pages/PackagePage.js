@@ -74,12 +74,9 @@ export default function PackagePage() {
         user.accessToken = newAccessToken;
         localStorage.setItem('user', JSON.stringify(user));
         dispatch({type: 'LOGIN', payload: user})
-        //console.log('New access token saved:', newAccessToken);
       }
 
       const json = await response.json();
-      /* console.log('Packages for this company: ', json); */
-      
       if (response.ok) {
         setPackages(json);
       }
@@ -170,7 +167,7 @@ export default function PackagePage() {
 
   return (
     <div className={Styles.content}>
-
+      <h4>Filter By: </h4>
       <div className={Styles.packageHeader}>
         <div className={`${Styles.input_control}`}>
           <input 
@@ -201,6 +198,8 @@ export default function PackagePage() {
           onChange={(e) => handleInputChange('date', e.target.value)}
         />
       </div>
+
+      <h4>List of Packages</h4>
 
       <div className={Styles.Table_wrapper}>
         <table className={Styles.table}>

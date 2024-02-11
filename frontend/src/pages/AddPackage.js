@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useAuthContext } from '../hooks/useAuthContext'
+import React, { useEffect, useState } from 'react';
+import { useAuthContext } from '../hooks/useAuthContext';
+import DropdownList from '../components/DropdownList';
+import Styles from '../assets/css/AddPackage.module.css'
 
 export default function AddPackage() {
+  const [packageTypes, setPackageTypes] = useState([]);
   const [hotelData, setHotelData] = useState([]);
   const { user, dispatch } = useAuthContext();
   const [formData, setFormData] = useState({
-    hotelId: '',
+    hotelId: [],
     name: '',
     country: '',
     destinations: [
@@ -22,10 +25,69 @@ export default function AddPackage() {
     duration: '',
   });
 
+  const handleChange = (e, destIndex, actIndex, nestedName) => {
+    const { name, value } = e.target;
+    
+    if (name.startsWith('destinations')) {
+      const [prefix, currentDestIndex, currentNestedName] = name.split('-');
+      setFormData((prevFormData) => {
+        const updatedDestinations = [...prevFormData.destinations];
+        const destination = updatedDestinations[destIndex];
+        if (currentNestedName === 'destinationName') {
+          updatedDestinations[currentDestIndex] = {
+            ...updatedDestinations[currentDestIndex],
+            destinationName: value,
+          };
+        } else if (nestedName === 'destinationName') {
+          destination.destinationName = value;
+        } else if (nestedName === 'activityName' || nestedName === 'activityDescription') {
+          const updatedActivities = destination.activities || [];
+          const activity = updatedActivities[actIndex] || {};
+  
+          activity[nestedName] = value;
+  
+          if (!updatedActivities[actIndex]) {
+            // If activity is undefined, create a new one
+            updatedActivities[actIndex] = activity;
+          }
+  
+          destination.activities = updatedActivities;
+        }
+  
+        return { ...prevFormData, destinations: updatedDestinations };
+      });
+    } else {
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    }
+  };
 
-  /*const fetchPackagesForCompany = async () => {
+  const handleTypeChange = (e) => {
+    const selectedType = e.target.value;
+    setFormData({ ...formData, type: selectedType });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, coverImg: e.target.files[0] });
+  };
+
+  const handleHotelChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        hotelId: [...prevFormData.hotelId, value],
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        hotelId: prevFormData.hotelId.filter((id) => id !== value),
+      }));
+    }
+  };
+  
+  const fetchPackageTypes = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/packageForCompany`
+      const response = await fetch(`http://localhost:4000/api/packageTypes`
         ,{
           method: "GET",
           headers: {
@@ -49,7 +111,7 @@ export default function AddPackage() {
       console.log('Packages for this company: ', json); 
       
       if (response.ok) {
-        setPackageData(json);
+        setPackageTypes(json);
       }
       else{
         console.log('No Available Package');
@@ -57,7 +119,7 @@ export default function AddPackage() {
     } catch (error) {
       console.error('An error occurred while fetching data', error);
     }
-  };*/
+  };
 
   const fetchHotels = async () => {
     try {
@@ -97,59 +159,16 @@ export default function AddPackage() {
 
 
   useEffect(() => {
-    //fetchPackagesForCompany();
+    fetchPackageTypes();
     fetchHotels();
-  });
-
-
-
-  
-  const handleChange = (e, destIndex, actIndex, nestedName) => {
-    const { name, value } = e.target;
-    
-    if (name.startsWith('destinations')) {
-      const [prefix, currentDestIndex, currentNestedName] = name.split('-');
-      setFormData((prevFormData) => {
-        const updatedDestinations = [...prevFormData.destinations];
-        const destination = updatedDestinations[destIndex];
-        if (currentNestedName === 'destinationName') {
-          updatedDestinations[currentDestIndex] = {
-            ...updatedDestinations[currentDestIndex],
-            destinationName: value,
-          };
-        } else if (nestedName === 'destinationName') {
-          destination.destinationName = value;
-        } else if (nestedName === 'activityName' || nestedName === 'activityDescription') {
-          const updatedActivities = destination.activities || [];
-          const activity = updatedActivities[actIndex] || {};
-  
-          activity[nestedName] = value;
-  
-          if (!updatedActivities[actIndex]) {
-            // If activity is undefined, create a new one
-            updatedActivities[actIndex] = activity;
-          }
-  
-          destination.activities = updatedActivities;
-        }
-  
-        return { ...prevFormData, destinations: updatedDestinations };
-      });
-    } else {
-      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-    }
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, coverImg: e.target.files[0] });
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
       const formDataForApi = new FormData();
-      formDataForApi.append('hotelId', formData.hotelId);
+      formDataForApi.append('hotelId', formData.hotelId.join(','));
       formDataForApi.append('name', formData.name);
       formDataForApi.append('country', formData.country);
   
@@ -196,9 +215,6 @@ export default function AddPackage() {
       }
   
       const data = await response.json();
-
-      console.log('API Response:', response);
-
       if (response.ok) {
         console.log('Package added successfully!', data.message);
       } else {
@@ -206,66 +222,159 @@ export default function AddPackage() {
       }
     }  catch (error) {
       console.error('Error adding package:', error);
-  
-      // Log the response body in case of an error
-      const responseBody = await error.response.text();
-      console.log('Error response body:', responseBody);
     }
   };
 
   return (
-    <div>
-      <h2>Add Package</h2>
-      <form onSubmit={handleSubmit} >
-        <label>Hotel:</label>
-        <input type="text" name="hotelId" value={formData.hotelId} onChange={handleChange} />
-        <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <label>country:</label>
-            <input
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            />
+    <div className={Styles.addPackage_contianer}>
+      <h1 className={Styles.addPackage_pageTitle}> Manage Flight</h1>
+      <fieldset className={Styles.addPackageField}>
+        <form onSubmit={handleSubmit} >
+
+          <h4 className={Styles.addPackage_Heading}>1. Package Informations</h4>
+          <div className={Styles.packageInformation_container}>
+            <div className={Styles.packageName}>
+              <label>Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={Styles.packagePrice}>
+              <label className={Styles.labelPR}>Price</label>
+              <input
+                type="number"
+                name="pricePerOne"
+                value={formData.pricePerOne}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={Styles.packageImage}>
+              <label>Image</label>
+              <input 
+                type="file" 
+                name="coverImg" 
+                onChange={handleFileChange} 
+              />
+            </div>
+            <div className={Styles.packageDescription}>
+              <label>description</label>
+              {/*<input
+                type="text"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />*/}
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              >
+              </textarea>
+            </div>
+          </div>
+
+          <h4 className={Styles.addPackage_Heading}>2. Travel Details</h4> 
+          <div className={Styles.traveLDetails_container}>
+            <div className={Styles.packageType}>
+              <label>type</label>
+              <DropdownList
+                options={packageTypes}
+                value={formData.type}
+                onChange={handleTypeChange}
+              />
+            </div>
+            <div className={Styles.packageDate}>
+              <label>startDate</label>
+              <input
+                type="date"
+                name="startDate"
+                value={formData.startDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div className={Styles.packageDuration}>
+              <label>duration</label>
+              <input
+                type="text"
+                name="duration"
+                value={formData.duration}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <h4 className={Styles.addPackage_Heading}>3. Accommodations</h4>
+          <div className={Styles.accommodation_container}>
+              {hotelData.length > 0 && hotelData.map((hotel) => (
+                <div key={hotel._id} className={Styles.hotelDisplay}>
+                  <input
+                    type="checkbox"
+                    id={hotel._id}
+                    name={hotel._id}
+                    value={hotel._id}
+                    checked={Array.isArray(formData.hotelId) && formData.hotelId.includes(hotel._id)}
+                    onChange={handleHotelChange}
+                  />
+                  <label htmlFor={hotel._id}>{hotel.name}</label>
+                </div>
+              ))}
+              {/* Display selected hotel IDs */}
+              <div style={{display:'none'}}>
+                <ul>
+                  {formData.hotelId.map((hotelIdd) => (
+                    <li key={hotelIdd}>{hotelIdd}</li>
+                  ))}
+                </ul>
+              </div>
+          </div>
+
+          <h4 className={Styles.addPackage_Heading}>4. Location & Activities</h4>
+          <div className={Styles.location_container}>
+            <div className={Styles.packageCountry}>
+              <label>country</label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+              />
+            </div>
             {formData.destinations.map((destination, destIndex) => (
-              <div key={destIndex}>
-                <label>{`Destination ${destIndex + 1}:`}</label>
+              <div key={destIndex} className={Styles.addPackage_destinationInputs}>
+                <label>{`Destination ${destIndex + 1}`}</label>
                 <input
                   type="text"
                   name={`destinations-${destIndex}-destinationName`}
                   value={destination.destinationName}
                   onChange={handleChange}
                 />
-               {destination.activities && destination.activities.map((activity, actIndex) => (
-                <div key={actIndex}>
-                  <label>{`Activity ${actIndex + 1}:`}</label>
-                  <input
-                    type="text"
-                    name={`destinations-${destIndex}-activities-${actIndex}-activityName`}
-                    value={activity.activityName}
-                    onChange={(e) => handleChange(e, destIndex, actIndex, 'activityName')}
-                  />
-                  <label>{`Activity Description ${actIndex + 1}:`}</label>
-                  <input
-                    type="text"
-                    name={`destinations-${destIndex}-activities-${actIndex}-activityDescription`}
-                    value={activity.activityDescription}
-                    onChange={(e) => handleChange(e, destIndex, actIndex, 'activityDescription')}
-                  />
-                </div>
-              ))}
-
+                {destination.activities && destination.activities.map((activity, actIndex) => (
+                  <div key={actIndex} className={Styles.addPackage_activityInputs}>
+                    <label>{`Activity ${actIndex + 1}:`}</label>
+                    <input
+                      type="text"
+                      name={`destinations-${destIndex}-activities-${actIndex}-activityName`}
+                      value={activity.activityName}
+                      onChange={(e) => handleChange(e, destIndex, actIndex, 'activityName')}
+                    />
+                    <label>{`Activity Description ${actIndex + 1}:`}</label>
+                    <input
+                      type="text"
+                      name={`destinations-${destIndex}-activities-${actIndex}-activityDescription`}
+                      value={activity.activityDescription}
+                      onChange={(e) => handleChange(e, destIndex, actIndex, 'activityDescription')}
+                    />
+                  </div>
+                ))}
                 <button
                   type="button"
+                  className={Styles.addPackageBtn}
                   onClick={() => {
                     const updatedDestinations = [...formData.destinations];
-                    updatedDestinations[destIndex].activities.push({
+                      updatedDestinations[destIndex].activities.push({
                       activityName: '',
                       activityDescription: '',
                     });
@@ -274,68 +383,35 @@ export default function AddPackage() {
                 >
                   Add Activity
                 </button>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => {
-                  setFormData({
-                    ...formData,
-                    destinations: [
-                      ...formData.destinations,
-                      {
-                        destinationName: '',
-                        activities: [{ activityName: '', activityDescription: '' }],
-                      },
-                    ],
-                  });
-                }}
-              >
+              </div>
+            ))}
+            <button
+              type="button"
+              className={Styles.addPackageBtn}
+              onClick={() => {
+                setFormData({
+                  ...formData,
+                  destinations: [
+                    ...formData.destinations,
+                    {
+                      destinationName: '',
+                      activities: [{ activityName: '', activityDescription: '' }],
+                    },
+                  ],
+                });
+              }}
+            >
               Add Destination
             </button>
-            <label>pricePerOne:</label>
-            <input
-              type="text"
-              name="pricePerOne"
-              value={formData.pricePerOne}
-              onChange={handleChange}
-            />
-            <label>coverImg:</label>
-            <input 
-              type="file" 
-              name="coverImg" 
-              onChange={handleFileChange} 
-            />
-            <label>description:</label>
-            <input
-              type="text"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-            <label>type:</label>
-            {/*<input
-              type="text"
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              />*/}
-            <label>startDate:</label>
-            <input
-              type="date"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-            />
-            <label>duration:</label>
-            <input
-              type="text"
-              name="duration"
-              value={formData.duration}
-              onChange={handleChange}
-            />
-        <button>Add Package</button>
-      </form>
+          </div>
+            
+          <button
+            className={Styles.addPackageBtn}
+          >
+            Add 
+          </button>    
+        </form>
+      </fieldset>
     </div>
   );
 }

@@ -64,7 +64,7 @@
     grid-template-columns: 33.33% 33.33% 33.33%;
 }
 
-.flex {
+.package_banner .flex {
     display: flex;
 }
 
@@ -145,7 +145,7 @@ input[type=range] {
 .package_body {
     padding: 20px 40px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: 33.33% 33.33% 33.33%;
     gap: 1.5rem;
     justify-content: center;
     margin-top: 20px;
@@ -157,7 +157,7 @@ input[type=range] {
     z-index: 5;
 }
 
-.discount{
+.package_body .discount{
     z-index: 8;
     position: absolute;
     width: 85px;
@@ -168,7 +168,7 @@ input[type=range] {
     clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 
-.discountText {
+.package_body .discountText {
     color: var(--dark);
     display: flex;
     justify-content: center;

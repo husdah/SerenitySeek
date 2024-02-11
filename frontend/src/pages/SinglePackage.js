@@ -55,8 +55,6 @@ export default function SinglePackage() {
         return Styles.familyBanner;
       case 'History':
         return Styles.historyBanner;
-      case 'Honeymoon':
-        return Styles.honeymoonBanner;
       case 'Nature':
         return Styles.natureBanner;
       case 'Relax':
@@ -123,7 +121,7 @@ export default function SinglePackage() {
                   <img src={imageUrl} alt={packageItem.name + 'image'} crossOrigin="anonymous" />
                 </div>
                 <div className={Styles.dest_desc}>
-                  <span className={Styles.singlePackage_description}> { packageItem.description } <p><b>Assigned By:</b> </p>
+                  <span className={Styles.singlePackage_description}> { packageItem.description } <p><b>Shared By:</b> </p>
                   <span>{packageItem.companyId.name}</span></span>
                   
                 </div>

@@ -132,6 +132,11 @@
     transition: 0.3s;
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: #ccc;
+}
+
 .contactTextarea {
     width: 70%;
     outline: none;
