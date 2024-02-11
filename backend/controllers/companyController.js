@@ -135,6 +135,35 @@ const getCompanyById = async (req, res) =>{
             description: company.description, 
             location: company.location,
             logo: company.logo, 
+            rate: company.rate.value,
+            customers: company.customers,
+            email: account.email, 
+            phoneNumber: account.phoneNumber});
+    }catch(error){
+        return res.status(500).json({error : error.message});
+    }
+}
+
+const getCompanyByName = async (req, res) =>{
+    const {Cname} = req.params;
+    const decodedName = decodeURIComponent(Cname);
+    console.log('decodedName',decodedName)
+    try{
+        const company = await companyModel.findOne({name : decodedName});
+        if(!company){
+            return res.status(404).json({error : `Company ${decodedName} Not Found`});
+        }
+        const account = await accountModel.findOne({companyId: company.id});
+        if(!account){
+            res.status(404).json({error: "Company Account Not Found!"});
+        }
+        res.status(200).json({
+            name: company.name, 
+            description: company.description, 
+            location: company.location,
+            logo: company.logo, 
+            rate: company.rate.value,
+            customers: company.customers,
             email: account.email, 
             phoneNumber: account.phoneNumber});
     }catch(error){
@@ -257,37 +286,52 @@ const deleteCompany = async (req, res) =>{
 }
 
 const rateCompany = async (req, res) => {
-    //const {companyId} = req.params;
-    const {companyId,userId, rating } = req.body;
+    const {companyName,userId, rating } = req.body;
 
     if(userId != req.user.id){
-        return res.status(400).json({message : "You are not authorized to access this request"});
+        return res.status(400).json({error : "You are not authorized to access this request"});
     }
 
     try {
         // Check if the user is a customer of the company
-        const company = await companyModel.findById(companyId);
+        const company = await companyModel.findOne({name : companyName });
         if (!company) {
-            return res.status(404).json({ message: "Company not found" });
+            return res.status(404).json({ error: `Company ${companyName} not found` });
         }
 
         const isCustomer = company.customers.some(customerId => customerId.equals(userId));
         let availableCustomers = company.customers;
         if (!isCustomer) {
-            return res.status(403).json({ message: "User is not a customer of this company", availableCustomers });
+            return res.status(403).json({ error: "User is not a customer of this company", availableCustomers });
+        }
+
+        const isRater = company.rate.raters.some(customerId => customerId.equals(userId));
+        if (isRater) {
+            return res.status(403).json({ error: "You Have Already Rate Us!"});
         }
 
         if (isNaN(rating) || rating < 0 || rating > 5) {
-            return res.status(400).json({ message: "Invalid rating value" });
+            return res.status(400).json({ error: "Invalid rating value" });
         }
 
         // Update the rate based on your logic
-        company.rate = (company.rate + rating) / 2;
+        company.rate.value = (company.rate.value + rating) / 2;
+        company.rate.raters.push(userId);
 
         // Save the updated company
         const updatedCompany = await company.save();
 
-        res.status(200).json({ message: "Rating updated successfully", updatedCompany });
+       /*  const updatedCompany = await companyModel.findOneAndUpdate(
+            { name: companyName },
+            {
+              $inc: { "rate.value": rating },
+              $push: { "rate.raters": userId },
+            },
+            { new: true }
+          ); */
+          
+
+        res.status(200).json({ message: "Rating updated successfully", rate: updatedCompany.rate.value });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
@@ -333,6 +377,7 @@ module.exports =
 {
     createCompany,
     getCompanyById,
+    getCompanyByName,
     getAllCompanies,
     getHomeCompanies,
     updateCompanyInfo,
