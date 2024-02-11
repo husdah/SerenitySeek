@@ -1,22 +1,28 @@
 .SideMenu {
     position: fixed;
     top: 4px;
-    left: 0;
+    left: 4px;
     width: 15%;
-    height: 100%;
+    height: 99%;
     border-radius: 4px;
     background-color: #fff;
+    color: var(--dark);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-.SideMenuVertical{
-    height: 100%;
 }
 
 .sideMenuImage {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    justify-content: center;
+    align-items: start;
+    padding: 20px 25px;
+}
+
+.sideMenuImage h3{
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
 }
 
 .sideMenuImage img {
@@ -25,6 +31,14 @@
     border-radius: 50%;
 }
 
-.ant-menu-item.ant-menu-item-selected {
-    background-color: red !important;
+.SideMenuVertical {
+    color: var(--dark);
 }
+
+/*
+.SideMenuVertical li {
+    background-color: var(--dark) !important;
+    color: #fff;
+}
+*/
+

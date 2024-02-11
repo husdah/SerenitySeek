@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import Swal from "sweetalert2";
+import React, { useState } from 'react';
+import Styles from './Contact.module.css';
+import {  FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn  } from 'react-icons/fa';
+import image from '../../assets/images/contact.jpeg';
 import validator from 'validator';
-import withReactContent from 'sweetalert2-react-content'
-import Styles from './Contact.module.css'
-import {  FaInstagram, FaFacebookF, FaTwitter, FaLinkedinIn  } from "react-icons/fa"
-import image from '../../assets/images/contact.jpeg'
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 export default function Contact() {
 
     /* const [Fname, setFname] = useState('') can I do this for all inputs or set them in object as below */
-    const [state, setState] = useState({
+    const [ state, setState ] = useState({
       fname: '',
       lname: '',
       email: '',
@@ -18,55 +18,68 @@ export default function Contact() {
     });
 
     /* For validation state - type of useState boolean and initial state true */
-    const [isValidFirstName, setIsValidFirstName] = useState(true);
-    const [isValidLastName, setIsValidLastName]   = useState(true);
-    const [isValidEmail, setIsValidEmail]         = useState(true);
-    const [isValidSubject, setIsValidSubject]     = useState(true);
-    const [isValidMessage, setIsValidMessage]     = useState(true);
-    const [emptyFields, setEmptyFields] = useState([]);
+    const [ isValidFirstName, setIsValidFirstName ] = useState(true);
+    const [ isValidLastName, setIsValidLastName ]   = useState(true);
+    const [ isValidEmail, setIsValidEmail ]         = useState(true);
+    const [ isValidSubject, setIsValidSubject ]     = useState(true);
+    const [ isValidMessage, setIsValidMessage ]     = useState(true);
+    const [ emptyFields, setEmptyFields ]           = useState([]);
     
     const handleChange = (e) => {
       const { name, value } = e.target;
-      /* ...prev if we have sentence and change one word only this word will change  while the other remain the same  */
+      /* ...prev if we have sentence and change one word only this word will change while the other remain the same  */
       setState((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleOnFocus = (fieldName) => {
+      setEmptyFields('');
+      switch (fieldName) {
+        case 'fname':
+          setIsValidFirstName(true);
+          break;
+        case 'lname':
+          setIsValidLastName(true);
+          break;
+        case 'email':
+          setIsValidEmail(true);
+          break;
+        case 'subject':
+          setIsValidSubject(true);
+          break;
+        case 'message':
+          setIsValidMessage(true);
+          break;
+        default:
+          break;
+      }
+    };
+    
     /* Action on submit  */
     const handleSubmit = async (e) => {
       e.preventDefault();
-  
-      // Reset validation states
-      setIsValidFirstName(true);
-      setIsValidLastName(true);
-      setIsValidEmail(true);
-      setIsValidSubject(true);
-      setIsValidMessage(true);
 
-      setEmptyFields([]);
-  
-      // Destructure the state to get individual values
       const { fname, lname, email, subject, message } = state;
-  
-      let emptyValues = [];
-      if (!fname || validator.isEmpty(fname) || !validator.isAlpha(fname)) {
-        emptyValues.push('First Name');
-        setIsValidFirstName(false);
+
+       /* Reset validation states */
+       setIsValidFirstName(true);
+       setIsValidLastName(true);
+       setIsValidEmail(true);
+       setIsValidSubject(true);
+       setIsValidMessage(true);
+
+      if (!fname || !lname || !email || !subject || !message || validator.isEmpty(fname) || validator.isEmpty(lname) || validator.isEmpty(email) || validator.isEmpty(subject) || validator.isEmpty(message) ) {
+        setEmptyFields('This field is required.');
+        return;
       }
-      if (!lname || validator.isEmpty(lname) || !validator.isAlpha(fname)) {
-        emptyValues.push('Last Name');
-        setIsValidLastName(false);
-      }
-      if (!email || validator.isEmpty(email) || !validator.isEmail(email)) {
-        emptyValues.push('Email');
-        setIsValidEmail(false);
-      }
-      if (!subject || validator.isEmpty(subject) || !validator.matches(subject, /^[a-zA-Z\s]+$/)) {
-        emptyValues.push('Subject');
-        setIsValidSubject(false);
-      }
-      if (!message || validator.isEmpty(message) || !validator.isLength(message, { min: 1, max: 50 })) {
-        emptyValues.push('Message');
-        setIsValidMessage(false);
+
+      setIsValidFirstName(validator.isAlpha(fname));
+      setIsValidLastName(validator.isAlpha(lname));
+      setIsValidEmail(validator.isEmail(email));
+      setIsValidSubject(validator.matches(subject, /^[a-zA-Z\s]+$/));
+      setIsValidMessage(validator.isLength(message, { min: 1, max: 50 }));
+
+      if (!isValidFirstName || !isValidLastName || !isValidEmail || !isValidSubject || !isValidMessage) {
+        return;
       }
 
       const MySwal = withReactContent(Swal);
@@ -77,32 +90,19 @@ export default function Contact() {
           title: responseData.message,
           time: 4000,
         });
-        // Clear the form fields
-        handleClearForm();
       };
 
-      const handleFailure = (errorData) => {
-        MySwal.fire({
-          icon: 'error',
-          title: errorData.message,
-          time: 4000,
+      /* Clear form fields */
+      const handleClearForm = () => {
+        setState({
+          fname: '',
+          lname: '',
+          email: '',
+          subject: '',
+          message: '',
         });
-      };
-
-      const handleValidation = () => {
-        MySwal.fire({
-          icon: 'error',
-          title: 'All fields should be required & validated',
-          time: 4000,
-        });
-      };
-
-      if (emptyValues.length > 0) {
-        setEmptyFields(emptyValues);
-        handleValidation();
-        return;
       }
-  
+
       try {
         const response = await fetch('http://localhost:4000/api/contact', {
           method: 'POST',
@@ -111,31 +111,23 @@ export default function Contact() {
           },
           body: JSON.stringify(state),
         });
-  
+
+        const responseData = await response.json();
+
         if (response.status === 200) {
-          const responseData = await response.json();
           handleSuccess(responseData);
+          handleClearForm();
           console.log(responseData.message);
-        } else {
-          const errorData = await response.json();
-          handleFailure(errorData);
-          console.error(errorData.message);
+        } 
+        else {
+          console.error(responseData.message);
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('An error occurred while sending the email', error);
       }
     };
   
-    // Clear form fields
-    const handleClearForm = () => {
-      setState({
-        fname: '',
-        lname: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
-    }
     return (
         <div className={Styles.contact}>
             <div className={Styles.contactContainer}>
@@ -164,52 +156,72 @@ export default function Contact() {
                   <h3 className={Styles.contactFormTitle}>Contact Us</h3>
 
                   <div className={Styles.input_control}>
-                    <input type="text" placeholder='First Name' name="fname" 
+                    <input 
+                      type="text" 
+                      placeholder='First Name' 
+                      name="fname" 
                       value={state.fname}
                       onChange={handleChange}
-                      onFocus={() => setIsValidFirstName(true)} 
+                      onFocus={() => handleOnFocus('fname')} 
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidFirstName && <span className={Styles.error}>Contains only letters.</span>}
                   </div>
 
                   <div className={Styles.input_control}>
-                    <input type="text" placeholder='Last Name' name="lname"  
+                    <input 
+                      type="text" 
+                      placeholder='Last Name' 
+                      name="lname"  
                       value={state.lname}
                       onChange={handleChange}
-                      onFocus={() => setIsValidLastName(true)}
+                      onFocus={() => handleOnFocus('lname')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidLastName && <span className={Styles.error}>Contains only letters.</span>}
                   </div>
 
                   <div className={Styles.input_control}>
-                    <input type="text" placeholder='Email' name="email" 
+                    <input 
+                      type="text" 
+                      placeholder='Email' 
+                      name="email" 
                       value={state.email}
                       onChange={handleChange}
-                      onFocus={() => setIsValidEmail(true)}
+                      onFocus={() => handleOnFocus('email')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidEmail && <span className={Styles.error}>example@gmail.com</span>}
                   </div>
 
                   <div className={Styles.input_control}>
-                    <input type="text" placeholder='Subject'  name="subject" 
+                    <input 
+                      type="text" 
+                      placeholder='Subject'  
+                      name="subject" 
                       value={state.subject}
                       onChange={handleChange}
-                      onFocus={() => setIsValidSubject(true)}
+                      onFocus={() => handleOnFocus('subject')}
                     />
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidSubject && <span className={Styles.error}>The subject must be clear</span>}
                   </div>
 
                   <div className={Styles.input_control}>
-                    <textarea className={Styles.contactTextarea}  placeholder='Message' name="message" 
+                    <textarea 
+                      className={Styles.contactTextarea}  
+                      placeholder='Message' 
+                      name="message" 
                       value={state.message}
                       onChange={handleChange}
-                      onFocus={() => setIsValidMessage(true)}
+                      onFocus={() => handleOnFocus('message')}
                     ></textarea>
                     <br />
+                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
                     {!isValidMessage && <span className={Styles.error}>The message must be clear</span>}
                   </div>
 

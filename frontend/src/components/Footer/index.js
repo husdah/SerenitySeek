@@ -1,10 +1,7 @@
-import React from 'react'
-import { MdEmail } from "react-icons/md";
-import { MdOutlinePlace } from "react-icons/md";
-import { FaPhone } from "react-icons/fa";
-import { FaFacebookF } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
+import React from 'react';
+import { MdEmail, MdOutlinePlace } from 'react-icons/md';
+import { FaFacebookF } from 'react-icons/fa6';
+import { FaPhone, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import Styles from './Footer.module.css'
 
 export default function Footer() {

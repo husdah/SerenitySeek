@@ -1,0 +1,75 @@
+.modal_container {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);    
+}
+
+.modal {
+    border-radius: 5px;
+    padding: 2rem;
+    background-color: var(--light);
+    width: 30%;
+}
+
+.closeBtn {
+    float: right;
+    color: red;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form_group input {
+    border: 0;
+    background-color: transparent;
+    border-bottom: 1px solid var(--dark);
+    color: var(--dark);
+    height: 30px;
+    width: 75%;
+    padding: 0.3rem;
+    font-size: 1rem;
+}
+
+.form_group label {
+    margin-bottom: 0.2rem;
+    color: var(--dark);
+}
+
+.form_group input:focus {
+    outline: 0;
+}
+
+.modal .btn_update {
+    display: block;
+    margin-top: 1rem;
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px #ccc;
+    border: none;
+}
+
+p.error,
+span.error {
+    margin-top: 5px;
+    font-size: 12px;
+    color: red;
+}
+
+

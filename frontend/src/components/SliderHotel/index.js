@@ -1,28 +1,11 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './sliderHotel.css';
-import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import './sliderHotel.css'
 
-export default function sliderHotel({ galleryImages, hotels }) {
-  // Function to generate class name based on the number of hotels
-  const getHotelContainerClass = () => {
-    const numberOfHotels = hotels;
 
-    if (numberOfHotels === 2) {
-      return 'twoHotels';
-    } else if (numberOfHotels === 3) {
-      return 'threeHotels';
-    } 
-    else if (numberOfHotels === 4) {
-      return 'fourHotels';
-    }
-    else {
-      // Add more conditions as needed
-      return 'defaultHotels';
-    }
-  };
-
+export default function sliderHotel({ galleryImages}) {
   return (
     <Swiper
         spaceBetween={30}

@@ -1,0 +1,115 @@
+.packageHeader {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: var(--dark);
+    gap: 150px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.input_control {
+    height: 35px;
+    width: 15%;
+    border-radius: 24px;
+    background-color:#ccc;
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+
+.packageHeader input[type='text'] {
+    background-color:#ccc;
+    border-radius: 24px;
+    color: var(--dark);
+    padding-left: 16px;
+    border: 0;
+}
+
+.packageHeader input[type='date'] {
+    height: 35px;
+    width: 15%;
+    border-radius: 24px;
+    background-color:#ccc;
+    color: var(--dark);
+    padding: 0 10px;
+    border: 0;
+}
+
+.packageHeader input:focus {
+    outline: none;
+}
+
+.packageHeader input::placeholder {
+    color: var(--dark);
+}
+
+.searchIcon {
+    padding: 10px;
+}
+
+.table { 
+    display: inline-block;
+    table-layout: fixed;
+    border-collapse: collapse;
+    box-shadow: 0px 10px 10px #ccc;
+    border-radius: 10px;
+    white-space: nowrap;
+    margin: auto 53px;
+    overflow-x: auto;
+}
+
+.table thead {
+    font-size: 16px;
+    text-align: left;
+    text-transform: capitalize;
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.table th,
+.table td {
+    text-transform: capitalize; 
+    cursor: pointer;
+    padding: 0.8em;
+}
+
+.table td {
+    border-top: 0.5px solid #ddd;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.label {
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: #fff;
+}
+
+.packageImg {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px; 
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;   
+}
+
+.delete_btn, 
+.edit_btn {
+    text-transform: capitalize;
+    color: var(--dark);
+    font-size: 20px;
+}
+
+.delete_btn:hover, 
+.edit_btn:hover {
+    color: var(--primary);
+}
