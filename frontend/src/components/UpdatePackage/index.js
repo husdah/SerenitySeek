@@ -23,7 +23,20 @@ export default function UpdatePackage({ closeModal, packageId  }) {
   };
   
   const handleDiscountChange = (e) => {
-    setDiscount(e.target.value);
+    const value = e.target.value;
+    if (value.trim() === '') {
+      setDiscount('');
+    } 
+    else {
+      setDiscount(value);
+      const numericValue = parseFloat(value);
+      if (numericValue >= 1 && numericValue >= 100) {
+        setIsValidDiscount(false);
+      }
+      else {
+        setIsValidDiscount(true);
+      }
+    }
   };
   
   const handleStartDateChange = (e) => {
@@ -119,13 +132,12 @@ export default function UpdatePackage({ closeModal, packageId  }) {
       setIsValidPrice(false);
     }
 
-    if (!String(discount) || validator.isEmpty(String(discount))) {
-      
-    } 
-    else if (!validator.isNumeric(String(discount))) {
-      setIsValidDiscount(false);
+    if(String(discount) || !validator.isEmpty(String(discount))){
+      if (!validator.isNumeric(String(discount))) {
+        setIsValidDiscount(false);
+      }
     }
-
+    
     if (!startDate || validator.isEmpty(String(startDate))) {
       emptyValues.push('Date');
     }
@@ -142,15 +154,11 @@ export default function UpdatePackage({ closeModal, packageId  }) {
     if (validator.isNumeric(String(pricePerOne)) && emptyValues.length === 0) {
       try {
         const requestBody = {
-          // validator read as a strting while the fields are number
           pricePerOne: String(pricePerOne),
           startDate: String(startDate),
           duration: String(duration),
+          discount: discount.trim() === '' ? '' : discount,
         };
-
-        if (String(discount)) {
-          requestBody.discount = discount;
-        }
 
         //console.log('Request Body:', requestBody);
 
@@ -160,14 +168,6 @@ export default function UpdatePackage({ closeModal, packageId  }) {
           MySwal.fire({
             icon: 'success',
             title: responseData.message,
-            time: 4000,
-          });
-        };
-
-        const handleFailure = (errorData) => {
-          MySwal.fire({
-            icon: 'error',
-            title: errorData.message,
             time: 4000,
           });
         };
@@ -195,13 +195,12 @@ export default function UpdatePackage({ closeModal, packageId  }) {
         }
 
         if (response.ok) {
-          console.log('Package updated successfully:', json);
+          //console.log('Package updated successfully:', json);
           handleSuccess(json);
           closeModal();
         } 
         else {
           console.error('Error updating package:', json);
-          handleFailure(json);
         }
       } 
       catch (error) {
@@ -236,10 +235,7 @@ export default function UpdatePackage({ closeModal, packageId  }) {
               onChange={handleDiscountChange}
               onFocus={handleInputDiscountOnFocus}
             />
-            {!isValidDiscount && !String(discount) 
-              ? <p className={Styles.error}>Please enter a valid discount.</p>
-              : <p className={Styles.error}></p>
-            } 
+            {!isValidDiscount && <p className={Styles.error}> Please enter a valid discount.</p> } 
           </div>
           <div className={Styles.form_group}>
             <label htmlFor='date'>Date</label>
