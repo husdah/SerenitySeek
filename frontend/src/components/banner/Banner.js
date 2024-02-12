@@ -6,8 +6,8 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 
-import './slider.css';
-import './banner.css';
+import styles2 from './slider.module.css';
+import styles from './banner.module.css';
 
 
 import greecImage from '../../images/greece.jpg';
@@ -50,15 +50,15 @@ const Banner = () => {
 
 
   return (
-    <div className="banner" style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className={styles.banner} style={{ backgroundImage: `url(${backgroundImage})` }}>
           <Navbar></Navbar>
-          <div className="banner-section2">
+          <div className={styles.banner_section2}>
             <div>
                 {selectedData && (
                 <>
                     <p>{selectedData.title}</p>
-                    <p className='desc'>{selectedData.description}</p>
-                    <button className='explore'>Explore</button>
+                    <p className={styles.desc}>{selectedData.description}</p>
+                    <button className={styles.explore}>Explore</button>
                 </>
                 )}
             </div>

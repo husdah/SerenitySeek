@@ -1,0 +1,63 @@
+.services {
+    position: relative;
+    height: 500px;
+    background-color: rgb(225, 225, 225);
+}
+
+/*.services::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../images/maldives.webp');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7; 
+    z-index: -99;
+}*/
+
+
+.services h1
+{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    text-align: center;
+    color: #0a2342;
+}
+
+.forservices
+{
+    display: grid;
+    grid-template-columns: repeat(3,300px);
+    justify-content: center;
+}
+
+.forservices div:empty
+{
+ background-image: url('../../images/london.jpg');
+ background-position: center;
+ background-size: cover;
+}
+.forservices div
+{
+    background-color:white;
+    height: 170px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+.forservices span
+{
+    font-size: 16px;
+    font-weight: 600;
+}
+.forservices p
+{
+    font-size: 14px;
+}

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import londonImage from '../../images/london.jpg';
 import dubaiImage from '../../images/dubai.jpg';
-import './destinations.css';
+import styles from './destinations.module.css';
+import { Link } from 'react-router-dom'
 
 export default function Destinations() {
     const [packages,setPackages]=useState([]);
@@ -30,25 +31,29 @@ export default function Destinations() {
     // };
 
   return (
-    <div className="destinations">
+
+    <div className={styles.destinations}>
         <h1>Most Visited Destinations</h1>
-        <div className="cards">
+        <div className={styles.cards}>
           {packages && packages.map(packageItem=>(
-              <div className="card">
-              <div className="card__img">
-                  <img src={londonImage} alt=""/>
+              <div className={styles.card}>
+              <div className={styles.card__img}>
+                
+                  <img src= {`http://localhost:4000/uploads/${packageItem.coverImg}`} crossOrigin="anonymous" alt=""/>
               </div>
-              <div className="card__body">
+              <div className={styles.card__body}>
                   <h1>{packageItem.country}</h1>
                   <p>Lorem ipsum dolorsit, amet consectetur adipisicing elit corrupti delectus rep rehenderit.</p>
-                  <div className="info">
+                  <div className={styles.info}>
                   {/* <p className="info__highlight">{new Date(packageItem.startDate).toLocaleDateString("en-US")}</p> */}
-                  <p className="info__highlight">{packageItem.pricePerOne} $</p>
-                  <button>Book Now</button>
+                  <p className={styles.info__highlight}>{packageItem.pricePerOne} $</p>
+                  <Link to={`/SinglePackage/${packageItem._id}`}>
+                     <button>Book Now</button>
+                  </Link>
                   </div>
               </div>
-              <div className="card__footer">
-                  <p>Shared by <span>{packageItem.companyId}</span></p>
+              <div className={styles.card__footer}>
+                  <p>Shared by <span>{packageItem.companyId.name}</span></p>
               </div>
           </div>
           ))}

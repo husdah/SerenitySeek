@@ -146,11 +146,26 @@ const getAllPackages = async (req, res) => {
 }
 
 //select packages to display them in home page 
+// const getHomePackages = async (req, res) => {
+//     try {
+//         const count = 4; // Set the default value to 5
+//         const packages = await packageModel.find().limit(count);
+       
+//         if (!packages || packages.length === 0) {
+//             return res.status(404).json({ message: "No Available Packages!" });
+//         }
+//         res.status(200).json(packages);
+//     } catch (error) {
+//         return res.status(400).json({ error: error.message });
+//     }
+// }
 const getHomePackages = async (req, res) => {
     try {
-        const count = 4; // Set the default value to 5
-        const packages = await packageModel.find().limit(count);
-
+        const count = 4; 
+        const packages = await packageModel
+            .find()
+            .limit(count)
+            .populate('companyId', 'name');
         if (!packages || packages.length === 0) {
             return res.status(404).json({ message: "No Available Packages!" });
         }
