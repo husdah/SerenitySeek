@@ -158,27 +158,6 @@
   border-radius: 50%;
 }
 
-
-/* #person2_pic {
-  background: url("https://www.materialui.co/materialIcons/action/face_white_192x192.png");
-  background-size: cover;
-  overflow: hidden;
-  height: 5em;
-  width: 5em;
-  margin: 0 auto;
-  border-radius: 50%;
-  box-shadow: inset -1px -1px 10px #000;
-}
-#person3_pic {
-  background: url("https://www.materialui.co/materialIcons/action/face_white_192x192.png");
-  background-size: cover;
-  overflow: hidden;
-  height: 5em;
-  width: 5em;
-  margin: 0 auto;
-  border-radius: 50%;
-  box-shadow: inset -1px -1px 10px #000;
-} */
 .section_header {
   padding: 0.3em 0em;
 }
@@ -251,14 +230,14 @@
   margin: 0 auto;
 }
 
-.twobytwo {
+/* .twobytwo {
   box-sizing: border-box;
   width: 48%;
   float: left;
   text-align: center;
   padding: 1.0em;
   margin: 1%;
-}
+} */
 
 .box {
   box-sizing: border-box;
@@ -278,90 +257,6 @@
   text-shadow: var(--primary-hover-shadow);
 }
 
-/* * {
-  box-sizing: border-box;
-} */
-
-#contact_form {
-  height: 33.5em;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-
-/* %label-movement {
-  font-size: 0.75em;
-  color: var(--theme_accent_color);
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-} */
-
-.styled_input {
-  font-family: 'Roboto Slab', serif;
-  font-weight: 300;
-  float: left;
-  width: 33.3333%;
-  margin-top: 2rem;
-  padding: 0;
-  position: relative;
-}
-.styled_input label {
-  color: #999;
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all 0.25s cubic-bezier(0.2, 0, 0.03, 1);
-  pointer-events: none;
-}
-.styled_input.wide {
-  width: 100%;
-}
-input, textarea {
-  padding: 1rem 1rem;
-  border: 0;
-  width: 100%;
-  font-size: 1rem;
-}
-input ~ span {
-  display: block;
-  width: 0;
-  height: 3px;
-  background: var(--theme_accent_color);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input:focus ~ label, textarea:focus ~ label {
-  font-size: 0.75em;
-  color: var(--theme_accent_color);
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input ~ span {
-  width: 100%;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input:valid ~ label {
-  font-size: 0.75em;
-  color: var(--theme_accent_color);
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-textarea {
-  width: 100%;
-  min-height: 15em;
-}
-
-/* %twobytwo {
-  box-sizing: border-box;
-  width: 48%;
-  float: left;
-  text-align: center;
-  padding: 1.0em;
-  margin: 1%;
-} */
-
 .box {
   box-sizing: border-box;
   width: 48%;
@@ -373,73 +268,6 @@ textarea {
 .box > p {
   font-family: 'Roboto Slab', serif;
   font-weight: 100;
-}
-
-/* Effect Styles Start Here */
-
-/* %label-movement {
-  font-size: 0.75em;
-  color: --theme_accent_color;
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
- */
-.styled_input {
-  font-family: 'Roboto Slab', serif;
-  font-weight: 300;
-  float: left;
-  width: 33.3333%;
-  margin-top: 2rem;
-  padding: 0;
-  position: relative;
-}
-.styled_input label {
-  color: #999;
-  padding: 1rem;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all 0.25s cubic-bezier(0.2, 0, 0.03, 1);
-  pointer-events: none;
-}
-.styled_input.wide {
-  width: 100%;
-}
-input, textarea {
-  padding: 1rem 1rem;
-  border: 0;
-  width: 100%;
-  font-size: 1rem;
-}
-input ~ span {
-  display: block;
-  width: 0;
-  height: 3px;
-  background: var(--theme_accent_color);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input:focus ~ label, textarea:focus ~ label {
-  font-size: 0.75em;
-  color: var(--theme_accent_color);
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input ~ span {
-  width: 100%;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-input:valid ~ label {
-  font-size: 0.75em;
-  color: var(--theme_accent_color);
-  top: -2.25rem;
-  transition: all 0.125s cubic-bezier(0.2, 0, 0.03, 1);
-}
-textarea {
-  width: 100%;
-  min-height: 15em;
 }
 
 /* Media Queries */
@@ -487,9 +315,9 @@ textarea {
   .sns_btn {
     font-size: 1.5em;
   }
-  article {
+  /* article {
     display: block;
-  }
+  } */
   .bio {
     display: block;
   }
@@ -497,12 +325,6 @@ textarea {
     height: 14vh;
   }
   .box {
-    width: 100%;
-  }
-  #contact_form {
-    height: 43rem;
-  }
-  .styled_input {
     width: 100%;
   }
 }
@@ -517,10 +339,6 @@ textarea {
   }
   .bio .bio_text {
     height: 20vh;
-  }
-  .styled_input {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 }
 .footer {
