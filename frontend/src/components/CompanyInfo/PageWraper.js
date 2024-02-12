@@ -12,8 +12,8 @@ import ContactSection from './ContactSection';
 import RatingSection from './RatingSection';
 import FooterSection from './FooterSection';
 
-function PageWraper() {
-    const [companyName, setCompanyName] = useState('');
+function PageWraper(props) {
+    const [companyName, setCompanyName] = useState(null);
     const [companyLogo, setCompanyLogo] = useState(null);
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
@@ -23,9 +23,9 @@ function PageWraper() {
     const [customers, setCustomers] = useState('');
 
     useEffect(() =>{
-        const encodedString = encodeURIComponent('Serenity Seek');
+        /* const encodedString = encodeURIComponent(props.heading); */
         const fetchCompanyInfo =  async ()=>{
-            const res = await fetch(`http://localhost:4000/api/companyInfo/${encodedString}`,{
+            const res = await fetch(`http://localhost:4000/api/companyInfo/${props.heading}`,{
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,8 +60,10 @@ function PageWraper() {
                
             }
         }
-        fetchCompanyInfo();
-    },[])
+        if(props.heading){
+            fetchCompanyInfo();
+        }
+    },[props.heading])
 
   return (
     <>
@@ -70,11 +72,11 @@ function PageWraper() {
     <div id="page_wrap">
         <nav className={styles.menu}>
             <ul className={styles.ul}>
-                <li className={styles.nav_four}><Link to="/CompanyInfo/">About</Link></li>
-                <li className={styles.nav_four}><Link to="/CompanyInfo/Services">Services</Link></li>
-                <li className={styles.nav_four}><Link to="/CompanyInfo/Customers">Customers</Link></li>
-                <li className={styles.nav_four}><Link to="/CompanyInfo/Contact">Contact Info</Link></li>
-                <li className={styles.nav_four}><Link to="/CompanyInfo/Rating">Rating</Link></li>
+                <li className={styles.nav_four}><Link to={`/CompanyInfo?companyName=${props.heading}`}>About</Link></li>
+                <li className={styles.nav_four}><Link to={`/CompanyInfo/Services?companyName=${props.heading}`}>Services</Link></li>
+                <li className={styles.nav_four}><Link to={`/CompanyInfo/Customers?companyName=${props.heading}`}>Customers</Link></li>
+                <li className={styles.nav_four}><Link to={`/CompanyInfo/Contact?companyName=${props.heading}`}>Contact Info</Link></li>
+                <li className={styles.nav_four}><Link to={`/CompanyInfo/Rating?companyName=${props.heading}`}>Rating</Link></li>
                 <li className={styles.nav_four}><Link to="/ChatApp">Contact Support</Link></li>
             </ul>
         </nav>
