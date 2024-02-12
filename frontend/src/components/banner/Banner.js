@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import greeceImage from '../../images/greece.jpg';
 import Slider from './Slider';
 import Navbar from '../navbar/Navbar'
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 
-import styles2 from './slider.module.css';
 import styles from './banner.module.css';
 
-
-import greecImage from '../../images/greece.jpg';
+import greeceImage from '../../images/greece.jpg';
 import franceImage from '../../images/france.avif';
 import londonImage from '../../images/london.jpg';
 import dubaiImage from '../../images/dubai.jpg';
