@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const companyModel = require("../models/Company");
 const accountModel = require("../models/Account");
+const userModel = require('../models/User');
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
@@ -157,13 +158,36 @@ const getCompanyByName = async (req, res) =>{
         if(!account){
             res.status(404).json({error: "Company Account Not Found!"});
         }
+
+        // Fetch customer information from the user model based on customer IDs in the company
+        const customers = await userModel.find({ _id: { $in: company.customers } });
+
+        if(customers.length > 3){
+            // Limit to a maximum of 3 customers
+            customers = customers.slice(0, 3);
+        }
+
+        // Extract relevant information from customer objects
+        const customerInfo = [];
+
+        for (const customer of customers) {
+            const customerAccount = await accountModel.findOne({ userId: customer._id });
+
+            customerInfo.push({
+                name: customer.Fname + " " + customer.Lname,
+                profilePic: customer.profilePic,
+                email: customerAccount.email,
+                phoneNumber: customerAccount.phoneNumber,
+            });
+        }
+
         res.status(200).json({
             name: company.name, 
             description: company.description, 
             location: company.location,
             logo: company.logo, 
             rate: company.rate.value,
-            customers: company.customers,
+            customers: customerInfo,
             email: account.email, 
             phoneNumber: account.phoneNumber});
     }catch(error){
