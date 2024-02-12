@@ -82,7 +82,7 @@ html {
 .up_wrapper .up_form_container .up_form .up_form_group {
     position: relative;
     width: 20rem;
-    margin: 1.8rem 0;
+    margin: 1.6rem 0;
 }
 
 /* .up_ImgContainer{
@@ -185,7 +185,7 @@ html {
     text-align: center;
     font-size: 0.875rem;
     color: var(--labelColor);
-    margin: 1.6rem 0;
+    margin: -.2rem 0 2.5rem 0;
 }
 
 .up_wrapper .up_form_container .up_form .up_link .up_linkClick {

@@ -6,6 +6,7 @@ import { IoMdTime } from 'react-icons/io'
 import { IoLocationSharp } from 'react-icons/io5'
 import { RiMoneyDollarCircleFill } from 'react-icons/ri'
 import SliderHotel from '../components/SliderHotel'
+import { Link } from 'react-router-dom'
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
@@ -122,7 +123,12 @@ export default function SinglePackage() {
                 </div>
                 <div className={Styles.dest_desc}>
                   <span className={Styles.singlePackage_description}> { packageItem.description } <p><b>Shared By:</b> </p>
-                  <span>{packageItem.companyId.name}</span></span>
+                    <span>
+                      <Link to={`/companyInfo?companyName=${encodeURIComponent(packageItem.companyId.name)}`}>
+                        {packageItem.companyId.name}
+                      </Link>
+                    </span>
+                  </span>
                   
                 </div>
               </div>
