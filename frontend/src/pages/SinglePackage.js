@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import Styles from '../assets/css/SinglePackage.module.css';
-import { FaStar, FaRegCalendarAlt, FaHotel, FaLayerGroup } from 'react-icons/fa';
-import { IoMdTime } from 'react-icons/io';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import Styles from '../assets/css/SinglePackage.module.css'
+import { FaStar, FaRegCalendarAlt, FaHotel, FaLayerGroup } from 'react-icons/fa'
+import { IoMdTime } from 'react-icons/io'
 import { FaBookmark } from "react-icons/fa6";
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiMoneyDollarCircleFill } from 'react-icons/ri';
-import SliderHotel from '../components/SliderHotel';
+import { IoLocationSharp } from 'react-icons/io5'
+import { RiMoneyDollarCircleFill } from 'react-icons/ri'
+import SliderHotel from '../components/SliderHotel'
+import { Link } from 'react-router-dom'
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
@@ -125,8 +126,14 @@ export default function SinglePackage() {
                   <img src={imageUrl} alt={packageItem.name + 'image'} crossOrigin="anonymous" />
                 </div>
                 <div className={Styles.dest_desc}>
-                  <span className={Styles.singlePackage_description}> { packageItem.description } <p className={Styles.companyLink}><b>Shared By:</b> </p>
-                  <span>{packageItem.companyId.name}</span></span>
+
+                  <span className={Styles.singlePackage_description}> { packageItem.description } <p><b>Shared By:</b> </p>
+                    <span>
+                      <Link to={`/companyInfo?companyName=${encodeURIComponent(packageItem.companyId.name)}`}>
+                        {packageItem.companyId.name}
+                      </Link>
+                    </span>
+                  </span>
                   
                 </div>
               </div>
