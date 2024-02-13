@@ -1,7 +1,5 @@
 .swiper {
   width: 90%;
-  /*padding-top: 50px;
-  padding-bottom: 50px;*/
 }
 
 .swiper-slide {
@@ -49,7 +47,27 @@
 /* Responsive on width 1024px */
 @media(max-width:1024px) {
   .swiper {
-    width: 90%;
+    width: 86%;
   }
+}
 
+/* Responsive on width 900px */
+@media(max-width:900px) {
+  .swiper {
+    width: 87%;
+  }
+}
+
+/* Responsive on width 800px */
+@media(max-width:822px) {
+  .swiper {
+    width: 83%;
+  }
+}
+
+/* Responsive on width 700px */
+@media(max-width:701px) {
+  .swiper {
+    width: 84%;
+  }
 }

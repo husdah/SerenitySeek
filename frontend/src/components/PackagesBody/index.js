@@ -4,7 +4,7 @@ import Styles from './PackagesBody.module.css';
 import { Link } from 'react-router-dom';
 import { FaLocationDot } from "react-icons/fa6";
 import { HiOutlineClipboardCheck } from "react-icons/hi"
-import { MdFavorite } from "react-icons/md";
+import { MdFavoriteBorder } from "react-icons/md";
 
 
 export default function PackagesBody({ packages, filteredPackages, countryFilter, selectedDate, maxPrice, setCountryFilter, setSelectedDate, setMaxPrice }) {
@@ -30,7 +30,7 @@ export default function PackagesBody({ packages, filteredPackages, countryFilter
                 <img src={imageUrl} className={Styles.Package_Img} alt={packageItem.name + 'image'} crossOrigin="anonymous" />
               </div>
               <Link to={`/SinglePackage/${packageItem._id}`}>
-                <MdFavorite className={Styles.favoriteIcon}/>
+                <MdFavoriteBorder className={Styles.favoriteIcon}/>
               </Link>
               <div className={Styles.packageDetails}>
                 <div className={Styles.packageDestination}>
@@ -44,7 +44,7 @@ export default function PackagesBody({ packages, filteredPackages, countryFilter
                   {packageItem.discount ?
                     <div className={Styles.package_price}>
                       <span className={Styles.package_price_del}>{packageItem.pricePerOne}$</span>
-                      <span>{(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)}$</span>
+                      <span>{Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)}$</span>
                     </div>
                     :
                     <div className={Styles.package_price}>

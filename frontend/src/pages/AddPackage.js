@@ -228,110 +228,114 @@ export default function AddPackage() {
   return (
     <div className={Styles.addPackage_contianer}>
       <h1 className={Styles.addPackage_pageTitle}> Manage Flight</h1>
-      <fieldset className={Styles.addPackageField}>
         <form onSubmit={handleSubmit} >
 
-          <h4 className={Styles.addPackage_Heading}>1. Package Informations</h4>
-          <div className={Styles.packageInformation_container}>
-            <div className={Styles.packageName}>
-              <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={Styles.packagePrice}>
-              <label className={Styles.labelPR}>Price</label>
-              <input
-                type="number"
-                name="pricePerOne"
-                value={formData.pricePerOne}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={Styles.packageImage}>
-              <label>Image</label>
-              <input 
-                type="file" 
-                name="coverImg" 
-                onChange={handleFileChange} 
-              />
-            </div>
-            <div className={Styles.packageDescription}>
-              <label>description</label>
-              {/*<input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />*/}
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              >
-              </textarea>
-            </div>
-          </div>
-
-          <h4 className={Styles.addPackage_Heading}>2. Travel Details</h4> 
-          <div className={Styles.traveLDetails_container}>
-            <div className={Styles.packageType}>
-              <label>type</label>
-              <DropdownList
-                options={packageTypes}
-                value={formData.type}
-                onChange={handleTypeChange}
-              />
-            </div>
-            <div className={Styles.packageDate}>
-              <label>startDate</label>
-              <input
-                type="date"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={Styles.packageDuration}>
-              <label>duration</label>
-              <input
-                type="text"
-                name="duration"
-                value={formData.duration}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <h4 className={Styles.addPackage_Heading}>3. Accommodations</h4>
-          <div className={Styles.accommodation_container}>
-              {hotelData.length > 0 && hotelData.map((hotel) => (
-                <div key={hotel._id} className={Styles.hotelDisplay}>
-                  <input
-                    type="checkbox"
-                    id={hotel._id}
-                    name={hotel._id}
-                    value={hotel._id}
-                    checked={Array.isArray(formData.hotelId) && formData.hotelId.includes(hotel._id)}
-                    onChange={handleHotelChange}
-                  />
-                  <label htmlFor={hotel._id}>{hotel.name}</label>
-                </div>
-              ))}
-              {/* Display selected hotel IDs */}
-              <div style={{display:'none'}}>
-                <ul>
-                  {formData.hotelId.map((hotelIdd) => (
-                    <li key={hotelIdd}>{hotelIdd}</li>
-                  ))}
-                </ul>
+          <h4 className={Styles.addPackage_Heading}><span className={Styles.number}> 1.</span> Package Informations</h4>
+          <fieldset className={Styles.packageInformation_fieldSet}>
+            <div className={Styles.packageInformation_container}>
+              <div className={Styles.packageName}>
+                {/*<label>Name</label>*/}
+                <input
+                  type="text"
+                  name="name"
+                  placeholder='Name'
+                  value={formData.name}
+                  onChange={handleChange}
+                />
               </div>
-          </div>
+              <div className={Styles.packagePrice}>
+                {/*<label className={Styles.labelPR}>Price</label>*/}
+                <input
+                  type="number"
+                  name="pricePerOne"
+                  placeholder='Price'
+                  value={formData.pricePerOne}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={Styles.packageImage}>
+                {/*<label>Image</label>*/}
+                <input 
+                  type="file" 
+                  name="coverImg"
+                  onChange={handleFileChange} 
+                />
+              </div>
+              <div className={Styles.packageDescription}>
+                {/*<label>description</label>*/}
+                <textarea
+                  name="description"
+                  placeholder='Description'
+                  value={formData.description}
+                  onChange={handleChange}
+                >
+                </textarea>
+              </div>
+            </div>
+          </fieldset>
 
-          <h4 className={Styles.addPackage_Heading}>4. Location & Activities</h4>
+          <h4 className={Styles.addPackage_Heading}> 2. Travel Details</h4>
+          <fieldset className={Styles.packageInformation_fieldSet}>
+            <div className={Styles.traveLDetails_container}>
+              <div className={Styles.packageType}>
+                {/*<label>type</label>*/}
+                <DropdownList
+                  options={packageTypes}
+                  value={formData.type}
+                  onChange={handleTypeChange}
+                />
+              </div>
+              <div className={Styles.packageDate}>
+                {/*<label>startDate</label>*/}
+                <input
+                  type="date"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className={Styles.packageDuration}>
+                {/*<label>duration</label>*/}
+                <input
+                  type="text"
+                  name="duration"
+                  placeholder='Duration'
+                  value={formData.duration}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </fieldset>
+
+          <h4 className={Styles.addPackage_Heading}> 3. Accommodations</h4>
+          <fieldset className={Styles.packageInformation_fieldSet}>
+            <div className={Styles.accommodation_container}>
+                {hotelData.length > 0 && hotelData.map((hotel) => (
+                  <div key={hotel._id} className={Styles.hotelDisplay}>
+                    <input
+                      type="checkbox"
+                      id={hotel._id}
+                      name={hotel._id}
+                      value={hotel._id}
+                      checked={Array.isArray(formData.hotelId) && formData.hotelId.includes(hotel._id)}
+                      onChange={handleHotelChange}
+                    />
+                    <label htmlFor={hotel._id}>{hotel.name}</label>
+                  </div>
+                ))}
+                {/* Display selected hotel IDs */}
+                <div style={{display:'none'}}>
+                  <ul>
+                    {formData.hotelId.map((hotelIdd) => (
+                      <li key={hotelIdd}>{hotelIdd}</li>
+                    ))}
+                  </ul>
+                </div>
+            </div>
+          </fieldset>
+
+          <h4 className={Styles.addPackage_Heading}> 4. Location & Activities</h4>
+          <fieldset className={Styles.packageInformation_fieldSet}>
           <div className={Styles.location_container}>
             <div className={Styles.packageCountry}>
               <label>country</label>
@@ -404,14 +408,15 @@ export default function AddPackage() {
               Add Destination
             </button>
           </div>
-            
+          </fieldset>
+          
           <button
             className={Styles.addPackageBtn}
           >
             Add 
           </button>    
         </form>
-      </fieldset>
+      
     </div>
   );
 }

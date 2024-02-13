@@ -184,8 +184,8 @@ textarea::placeholder {
     color: red;
 }
 
-/* Responsive on width 425px */
-@media(max-width:425px) {
+/* Responsive on width 600px */
+@media(max-width:600px) {
     .contactContainer {
         display: flex;
         flex-direction: column;

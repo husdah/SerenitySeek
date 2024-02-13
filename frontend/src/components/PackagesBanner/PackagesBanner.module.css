@@ -141,3 +141,13 @@ input[type=range] {
 .cardDiv .searchOptions span{
     font-size: 13px;
 }
+
+/* Responsive on width 600px */
+@media(max-width:600px) {
+    .package_banner .homeContent .grid {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
