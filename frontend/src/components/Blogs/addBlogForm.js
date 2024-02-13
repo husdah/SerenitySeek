@@ -56,13 +56,14 @@ const AddBlogForm = () => {
   };
 
   return (
+    <div>
+    <h1 className={styles['title']}>Share your moment</h1>
     <form onSubmit={handleSubmit} className={styles['form-container']}>
-      <div>
-        <label htmlFor="caption">Caption:</label>
-        <input type="text" id="caption" value={caption} onChange={(e) => setCaption(e.target.value)} />
-      </div>
-      <div>
-        <label htmlFor="location">Location:</label>
+    <div className={styles['caption_input']}>
+      <input type="text" placeholder="Type your caption here..." id="caption" value={caption} onChange={(e) => setCaption(e.target.value)} />
+    </div>
+    <div className={styles['location-group']}>
+      <div className={styles['input-group']}>
         <select id="location" value={location} onChange={(e) => setLocation(e.target.value)}>
           <option value="">Select Country</option>
           {countries.map((country, index) => (
@@ -72,12 +73,15 @@ const AddBlogForm = () => {
           ))}
         </select>
       </div>
-      <div>
-        <label htmlFor="image">Image:</label>
+      <div className={styles['input-group']}>
         <input type="file" id="image" onChange={handleImageChange} />
       </div>
+    </div>
+    <div className={styles['button-group']}>
       <button type="submit">Add Blog</button>
-    </form>
+    </div>
+  </form>
+  </div>
   );
 };
 

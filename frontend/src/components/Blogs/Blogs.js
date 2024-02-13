@@ -49,8 +49,8 @@ const Blogs = () => {
 
   return (
     <div className="blogs_page">
-      <div className='banner_blogs'><h2>Discover others' experiences.</h2></div>
       < AddBlogForm />
+      <div className='banner_blogs'><h1>Discover Others' Experience</h1></div>
     <div className="blogs-section">
       {blogs.map((blog, blogIndex) => (
         <div className='blog-container' key={blogIndex}>

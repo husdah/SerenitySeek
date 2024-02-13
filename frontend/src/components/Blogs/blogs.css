@@ -13,10 +13,12 @@
   }
   
   .banner_blogs{
-    background: var(--danger);
     margin: 0;
-    padding: 15px;
-    border-radius: 30px;
+    background: linear-gradient(-260deg, var(--dark), var(--danger));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-left: 30px;
   }
   
   .blogs-section {
