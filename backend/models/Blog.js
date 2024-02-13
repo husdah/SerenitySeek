@@ -43,5 +43,7 @@ const blogSchema=new Schema({
    ]
 },{timestamps:true})
 
+
+
 const blogModel=mongoose.model("Blog",blogSchema);
 module.exports=blogModel;

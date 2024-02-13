@@ -69,10 +69,25 @@ const getBlogsByUserId = async (req, res) => {
 
 };
 
+//Get blog by Id
+
+const getBlogById = async (req, res) =>{
+    const {id} = req.params;
+    try{
+        const blog = await blogModel.find({_id : id});
+        if(!blog){
+            return res.status(404).json({message : "Blog Not Found"});
+        }
+        res.status(200).json(blog);
+    }catch(error){
+        return res.status(500).json({error : error.message});
+    }
+}
+
 //Update a Blog
 const updateBlog = async (req,res) => {
     const {id} = req.params;
-    const {location,companyId,caption,comments} = req.body;
+    const {location,companyId,caption,likes,comments} = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
@@ -87,6 +102,7 @@ const updateBlog = async (req,res) => {
         blog.location = location || blog.location;
         blog.companyId = companyId || blog.companyId;
         blog.caption = caption || blog.caption;
+        blog.likes = likes || blog.likes;
     
         if (comments && comments.length > 0) {
             blog.comments.push(...comments);
@@ -103,6 +119,43 @@ const updateBlog = async (req,res) => {
         res.status(400).json({error: error.message});
     }
 }
+
+//Update nb of likes
+
+const updateBlogLikes = async (req, res) => {
+    const { id } = req.params;
+    const { action } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400).json({ message: "Id is not valid!" });
+        return;
+    }
+
+    try {
+        const blog = await blogModel.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: "Blog not found!" });
+        }
+
+        if (action === "like") {
+            // Increase the number of likes by one
+            blog.likes += 1;
+        } else {
+            // Handle other actions if needed
+        }
+
+        const updatedBlogLikes = await blog.save();
+
+        if (!updatedBlogLikes) {
+            return res.status(404).json({ message: "Not Found!" });
+        }
+
+        res.status(201).json({ message: "Blog Updated Successfully!" });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
 
 //Delete a Blog
 const deleteBlog = async (req,res) => {
@@ -133,6 +186,8 @@ module.exports = {
     addBlog,
     getAllBlogs,
     getBlogsByUserId,
+    getBlogById,
     updateBlog,
+    updateBlogLikes,
     deleteBlog
 };
