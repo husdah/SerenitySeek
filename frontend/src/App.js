@@ -16,7 +16,7 @@ import Footer from "./components/Footer";
 import Packages from "./components/Packages";
 import SinglePackage from "./components/SinglePackage";
 import Table from "./components/Table";
-import Blogs from "./components/Blogs";
+import Blogs from "./components/Blogs/Blogs";
 
 
 function App() {

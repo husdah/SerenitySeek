@@ -3,8 +3,8 @@ import axios from 'axios';
 import { FaCommentDots } from 'react-icons/fa';
 import { IoHeart } from 'react-icons/io5';
 import { SiYourtraveldottv } from 'react-icons/si';
-import '../assets/css/blogs.css';
 import AddBlogForm from './addBlogForm';
+import './blogs.css'
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);

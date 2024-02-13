@@ -1,0 +1,189 @@
+:root {
+    --light: #fffdf7;
+    --primary: #1AA6B7;
+    --dark: #0a2342;
+    --danger: #FFB100;
+    --grey: #333;
+  }
+  
+  .blogs_page{
+    background: #ecf0f3;
+    margin: 0;
+    padding: 20px 30px;
+  }
+  
+  .banner_blogs{
+    background: var(--danger);
+    margin: 0;
+    padding: 15px;
+    border-radius: 30px;
+  }
+  
+  .blogs-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    background: #ecf0f3;
+  }
+  
+  .blog-container {
+    padding: 10px;
+    margin: 20px;
+    width: 350px;
+    height: 400px;
+    background: #ecf0f3; /* Adjust background color to your preference */
+    border-radius: 50px;
+    transition: .5s;
+    box-shadow: -3px -3px 7px #ffffff,
+    3px 3px 5px #ceced1;}
+  
+  .blog-container:hover{
+    transform: translate(0px,-20px);
+  }
+  
+  .blog-container .gallery-container {
+    width: 100%;
+    height: 50%; /* Take up half the height of the blog container */
+    display: flex;
+    border-radius: 50px 50px 0px 0px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure content doesn't overflow the rounded corners */
+  }
+  
+  .gallery-container img.gallery-image {
+    width: 400px;
+    height: 250px;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border: 1px;
+  }
+  
+  .blog-container .content{
+    position: relative;
+    margin: 35px 15px;
+  }
+  
+  .blog-container .content .date{
+    position: absolute;
+    top: -70px;
+    background: var(--danger);
+    color: var(--dark);
+    border-radius: 5px;
+    height: 50px;
+    width: 45px;
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    box-shadow: -2px -2px 5px rgba(80, 80, 80, 0.473),
+    3px 3px 5px rgba(80, 80, 80, 0.205);
+    text-shadow: inset 10px 10px 15px rgba(255, 255, 255, 0.5);
+  }
+  
+  .blog-container .content p {
+    position: relative;
+    font-size: 16px; /* Adjust as needed */
+  }
+  
+  .blog-container .content p:first-child {
+    margin-top: 0; /* Remove top margin for the first paragraph */
+  }
+  
+  .blog-container .content .icons {
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    padding: 0 5px;
+    justify-content: space-evenly;
+  }
+  
+  .blog-container .content .icons .row {
+    color: black;
+    font-size: 17px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .blog-container .content .icons .row::before{
+    position: absolute;
+    content: '';
+    width: 3px;
+    height: 100%;
+    background: #e0e6eb;
+    margin-left: -45px;
+  }
+  
+  .blog-container .content .icons .row:first-child::before{
+    background: none;
+  }
+  
+  .blog-container .content .location-icon .icon-wrapper {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    animation: locationIconAnimation 1s infinite alternate; 
+  }
+  
+  .blog-container .content .location-icon{
+    color: var(--dark);
+    font-weight: 600;
+  }
+  
+  @keyframes locationIconAnimation {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-5px); 
+    }
+  }
+  
+  .username-caption {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font family */
+  }
+  
+  .username-caption p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--grey);
+  }
+  
+  .username-caption .username {
+    font-weight: bold; 
+    color: var(--dark);
+  }
+  
+  .username-caption .caption {
+    color: #666; 
+  }
+  
+  .heart-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .heart-container .heart-icon {
+    font-size: 22px;
+    color: var(--danger); 
+    transition: transform 0.3s;
+  }
+  
+  .heart-container span{
+    font-weight: bold;
+    color: var(--grey);
+    font-size: 17px;
+    margin-left: 3px;
+  }
+  
+  .comments-icon{
+    color: var(--grey);
+  }

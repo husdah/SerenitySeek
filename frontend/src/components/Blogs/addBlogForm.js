@@ -1,5 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styles from './AddBlogForm.module.css';
+
+const countries = [
+  { name: 'United States', code: 'US' },
+  { name: 'United Kingdom', code: 'GB' },
+  { name: 'Canada', code: 'CA' },
+  { name: 'Australia', code: 'AU' },
+  { name: 'Germany', code: 'DE' },
+  { name: 'France', code: 'FR' },
+  { name: 'Japan', code: 'JP' },
+  { name: 'Italy', code: 'IT' },
+  { name: 'Spain', code: 'ES' },
+  { name: 'Netherlands', code: 'NL' },
+  { name: 'Sweden', code: 'SE' },
+  { name: 'Switzerland', code: 'CH' },
+  { name: 'Brazil', code: 'BR' },
+  { name: 'Mexico', code: 'MX' },
+  { name: 'South Korea', code: 'KR' },
+  { name: 'Russia', code: 'RU' },
+  { name: 'China', code: 'CN' },
+  { name: 'India', code: 'IN' },
+  { name: 'South Africa', code: 'ZA' },
+  { name: 'Turkey', code: 'TR' }
+];
 
 const AddBlogForm = () => {
   const [caption, setCaption] = useState('');
@@ -32,14 +56,21 @@ const AddBlogForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={styles['form-container']}>
       <div>
         <label htmlFor="caption">Caption:</label>
         <input type="text" id="caption" value={caption} onChange={(e) => setCaption(e.target.value)} />
       </div>
       <div>
         <label htmlFor="location">Location:</label>
-        <input type="text" id="location" value={location} onChange={(e) => setLocation(e.target.value)} />
+        <select id="location" value={location} onChange={(e) => setLocation(e.target.value)}>
+          <option value="">Select Country</option>
+          {countries.map((country, index) => (
+            <option key={index} value={country.code}>
+              {country.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <label htmlFor="image">Image:</label>
