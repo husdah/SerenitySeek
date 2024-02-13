@@ -4,58 +4,56 @@
 }
 
 h1.addPackage_pageTitle { 
-    font-size: 26px;
+    font-size: 35px;
     font-weight: bold;
     font-style: normal;
     text-transform: capitalize;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.005em;
     color: var(--dark);
-    text-align: center;
-}
-
-.addPackageField {
-    width: 75%;
-    margin: auto;
-    border: 0;
-    border-radius: 14px;
-    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+    text-align: left;
+    margin-bottom: 40px;
 }
 
 h4.addPackage_Heading {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 400;
     font-style: normal;
     text-transform: capitalize;
     letter-spacing: 0.05em;
-    color: var(--dark);
+    color: var(--primary);
+    text-align: left;
+}
+
+.packageInformation_fieldSet {
+    border-radius: 10px;
+    border: 2px solid #F8F8F7;
+    box-shadow: 0px 1px 5px 1px white;
+    width: 80%;
+    margin-bottom: 25px;
 }
 
 .packageInformation_container {
     display: grid;
     grid-template-columns: 50% 50%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
 }
 
 .traveLDetails_container {
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
 }
 
 .accommodation_container {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     gap: 5px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
 }
 
 .location_container {
     width: 35%;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 20px 0;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -83,19 +81,20 @@ h4.addPackage_Heading {
     color: var(--dark);
 }
 
-.labelPR {
-    padding-right: 43px;
-}
-
 .addPackage_contianer input[type='text'],
 .addPackage_contianer input[type='date'],
 .addPackage_contianer input[type='checkbox'],
 select,
 .addPackage_contianer textarea,
 .addPackage_contianer input[type='number'] { 
-    border-radius: 4px;
-    border: 1px solid grey;
+    border-radius: 24px;
+    border: 0;
     padding-left: 7px;
+    color: var(--dark);
+    background-color: #ccc;
+}
+
+.addPackage_contianer input[type="file"] {
     color: var(--dark);
 }
 
@@ -104,11 +103,23 @@ select,
 .addPackage_contianer textarea,
 .addPackage_contianer input[type='number'] { 
     width: 65%;
-    height: 35px;
+    height: 24px;
+    padding: 8px 16px;
+}
+
+
+.addPackage_contianer input[type='text']::placeholder,
+.addPackage_contianer input[type='date']::placeholder,
+.addPackage_contianer textarea::placeholder,
+.addPackage_contianer input[type='number']::placeholder{ 
+    font-size: 13px;
+    color: var(--dark);
+    padding-left: 1px;
 }
 
 .addPackage_contianer textarea {
     height: 80px;
+    border-radius: 12px;
 }
 
 select {
@@ -142,8 +153,6 @@ select:focus,
     gap: 10px;
 }
 
-
-
 .addPackageBtn {
     color: var(--light);
     background: rgb(15,76,102);
@@ -161,13 +170,6 @@ select:focus,
     margin-top: 10px;
 }
 
-/*
-.addPackageBtn:hover{
-    background-color: var(--primary);
-    border: 1px solid var(--primary);
-    color: white;
-}
-*/
 
 
 

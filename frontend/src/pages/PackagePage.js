@@ -26,9 +26,6 @@ export default function PackagePage() {
       const packageStartMonth = packageStartDate.getMonth() + 1; 
       const packageStartYear  = packageStartDate.getFullYear();
   
-      if (searchQuery.price && parseFloat(packageItem.pricePerOne) !== parseFloat(searchQuery.price)) {
-        return false;
-      }
       if (searchQuery.discount && parseFloat(packageItem.discount) !== parseFloat(searchQuery.discount)) {
         return false;
       }
@@ -79,6 +76,7 @@ export default function PackagePage() {
       const json = await response.json();
       if (response.ok) {
         setPackages(json);
+        console.log('number of packages:', packages.length);
       }
       else{
         console.log('No Available Package');
@@ -167,19 +165,8 @@ export default function PackagePage() {
 
   return (
     <div className={Styles.content}>
-      <h4>Filter By: </h4>
+      <h1 className={Styles.packagepage_title}>List of Packages</h1>
       <div className={Styles.packageHeader}>
-        <div className={`${Styles.input_control}`}>
-          <input 
-            type="text" 
-            id="price" 
-            placeholder='Price'
-            value={searchQuery.price}
-            onChange={(e) => handleInputChange('price', e.target.value)}
-          />
-          <FaSearch  className={Styles.searchIcon}/>
-        </div>
-
         <div className={`${Styles.input_control}`}>
           <input 
             type="text" 
@@ -190,7 +177,6 @@ export default function PackagePage() {
           />
           <FaSearch  className={Styles.searchIcon}/>
         </div>
-
         <input 
           type="date"
           id="date"
@@ -198,8 +184,6 @@ export default function PackagePage() {
           onChange={(e) => handleInputChange('date', e.target.value)}
         />
       </div>
-
-      <h4>List of Packages</h4>
 
       <div className={Styles.Table_wrapper}>
         <table className={Styles.table}>

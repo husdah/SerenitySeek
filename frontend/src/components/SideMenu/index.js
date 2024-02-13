@@ -63,12 +63,12 @@ export default function SideMenu() {
     //getItem("label", "key", icon)
     getItem("Dashboard", "/Dashboard", <RxDashboard />),
     getItem("Package", "packages", <FiPackage />, [
-      getItem("Manage Package", "managePackage", <FiPackage />),
-      getItem("Add Package", "addPackage", <IoIosAddCircle />),
+      getItem("Manage", "managePackage", <FiPackage />),
+      getItem("Add", "addPackage", <IoIosAddCircle />),
     ]),
     getItem("Hotel", "Hotels", <FaHotel />, [
-      getItem("Manage Hotel", "manageHotel", <FaHotel />),
-      getItem("Add Hotel", "addHotel", <IoIosAddCircle />),
+      getItem("Manage", "manageHotel", <FaHotel />),
+      getItem("Add", "addHotel", <IoIosAddCircle />),
     ]),
     getItem("Setting", "setting", <IoSettings />),
     getItem("Logout", "logout", <IoMdLogOut />),

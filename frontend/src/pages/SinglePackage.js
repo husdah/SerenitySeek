@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import Styles from '../assets/css/SinglePackage.module.css'
-import { FaStar, FaRegCalendarAlt, FaHotel, FaLayerGroup } from 'react-icons/fa'
-import { IoMdTime } from 'react-icons/io'
-import { IoLocationSharp } from 'react-icons/io5'
-import { RiMoneyDollarCircleFill } from 'react-icons/ri'
-import SliderHotel from '../components/SliderHotel'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Styles from '../assets/css/SinglePackage.module.css';
+import { FaStar, FaRegCalendarAlt, FaHotel, FaLayerGroup } from 'react-icons/fa';
+import { IoMdTime } from 'react-icons/io';
+import { FaBookmark } from "react-icons/fa6";
+import { IoLocationSharp } from 'react-icons/io5';
+import { RiMoneyDollarCircleFill } from 'react-icons/ri';
+import SliderHotel from '../components/SliderHotel';
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
@@ -49,8 +50,8 @@ export default function SinglePackage() {
         return Styles.beachBanner;
       case 'Combination':
         return Styles.combinationBanner;  
-      case 'Culture':
-        return Styles.cultureBanner;
+      case 'Romantic':
+        return Styles.romanticBanner;
       case 'Family':
         return Styles.familyBanner;
       case 'History':
@@ -98,7 +99,6 @@ export default function SinglePackage() {
           let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;
           return(
             <div className={Styles.singlePackageDiv} key={packageItem._id} >
-              
               <div className={`${Styles.singlePackage_banner} ${getBannerClassName(packageItem.type)}`} >
                 <span className={Styles.singlePackage_country}> { packageItem.country } </span>
                 <span className={Styles.singlePackage_title}> { packageItem.name } </span>
@@ -116,12 +116,16 @@ export default function SinglePackage() {
                   }
               </div>
               
+              <div className={Styles.singlePackage_BtnDiv}>
+                <button className={Styles.singlePackage_button}><FaBookmark className={Styles.bookIcon}/></button>
+              </div> 
+
               <div className={Styles.singlePackage_container_1}>
                 <div className={Styles.dest_img}>
                   <img src={imageUrl} alt={packageItem.name + 'image'} crossOrigin="anonymous" />
                 </div>
                 <div className={Styles.dest_desc}>
-                  <span className={Styles.singlePackage_description}> { packageItem.description } <p><b>Shared By:</b> </p>
+                  <span className={Styles.singlePackage_description}> { packageItem.description } <p className={Styles.companyLink}><b>Shared By:</b> </p>
                   <span>{packageItem.companyId.name}</span></span>
                   
                 </div>
@@ -142,7 +146,7 @@ export default function SinglePackage() {
                         <p className={Styles.destName} >{destination.name}</p>
                         { destination.activities.map((activity, index) => (
                           <div key={activity._id} >
-                            <p> <b> {activity.name}: </b> {activity.description} </p>
+                            <span className={Styles.singlePackage_destinationActivity}> <b> {activity.name}: </b> {activity.description} </span>
                           </div>
                         ))}
                         <br />
@@ -174,12 +178,13 @@ export default function SinglePackage() {
                         </div>
                       </div>
                     </div>
-                  ))}          
+                  ))}  
                 </div>
               </div>
             </div>
           )
       })}
+      
     </div>
   );
 }

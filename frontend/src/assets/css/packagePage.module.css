@@ -53,14 +53,27 @@
     padding: 10px;
 }
 
+h1.packagepage_title { 
+    font-size: 35px;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: capitalize;
+    letter-spacing: 0.005em;
+    color: var(--primary);
+    text-align: left;
+    margin-bottom: 40px;
+}
+
 .table { 
+    margin: auto 17px;
+    background-color: var(--dark);
+    color: var(--light);
     display: inline-block;
     table-layout: fixed;
     border-collapse: collapse;
     box-shadow: 0px 10px 10px #ccc;
     border-radius: 10px;
     white-space: nowrap;
-    margin: auto 53px;
     overflow-x: auto;
 }
 
@@ -68,8 +81,8 @@
     font-size: 16px;
     text-align: left;
     text-transform: capitalize;
-    background-color: var(--dark);
-    color: var(--light);
+    /*background-color: var(--dark);
+    color: var(--light);*/
 }
 
 .table th,
@@ -105,11 +118,11 @@
 .delete_btn, 
 .edit_btn {
     text-transform: capitalize;
-    color: var(--dark);
+    color: var(--light);
     font-size: 20px;
 }
 
 .delete_btn:hover, 
 .edit_btn:hover {
-    color: var(--primary);
+    color: var(--danger);
 }

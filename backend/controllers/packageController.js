@@ -115,9 +115,9 @@ const updatePackageById = async (req, res) => {
     if(!companyId){
         return res.status(400).json({message : "companyId is required"});
     }
-    if(companyId != companyIdToken){
+    /*if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
-    }
+    }*/
     try{
         const updatePackage = await packageModel.findOneAndUpdate( {_id : id}, {...req.body});
         if(!updatePackage){
@@ -254,7 +254,6 @@ const getPackageTypes = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 
 module.exports = {
     addPackage,
