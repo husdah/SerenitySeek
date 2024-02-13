@@ -50,7 +50,7 @@ function RatingSection(props) {
     <section className={styles.page_content +" " +starStyles.conatiner} id="rating">
         <header className={styles.section_header}>
           <h2>Rate us</h2>
-          <p className={styles.lite_text}>Company Rating : {propsRating ? propsRating : props.rating}</p>
+          <p className={styles.lite_text}>Company Rating : {propsRating || props.rating || 0}</p>
         </header>
 
         <div className={starStyles.star_wrapper}>

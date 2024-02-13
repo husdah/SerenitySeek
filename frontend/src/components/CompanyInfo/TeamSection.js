@@ -15,7 +15,7 @@ function TeamSection(props) {
             <section className={styles.team_wrap}>
 
                 {customers && customers.map((customer) => (
-                    <article className={styles.bio}>
+                    <article className={styles.bio} key={customer.email}>
                         <div className={styles.person1_pic} id="person1_pic">
                             <img crossOrigin="anonymous" src={customer.profilePic ? 'http://localhost:4000/uploads/' +customer.profilePic : PlaceHolder} alt="ProfilePic" />
                         </div>

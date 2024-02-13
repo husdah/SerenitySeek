@@ -339,6 +339,10 @@
   .bio .bio_text {
     height: 20vh;
   }
+
+  .title {
+    width: 100%;
+  }
 }
 .footer {
   color: var(--light-grey);
