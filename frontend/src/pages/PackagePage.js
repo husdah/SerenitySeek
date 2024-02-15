@@ -5,6 +5,7 @@ import Styles from '../assets/css/packagePage.module.css';
 import { useAuthContext } from '../hooks/useAuthContext';
 import UpdatePackage from '../components/UpdatePackage';
 import Swal from 'sweetalert2';
+import { Typography } from "antd";
 import withReactContent from 'sweetalert2-react-content';
 
 export default function PackagePage() {
@@ -14,7 +15,6 @@ export default function PackagePage() {
   const [modalOpen, setModalOpen]                 = useState(false);
   const [selectedPackageId, setSelectedPackageId] = useState(null);
   const [searchQuery, setSearchQuery]             = useState({
-    price: '',
     discount: '',
     date: ''
   });
@@ -165,7 +165,9 @@ export default function PackagePage() {
 
   return (
     <div className={Styles.content}>
-      <h1 className={Styles.packagepage_title}>List of Packages</h1>
+      <div>
+        <Typography.Title level={4}>Add Package Page</Typography.Title>
+      </div>
       <div className={Styles.packageHeader}>
         <div className={`${Styles.input_control}`}>
           <input 
@@ -201,14 +203,20 @@ export default function PackagePage() {
             </tr>
           </thead>
           <tbody>
-            {searchQuery.price || searchQuery.discount || searchQuery.date ? (
+            {searchQuery.discount || searchQuery.date ? (
               filteredPackages.map((packageItem) => (
                 <tr key={packageItem.id}>
                   <td>{packageItem.name}</td>
                   <td><img src={`http://localhost:4000/uploads/${packageItem.coverImg}`} className={Styles.packageImg} alt='package_logo' crossOrigin="anonymous" /></td>
                   <td>{packageItem.country}</td>
                   <td>{packageItem.type}</td>
-                  <td>{packageItem.pricePerOne}</td>
+                  <td>
+                  {packageItem.discount ?
+                      Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)
+                    :
+                      packageItem.pricePerOne
+                  }  
+                  </td>
                   { packageItem.discount  ? <td>{packageItem.discount}</td>: <td> NULL</td> }
                   <td>{new Date(packageItem.startDate).toLocaleDateString("en-US")}</td>
                   <td>{packageItem.duration}</td>

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import Styles from './SideMenu.module.css';
-
+import comapnyIMG from '../../assets/images/cLogoColored.png';
 
 // Here  when a link is clicked, it calls the navigate function to change the URL, which in turn renders the corresponding component specified in your AppRoutes
 export default function SideMenu() {
@@ -84,7 +84,7 @@ export default function SideMenu() {
             alt='company_logo'
             crossOrigin="anonymous"
           />
-        ) : <img src="https://yt3.ggpht.com/ytc/AMLnZu83ghQ28n1SqADR-RbI2BGYTrqqThAtJbfv9jcq=s176-c-k-c0x00ffffff-no-rj" alt="company logo" /> }
+        ) : <img src={comapnyIMG} alt="company logo" /> }
         <h3>{ companyName }</h3>
       </div>
       <Menu

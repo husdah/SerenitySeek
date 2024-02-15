@@ -129,6 +129,10 @@
     border: 1px solid var(--danger);
     background-color: var(--danger);
     cursor: pointer;
+    /*background-image: url('../images/booking.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: fill;*/
 }
 
 .bookIcon {
@@ -205,6 +209,23 @@ p.companyLink {
     font-weight: bold;
     text-transform: uppercase;
     color: var(--dark);
+}
+
+.discoverCompanyBtn {
+    margin-left: 15px;
+    border: none;
+    border-radius: 24px;
+    padding: 10px 15px;
+    background-color: var(--primary);
+    color: white;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+    transition: 0.45s ease;
+}
+
+.discoverCompanyBtn:hover {
+    transform: scale(1.1);
 }
 
 /* Destination */
