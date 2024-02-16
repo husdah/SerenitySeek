@@ -94,34 +94,33 @@ export default function Contact() {
       if (!fname || validator.isEmpty(fname) || !validator.isAlpha(fname)) {
         emptyValues.push('fname');
         setIsValidFirstName(false);
-        console.log(isValidFirstName);
+        //console.log(isValidFirstName);
       }
 
       if (!lname || validator.isEmpty(lname) || !validator.isAlpha(lname)) {
         emptyValues.push('lname');
         setIsValidLastName(false);
-        console.log(isValidLastName);
+        //console.log(isValidLastName);
       }
 
       if (!email || validator.isEmpty(email) || !validator.isEmail(email)) {
         emptyValues.push('email');
         setIsValidEmail(false);
-        console.log(isValidEmail);
+        //console.log(isValidEmail);
 
       }
 
       if (!subject || validator.isEmpty(subject) || !validator.matches(subject, /^[a-zA-Z\s]+$/)) {
         emptyValues.push('subject');
         setIsValidSubject(false);
-        console.log(isValidSubject);
+        //console.log(isValidSubject);
 
       }
 
       if (!message || validator.isEmpty(message) || !validator.isLength(message, { min: 1, max: 225 })) {
         emptyValues.push('message');
         setIsValidMessage(false);
-        console.log(isValidMessage);
-
+        //console.log(isValidMessage);
       }
 
       if (emptyValues.length === 0 && isValidFirstName && isValidLastName && isValidEmail && isValidSubject && isValidMessage) {

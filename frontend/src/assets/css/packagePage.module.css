@@ -1,20 +1,12 @@
 .packageHeader {
-    height: 50px;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: capitalize;
-    color: var(--dark);
-    gap: 150px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    gap: 30px;
+    margin-bottom: 25px;
 }
 
 .input_control {
-    height: 35px;
     width: 15%;
     border-radius: 24px;
     background-color:#ccc;
@@ -53,36 +45,28 @@
     padding: 10px;
 }
 
-h1.packagepage_title { 
-    font-size: 35px;
-    font-weight: bold;
-    font-style: normal;
-    text-transform: capitalize;
-    letter-spacing: 0.005em;
-    color: var(--primary);
-    text-align: left;
-    margin-bottom: 40px;
+.Table_wrapper {
+    width: 100%;
 }
 
 .table { 
-    margin: auto 17px;
-    background-color: var(--dark);
-    color: var(--light);
     display: inline-block;
     table-layout: fixed;
     border-collapse: collapse;
-    box-shadow: 0px 10px 10px #ccc;
     border-radius: 10px;
     white-space: nowrap;
-    overflow-x: auto;
+    width: 800px;
 }
 
 .table thead {
     font-size: 16px;
     text-align: left;
     text-transform: capitalize;
-    /*background-color: var(--dark);
-    color: var(--light);*/
+    background-color: #eee;
+}
+
+.table tr:hover {
+    background-color: #eee;
 }
 
 .table th,
@@ -90,24 +74,25 @@ h1.packagepage_title {
     text-transform: capitalize; 
     cursor: pointer;
     padding: 0.8em;
+    width: auto;
 }
 
 .table td {
     border-top: 0.5px solid #ddd;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.label {
-    border-radius: 3px;
-    padding: 0.3rem;
-    color: #fff;
+    font-size: 14px;
 }
 
 .packageImg {
     border-radius: 50%;
     height: 60px;
     width: 60px; 
+    transition: .2s linear;
+}
+
+.packageImg:hover {
+    transform: scale(1.3);
 }
 
 .actions {
@@ -118,11 +103,11 @@ h1.packagepage_title {
 .delete_btn, 
 .edit_btn {
     text-transform: capitalize;
-    color: var(--light);
+    color: var(--dark);
     font-size: 20px;
 }
 
 .delete_btn:hover, 
 .edit_btn:hover {
-    color: var(--danger);
+    color: var(--primary);
 }

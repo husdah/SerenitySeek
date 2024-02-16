@@ -4,6 +4,7 @@ const CompanyModel = require("../models/Company");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const fs = require("fs").promises;
+
 // Access ObjectId through mongoose.Types
 const { ObjectId } = mongoose.Types;
 // Now you can use ObjectId to create new ObjectId instances
@@ -13,7 +14,7 @@ const newObjectId = new ObjectId();
 // Add Package
 const addPackage = async (req, res) => {
     const { hotelId, name, country, destinations, pricePerOne, discount, description, type, startDate, duration } = req.body;
-    console.log('Request Body:', req.body);
+    //console.log('Request Body:', req.body);
     /*console.log('Received destination array:', destinations);
     console.log('Processed destination array:', destinations.map(dest => ({
         name: dest.destinationName,
@@ -37,7 +38,7 @@ const addPackage = async (req, res) => {
 
     try {
         const hotelIds = hotelId.split(',').map(id => new mongoose.Types.ObjectId(id)); 
-        console.log('Parsed hotel IDs:', hotelIds);
+        //console.log('Parsed hotel IDs:', hotelIds);
         const addPackage = await packageModel.create({
             companyId: req.user.id,
             hotelId: hotelIds,

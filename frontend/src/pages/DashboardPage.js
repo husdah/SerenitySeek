@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Calendarr from '../components/Calendarr';
 import Styles from '../assets/css/Dashboard.module.css';
 import imageURL from '../assets/images/airplane.png';
 import { useAuthContext } from '../hooks/useAuthContext';
 import {jwtDecode} from 'jwt-decode';
-import DashboardWidget from '../components/DashboardWidget'
+import DashboardWidget from '../components/DashboardWidget';
 
 export default function DashboardPage() {
   const [packages, setPackages] = useState([]);
   const [bookPackages, setBookPackages] = useState([]);
   const [customerNumber, setCustomerNumber] = useState([]);
   const { user, dispatch } = useAuthContext();
-  let companyId = jwtDecode(user.accessToken).user.id;
+  let companyId    = jwtDecode(user.accessToken).user.id;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +55,7 @@ export default function DashboardPage() {
         const jsonCompanyInfo = await responseCompanyInfo.json();
         if (responseCompanyInfo.ok) {
           const numberOfCustomers = jsonCompanyInfo.customers.length; // Get the number of customers
-          setCustomerNumber(numberOfCustomers); // Set the number of customers in the state
+          setCustomerNumber(numberOfCustomers); 
           console.log('number of customers:', numberOfCustomers);
         } 
         else {
@@ -73,15 +72,45 @@ export default function DashboardPage() {
   
   return (
     <div className={Styles.dashbaord_content}>
-      <h1 className={Styles.dashbaord_pageTitle}> Dashboard </h1>
+      <div className={Styles.dashboard_header}>
+        <span className={Styles.dashbaord_pageTitle}> Dashboard </span>     
+      </div>
+      
       <div className={Styles.dashbaord_widgets}>
         <DashboardWidget title="Packages" number={packages.length} imageSrc={imageURL} className={Styles.widget1}/>
         <DashboardWidget title="Customers" number={customerNumber} imageSrc={imageURL} className={Styles.widget2}/>
         <DashboardWidget title="Booking Packages" number={bookPackages.length} imageSrc={imageURL} className={Styles.widget3}/>
       </div>
-      
 
-      <Calendarr />
+      <div className={Styles.statistic_banner}>
+
+        <div className={Styles.statistic_banner_left}>
+          <div className={Styles.statistic_section}>
+            <span className={Styles.statistic_head}>Last Trips</span>
+            <span className={Styles.statistic_subTitle}>Overview of latest month</span>
+          </div>
+
+          <div className={Styles.statistic_table}>
+            <div className={Styles.statistic_heading}>
+              <span>Flight</span>
+              <span>Total Members</span>
+              <span>Min Price</span>
+              <span>Max Price</span>
+            </div>
+            <div className={Styles.statistic_values}>
+              <span>Turkey</span>
+              <span>250</span>
+              <span>230</span>
+              <span>900</span>
+            </div>
+          </div>
+        </div>
+
+        <div className={Styles.statistic_banner_right}>
+        </div>
+
+      </div>
+
   </div>
   )
 }
