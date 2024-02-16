@@ -2,13 +2,13 @@ import {useRef} from 'react';
 import {FaTimes,FaBars} from 'react-icons/fa';
 import styles from './navbar.module.css';
 import Logo from '../../assets/images/LogoNoBg.png'
-const Navbar = () => {
+const Navbar = (props) => {
     const navRef =useRef();
     const showNavbar=()=>{
         navRef.current.classList.toggle("responsive_nav");
     }
     return ( 
-        <div className={styles.navbar}>
+        <div className={props.nothome ? styles.navbarNotHome : styles.navbar}>
             <header className={styles.header}>
                 {/* <h3>Logo</h3> */}
                 <img src={Logo}></img>

@@ -5,6 +5,12 @@
     padding-right: 20px;
 
 }
+.navbarNotHome
+{
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
 .header{
     display: flex;
     align-items: center;

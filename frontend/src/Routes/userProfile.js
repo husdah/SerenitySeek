@@ -12,6 +12,8 @@ import { useUpdatePassword } from '../hooks/useUpdatePassword';
 import { useUpdateProfileImg } from '../hooks/useUpdateProfileImg';
 import { useRemoveProfileImg } from '../hooks/useRemoveUserProfile';
 
+import Navbar from '../components/navbar/Navbar'
+
 const UserProfile = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const { logout } = useLogout()
@@ -195,6 +197,8 @@ const UserProfile = () => {
     };
 
     return (
+        <>
+        <Navbar nothome='true'/>
         <div className={styles.up_Body}>
             <div className={`${styles.up_wrapper} ${isSignUp ? styles.up_animated_signup : styles.up_animated_signin}`}>
                 <div className={`${styles.up_form_container} ${styles.up_sign_up} ${styles.up_form_containerProfile}`}>
@@ -335,7 +339,7 @@ const UserProfile = () => {
                 </div>
             </div>
         </div>
-       
+        </>
     );
 };
 
