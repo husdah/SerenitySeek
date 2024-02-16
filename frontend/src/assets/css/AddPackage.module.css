@@ -69,6 +69,10 @@
     margin-right: 8px;
 }
 
+.hotelDisplay {
+    margin-bottom: 20px;
+}
+
 .addPackage_contianer input[type='text']:focus,
 .addPackage_contianer input[type='number']:focus,
 .addPackage_contianer textarea:focus,
@@ -76,10 +80,6 @@
 .addPackage_contianer input[type='date']:focus { 
     outline: 0;
 }
-
-
-
-
 
 .addPackage_destinationInputs {
     display: flex;

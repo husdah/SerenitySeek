@@ -66,10 +66,7 @@ export default function SideMenu() {
       getItem("Manage", "managePackage", <FiPackage />),
       getItem("Add", "addPackage", <IoIosAddCircle />),
     ]),
-    getItem("Hotel", "Hotels", <FaHotel />, [
-      getItem("Manage", "manageHotel", <FaHotel />),
-      getItem("Add", "addHotel", <IoIosAddCircle />),
-    ]),
+    getItem("Hotel", "hotel", <FaHotel />),
     getItem("Setting", "setting", <IoSettings />),
     getItem("Logout", "logout", <IoMdLogOut />),
   ];

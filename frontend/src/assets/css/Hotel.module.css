@@ -1,0 +1,147 @@
+.hotelSubContainer {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    margin-top: 25px;
+}
+
+.hotelContent {
+    display:flex;
+    justify-content: center;
+    margin: 30px 20px;
+}
+
+.hotelContent table { 
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-radius: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    min-height: 350px;
+}
+
+.hotelContent table thead {
+    font-size: 13px;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.hotelContent table tr:hover {
+    background-color: #f0f0f0;
+}
+
+.hotelContent table th,
+.hotelContent table td {
+    text-transform: capitalize; 
+    padding: 0.8em;
+}
+
+.hotelContent .rateBody, 
+.hotelContent .actionBody {
+    text-align: center;
+}
+
+.hotelContent table td {
+    border-top: 0.5px solid #f0f0f0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.hotelContent .nameCell {
+    width: 45%;
+}
+
+.hotelContent .locationCell {
+    width: 25%;
+}
+
+.hotelContent .ratingCell,
+.hotelContent .actionCell {
+    width: 15%;
+    text-align: center;
+} 
+
+.hotelContent .delete_btn {
+    color: var(--dark);
+    font-size: 20px;
+}
+
+.hotelContent .delete_btn:hover {
+    color: var(--primary);
+}
+
+
+.hotelForm {
+    background-color: #fff;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    border-radius: 10px;
+    margin: 30px 0;
+    padding: 20px 40px;
+    min-height: 350px
+} 
+
+.hotelFormLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addIcon {
+    font-size: 45px;
+    
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.form_group label {
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: capitalize;
+}
+
+.hotelForm input[type='text'],
+.hotelForm input[type='number'],
+.hotelForm input[type='date'] { 
+    background-color: #eee;
+    color: #333;
+    border: none;
+    padding-left: 7px;
+    height: 30px;
+    border-radius: 0.5rem;
+    font-weight: 600;
+} 
+
+.hotelForm input[type="file"] {
+    color: var(--dark);
+}
+
+.hotelForm input[type='text']:focus,
+.hotelForm input[type='number']:focus,
+.hotelForm input[type='date']:focus { 
+    outline: 0;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+}
+
+.btn_add {
+    display: block;
+    margin-top: 1rem;
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px #ccc;
+    border: none;
+}

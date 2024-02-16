@@ -378,7 +378,7 @@ export default function AddPackage() {
     <div className={Styles.addPackage_contianer}>
       
       <div>
-        <Typography.Title level={4}>Add Package Page</Typography.Title>
+        <Typography.Title level={4}>Add Package</Typography.Title>
       </div>
       
       <div className={Styles.addPackage_container}>
@@ -435,7 +435,7 @@ export default function AddPackage() {
                     onChange={handleTypeChange}
                     onFocus={() => setIsValidType(true)}
                   />
-                  {!isValidType && <span className={Styles.error}>Please enter a valid Type.</span>}
+                  {!isValidType && <span className={Styles.error}>Please select a Type.</span>}
                 </div>
                 <div className={Styles.packageDate}>
                   <input
@@ -446,7 +446,7 @@ export default function AddPackage() {
                     onFocus={() => setIsValidDate(true)}
                   />
                   <br />
-                  {!isValidDate && <span className={Styles.error}>Please enter a valid Date.</span>}
+                  {!isValidDate && <span className={Styles.error}>Please select a valid Date.</span>}
                 </div>
                 <div className={Styles.packageDuration}>
                   <input
@@ -516,7 +516,7 @@ export default function AddPackage() {
                     onFocus={() => setIsValidCountry(true)}
                   />
                   <br />
-                  {!isValidCountry && <span className={Styles.error}>Please enter a valid Country.</span>}
+                  {!isValidCountry && <span className={Styles.error}>Please enter a valid country name.</span>}
                 </div>
                 {formData.destinations.map((destination, destIndex) => (
                   <div key={destIndex} className={Styles.addPackage_destinationInputs}>
@@ -528,7 +528,7 @@ export default function AddPackage() {
                       onChange={handleChange}
                       onFocus={() => setIsValidDestinationNames(true)}
                     />
-                    {!isValidDestinationNames && <span className={Styles.error}>Please enter a valid Name.</span>}
+                    {!isValidDestinationNames && <span className={Styles.error}>This field is required.</span>}
                     {destination.activities && destination.activities.map((activity, actIndex) => (
                       <div key={actIndex} className={Styles.addPackage_activityInputs}>
                         <input
@@ -539,7 +539,7 @@ export default function AddPackage() {
                           onChange={(e) => handleChange(e, destIndex, actIndex, 'activityName')}
                           onFocus={() => setIsValidActivityNames(true)}
                         />
-                        {!isValidActivityNames && <span className={Styles.error}>Please enter a valid Name.</span>}
+                        {!isValidActivityNames && <span className={Styles.error}>This field is required.</span>}
                         <input
                           type="text"
                           name={`destinations-${destIndex}-activities-${actIndex}-activityDescription`}
@@ -549,7 +549,7 @@ export default function AddPackage() {
                           onFocus={() => setIsValidActivityDescriptions(true)}
                       
                         />
-                        {!isValidActivityDescriptions && <span className={Styles.error}>Please enter a valid Description.</span>}
+                        {!isValidActivityDescriptions && <span className={Styles.error}>This field is required.</span>}
                       </div>
                     ))}
                     <button
