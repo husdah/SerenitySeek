@@ -43,9 +43,7 @@ export default function Destinations() {
               </div>
               <div className={styles.card__body}>
                   <h1>{packageItem.country}</h1>
-                  <p>Lorem ipsum dolorsit, amet consectetur adipisicing elit corrupti delectus rep rehenderit.</p>
                   <div className={styles.info}>
-                  {/* <p className="info__highlight">{new Date(packageItem.startDate).toLocaleDateString("en-US")}</p> */}
                   <p className={styles.info__highlight}>{packageItem.pricePerOne} $</p>
                   <Link to={`/SinglePackage/${packageItem._id}`}>
                      <button>Book Now</button>

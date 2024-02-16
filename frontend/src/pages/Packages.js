@@ -5,11 +5,13 @@ import { FaLocationDot } from "react-icons/fa6"
 import { HiOutlineClipboardCheck } from "react-icons/hi"
 import { Link } from 'react-router-dom'
 
+
 export default function Packages() {
   const [packages, setPackages]           = useState([]);
   const [countryFilter, setCountryFilter] = useState('');
   const [selectedDate, setSelectedDate]   = useState('');
   const [maxPrice, setMaxPrice]           = useState(5000);
+ 
 
   /* Fetch Packages */
   useEffect(() => {
@@ -17,7 +19,6 @@ export default function Packages() {
       try {
         const response = await fetch('http://localhost:4000/api/packages');
         const json = await response.json();
-        /* console.log(json); */
         if (response.ok) {
           setPackages(json);
         }

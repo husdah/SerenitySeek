@@ -7,6 +7,7 @@
     font-size: 3rem;
     text-align: center;
     color: #0a2342;
+    text-shadow: 1px 1px 2px rgb(47, 47, 47);
 }
 .content
 {
@@ -20,6 +21,12 @@
     width:45%;
     text-align: start;
     font-size: 1.1rem;
+    color: #0a2342;
+}
+.aboutustext p
+{
+    font-size: 1rem;
+    color: #0a2342c6;
 }
 .forimg
 {
@@ -41,4 +48,25 @@
     position: absolute;
     top:-10%;
     right: 0;
+}
+.aboutUs .fortitles
+{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding-top: 5px;
+}
+.fortitles div
+{
+    display: flex;
+}
+.aboutUs .fortitles .icon
+{
+   font-size: 40px;
+   color: #FFB100;
+   padding-right: 6px;
+}
+.aboutUs .fortitles span
+{
+    font-size: 15px;
+    color: #0a2342;
 }

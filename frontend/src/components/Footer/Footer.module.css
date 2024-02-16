@@ -1,113 +1,85 @@
-.footer_section {
+.footer
+{
+    padding: 80px 13% 70px;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    background-color: var(--dark);
-    padding: 80px 20px;
-    /*border: 1px solid red;*/
+    grid-template-columns: repeat(auto-fit,minmax(200px,auto));
+    gap: 3.5rem;
+    /* left: 0;
+    right: 0;
+    bottom: 0; */
 }
-
-.footer_section .column_navigation,
-.footer_section .column_link,
-.footer_section .column_support {
-    display: grid;
-    padding: 10px;
-    color: var(--light);
+.footer_content img
+{
+    width: 90px;
+    height: 90px;
 }
-
-.footer_section .footerParag {
-    color: var(--light);
-    font-size: 13px;
-    font-weight: 300;
-    padding-right: 70px;
-    text-align: justify;
-}
-
-.footer_section .column_support h4,
-.footer_section .column_link h4,
-.footer_section .column_navigation h4 {
-    font-size: 15px;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    font-weight: 500;
-    word-spacing: 1px;
-    border-bottom: 1px solid var(--light);
-    width: 31%;
-    font-style: normal;
-    text-transform: uppercase;
-}
-.footer_section .column_support h4 {
-    width: 40%;
-    padding-bottom: 15px;
-}
-
-.footer_section .column_navigation a,
-.footer_section .column_link a,
-.footer_section .column_social_media a {
-    color: var(--light);
-    text-decoration: none;
-    padding: 5px 0px;
-    font-size: 15px;
-    font-weight: 300;
-    font-style: normal;
-}
-
-.footer_section .column_navigation a, 
-.footer_section .column_link a {
-    transition: all 0.3s ease;
-}
-
-.footer_section .column_social_media a .facebook,
-.footer_section .column_social_media a .instagram,
-.footer_section .column_social_media a .linkedin {
-    margin-right: 15px;
+.footer_content h4
+{
     font-size: 20px;
-    transition: all 0.3s ease;
+    color: #0a2342;
+    margin-bottom: 1.5rem;
 }
-
-.footer_section  .column_social_media a .facebook:hover,
-.footer_section  .column_social_media a .instagram:hover,
-.footer_section  .column_social_media a .linkedin:hover {
-    transform: scale(1.1);
-    color: var(--primary);
+.footer_content li
+{
+    margin-bottom: 16px;
+    list-style: none;
 }
-
-.footer_section .column_support a{
-    transition: all 0.3s ease;
-}
-.footer_section .column_support a {
+.footer_content .link
+{
+    color: #0a2342d3;
+    display: block;
     text-decoration: none;
+    font-weight: 400;
+    font-size: 15px;
+    transition: all 0.4s ease;
 }
-.footer_section .column_support a span{
-    padding-left: 10px;
-    color: var(--light);
+.footer_content .link:hover
+{
+    transform: translateY(-3px) translateX(-5px);
+}
+.footer_content p
+{
+    color: #0a2342;
+    font-size: 16px;
+    line-height: 30px;
+    margin: 20px 0;
+}
+.footer_content .icons .link_icon
+{
+    display: inline-block;
+    margin-right: 17px;
     text-decoration: none;
+    transition: all 0.4s ease;
 }
-
-.footer_section .column_support a .email,
-.footer_section .column_support a .phone,
-.footer_section .column_support a .address{
-    color: var(--light);
-    font-size: 21px;
-    margin-top: 7px;
+.footer_content .icons .link_icon:hover
+{
+    transform: translateY(-3px) translateX(-5px);
 }
-
-.footer_section .column_navigation a:hover, 
-.footer_section .column_link a:hover {
-    padding-left: 10px;
-    color: var(--primary);
+.footer_content .icons .icon
+{
+    color: #0a2342;
+    font-size: 20px;
 }
-
-.footer_section .column_support a:hover{
-    color: var(--primary);
-    padding-left: 10px;
+@media(max-width:1690px)
+{
+    .footer
+    {
+        padding: 50px 5% 40px;
+    }
 }
-
-.footer_copyright {
-    border-top: 1px solid var(--light);
-    background-color: var(--dark);
-    padding: 5px 28px; 
-    width: 100%;
-    height: 30px;
-    color: var(--light);
+@media(max-width:1120px)
+{
+    .footer
+    {
+        grid-template-columns: repeat(auto-fit,minmax(300px,auto));
+        gap: 2rem;
+    }
 }
-
+@media(max-width:700px)
+{
+    .footer
+    {
+        grid-template-columns: repeat(auto-fit,minmax(150px,auto));
+        gap: 2.5rem;
+    }
+}
