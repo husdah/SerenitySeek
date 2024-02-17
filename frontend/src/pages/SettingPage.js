@@ -1,8 +1,8 @@
 import { Typography } from "antd";
 import React, { useState, useEffect } from "react";
 import styles from "../assets/css/companyProfile.module.css";
-import CompanyInfoForm from "../components/companyInfoForm";
-import CompanyAccountForm from "../components/companyAccountForm";
+import CompanyInfoForm from "../components/CompanySettings/companyInfoForm";
+import CompanyAccountForm from "../components/CompanySettings/companyAccountForm";
 import {FaCamera, FaTrash } from "react-icons/fa";
 import Profile  from '../assets/images/ProfilePlaceholder.jpg';
 import { useUpdateLogo } from '../hooks/useUpdateCompanyLogo';

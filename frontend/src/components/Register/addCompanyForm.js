@@ -2,10 +2,10 @@
 
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { useSignup } from '../hooks/useRegisterCompany';
+import { useSignup } from '../../hooks/useRegisterCompany';
 import validator from 'validator';
 import Swal from 'sweetalert2';
-import styles from '../assets/css/Register.module.css'; // Import the Register.module.css
+import styles from '../../assets/css/Register.module.css'; // Import the Register.module.css
 
 const CompanySignupForm = () => {
   const { signup, error, isLoading } = useSignup();

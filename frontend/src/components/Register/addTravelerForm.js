@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSignup } from '../hooks/useSignup';
+import { useSignup } from '../../hooks/useSignup';
 import validator from 'validator';
-import styles from '../assets/css/Register.module.css'; // Import the Register.module.css
+import styles from '../../assets/css/Register.module.css'; // Import the Register.module.css
 
 const TravelerSignUpForm = () => {
   const { signup, error, isLoading } = useSignup();
