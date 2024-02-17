@@ -39,7 +39,7 @@ function TeamSection(props) {
 
             </section>
         </div>
-        </section>
+    </section>
   )
 }
 
