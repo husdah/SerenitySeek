@@ -4,7 +4,7 @@ import AboutUs from '../components/aboutUs/AboutUs';
 import Destinations from '../components/destinations/Destinations'
 import Services from '../components/servicesSection/Services';
 import Travelers from '../components/travelers/Travelers';
-import Footer from '../components/footer/Footer';
+import Footer from '../components/Footer/Footer';
 import Companies from '../components/companies/Companies';
 
 const Home = () => {

@@ -1,6 +1,6 @@
 import React  from 'react'
 import { Link } from 'react-router-dom';
-import styles from './footer.module.css';
+import styles from './Footer.module.css';
 import logo from '../../assets/images/LogoNoBg.png'
 import { FaFacebook } from "react-icons/fa";
 import { BiLogoInstagramAlt } from "react-icons/bi";
