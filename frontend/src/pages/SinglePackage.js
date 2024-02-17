@@ -7,10 +7,9 @@ import { FaBookmark } from "react-icons/fa6";
 import { IoLocationSharp } from 'react-icons/io5';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 import SliderHotel from '../components/SliderHotel';
-import { Link } from 'react-router-dom';
-import bookImg from '../assets/images/booking.png'; 
-
-
+import { Link } from 'react-router-dom'; 
+import Navbar from '../components/navbar//Navbar';
+import Footer from '../components/Footer/Footer';
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
@@ -99,6 +98,7 @@ export default function SinglePackage() {
 
   return (
     <div className={Styles.container}>
+      <Navbar nothome='true' />
       {packageData.map((packageItem) => {
           let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;
           return(
@@ -201,7 +201,7 @@ export default function SinglePackage() {
             </div>
           )
       })}
-      
+      <Footer />
     </div>
   );
 }

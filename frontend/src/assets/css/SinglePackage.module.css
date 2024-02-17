@@ -214,9 +214,9 @@ p.companyLink {
 .discoverCompanyBtn {
     margin-left: 15px;
     border: none;
-    border-radius: 24px;
+    border-radius: 14px;
     padding: 10px 15px;
-    background-color: var(--primary);
+    background-color: var(--danger);
     color: white;
     font-size: 13px;
     letter-spacing: 0.05em;
