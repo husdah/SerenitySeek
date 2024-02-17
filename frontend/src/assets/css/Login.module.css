@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
-
 :root {
     --borderRadius: 1px;
     --offset: 150%;
@@ -15,7 +13,6 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     color: #fff;
 }

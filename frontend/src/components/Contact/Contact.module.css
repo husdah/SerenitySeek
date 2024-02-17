@@ -137,7 +137,7 @@ textarea::placeholder {
     color: #ccc;
 }
 
-.contactTextarea {
+.input_control  textarea{
     width: 70%;
     outline: none;
     border: 1px solid var(--light);
@@ -179,13 +179,13 @@ textarea::placeholder {
     transform: scale(1.1);
 }
 
-span.error {
+.contact span.error {
     font-size: 12px;
     color: red;
 }
 
-/* Responsive on width 425px */
-@media(max-width:425px) {
+/* Responsive on width 600px */
+@media(max-width:600px) {
     .contactContainer {
         display: flex;
         flex-direction: column;

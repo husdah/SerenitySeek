@@ -5,6 +5,7 @@ import Styles from '../assets/css/packagePage.module.css';
 import { useAuthContext } from '../hooks/useAuthContext';
 import UpdatePackage from '../components/UpdatePackage';
 import Swal from 'sweetalert2';
+import { Typography } from "antd";
 import withReactContent from 'sweetalert2-react-content';
 
 export default function PackagePage() {
@@ -14,7 +15,6 @@ export default function PackagePage() {
   const [modalOpen, setModalOpen]                 = useState(false);
   const [selectedPackageId, setSelectedPackageId] = useState(null);
   const [searchQuery, setSearchQuery]             = useState({
-    price: '',
     discount: '',
     date: ''
   });
@@ -26,9 +26,6 @@ export default function PackagePage() {
       const packageStartMonth = packageStartDate.getMonth() + 1; 
       const packageStartYear  = packageStartDate.getFullYear();
   
-      if (searchQuery.price && parseFloat(packageItem.pricePerOne) !== parseFloat(searchQuery.price)) {
-        return false;
-      }
       if (searchQuery.discount && parseFloat(packageItem.discount) !== parseFloat(searchQuery.discount)) {
         return false;
       }
@@ -79,6 +76,7 @@ export default function PackagePage() {
       const json = await response.json();
       if (response.ok) {
         setPackages(json);
+        console.log('number of packages:', packages.length);
       }
       else{
         console.log('No Available Package');
@@ -167,19 +165,10 @@ export default function PackagePage() {
 
   return (
     <div className={Styles.content}>
-      <h4>Filter By: </h4>
+      <div>
+        <Typography.Title level={4}>Manage Package</Typography.Title>
+      </div>
       <div className={Styles.packageHeader}>
-        <div className={`${Styles.input_control}`}>
-          <input 
-            type="text" 
-            id="price" 
-            placeholder='Price'
-            value={searchQuery.price}
-            onChange={(e) => handleInputChange('price', e.target.value)}
-          />
-          <FaSearch  className={Styles.searchIcon}/>
-        </div>
-
         <div className={`${Styles.input_control}`}>
           <input 
             type="text" 
@@ -190,7 +179,6 @@ export default function PackagePage() {
           />
           <FaSearch  className={Styles.searchIcon}/>
         </div>
-
         <input 
           type="date"
           id="date"
@@ -199,13 +187,11 @@ export default function PackagePage() {
         />
       </div>
 
-      <h4>List of Packages</h4>
-
       <div className={Styles.Table_wrapper}>
         <table className={Styles.table}>
           <thead>
             <tr>
-              <th>Name</th>
+              <th className={Styles.rowName}>Name</th>
               <th>Image</th>
               <th>Country</th>
               <th>Type</th>
@@ -217,14 +203,20 @@ export default function PackagePage() {
             </tr>
           </thead>
           <tbody>
-            {searchQuery.price || searchQuery.discount || searchQuery.date ? (
+            {searchQuery.discount || searchQuery.date ? (
               filteredPackages.map((packageItem) => (
-                <tr key={packageItem.id}>
-                  <td>{packageItem.name}</td>
+                <tr key={packageItem._id}>
+                  <td className={Styles.nameCell}>{packageItem.name}</td>
                   <td><img src={`http://localhost:4000/uploads/${packageItem.coverImg}`} className={Styles.packageImg} alt='package_logo' crossOrigin="anonymous" /></td>
                   <td>{packageItem.country}</td>
                   <td>{packageItem.type}</td>
-                  <td>{packageItem.pricePerOne}</td>
+                  <td>
+                  {packageItem.discount ?
+                      Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)
+                    :
+                      packageItem.pricePerOne
+                  }  
+                  </td>
                   { packageItem.discount  ? <td>{packageItem.discount}</td>: <td> NULL</td> }
                   <td>{new Date(packageItem.startDate).toLocaleDateString("en-US")}</td>
                   <td>{packageItem.duration}</td>

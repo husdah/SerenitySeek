@@ -2,12 +2,15 @@
     position: fixed;
     top: 4px;
     left: 4px;
-    width: 15%;
+    width: 14%;
     height: 99%;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: #F0F0F0;
     color: var(--dark);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    transition: all 0.3s ease;
 }
 
 .sideMenuImage {
@@ -20,7 +23,7 @@
 
 .sideMenuImage h3{
     text-transform: capitalize;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     font-style: normal;
 }
@@ -33,6 +36,9 @@
 
 .SideMenuVertical {
     color: var(--dark);
+    background-color: #F0F0F0;
+    outline: 0;
+    border: 0 !important;
 }
 
 /*

@@ -23,65 +23,14 @@ export default function Contact() {
     const [ isValidEmail, setIsValidEmail ]         = useState(true);
     const [ isValidSubject, setIsValidSubject ]     = useState(true);
     const [ isValidMessage, setIsValidMessage ]     = useState(true);
-    const [ emptyFields, setEmptyFields ]           = useState([]);
     
     const handleChange = (e) => {
       const { name, value } = e.target;
       /* ...prev if we have sentence and change one word only this word will change while the other remain the same  */
       setState((prev) => ({ ...prev, [name]: value }));
     };
-
-    const handleOnFocus = (fieldName) => {
-      setEmptyFields('');
-      switch (fieldName) {
-        case 'fname':
-          setIsValidFirstName(true);
-          break;
-        case 'lname':
-          setIsValidLastName(true);
-          break;
-        case 'email':
-          setIsValidEmail(true);
-          break;
-        case 'subject':
-          setIsValidSubject(true);
-          break;
-        case 'message':
-          setIsValidMessage(true);
-          break;
-        default:
-          break;
-      }
-    };
     
-    /* Action on submit  */
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      const { fname, lname, email, subject, message } = state;
-
-       /* Reset validation states */
-       setIsValidFirstName(true);
-       setIsValidLastName(true);
-       setIsValidEmail(true);
-       setIsValidSubject(true);
-       setIsValidMessage(true);
-
-      if (!fname || !lname || !email || !subject || !message || validator.isEmpty(fname) || validator.isEmpty(lname) || validator.isEmpty(email) || validator.isEmpty(subject) || validator.isEmpty(message) ) {
-        setEmptyFields('This field is required.');
-        return;
-      }
-
-      setIsValidFirstName(validator.isAlpha(fname));
-      setIsValidLastName(validator.isAlpha(lname));
-      setIsValidEmail(validator.isEmail(email));
-      setIsValidSubject(validator.matches(subject, /^[a-zA-Z\s]+$/));
-      setIsValidMessage(validator.isLength(message, { min: 1, max: 50 }));
-
-      if (!isValidFirstName || !isValidLastName || !isValidEmail || !isValidSubject || !isValidMessage) {
-        return;
-      }
-
+    const sendEmail = async() => {
       const MySwal = withReactContent(Swal);
 
       const handleSuccess = (responseData) => {
@@ -102,7 +51,6 @@ export default function Contact() {
           message: '',
         });
       }
-
       try {
         const response = await fetch('http://localhost:4000/api/contact', {
           method: 'POST',
@@ -125,6 +73,58 @@ export default function Contact() {
       } 
       catch (error) {
         console.error('An error occurred while sending the email', error);
+      }
+    }
+
+    /* Action on submit  */
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      // Reset validation states
+      setIsValidFirstName(true);
+      setIsValidLastName(true);
+      setIsValidEmail(true);
+      setIsValidSubject(true);
+      setIsValidMessage(true);
+
+      const { fname, lname, email, subject, message } = state;
+
+      let emptyValues = [];
+
+      if (!fname || validator.isEmpty(fname) || !validator.isAlpha(fname)) {
+        emptyValues.push('fname');
+        setIsValidFirstName(false);
+        //console.log(isValidFirstName);
+      }
+
+      if (!lname || validator.isEmpty(lname) || !validator.isAlpha(lname)) {
+        emptyValues.push('lname');
+        setIsValidLastName(false);
+        //console.log(isValidLastName);
+      }
+
+      if (!email || validator.isEmpty(email) || !validator.isEmail(email)) {
+        emptyValues.push('email');
+        setIsValidEmail(false);
+        //console.log(isValidEmail);
+
+      }
+
+      if (!subject || validator.isEmpty(subject) || !validator.matches(subject, /^[a-zA-Z\s]+$/)) {
+        emptyValues.push('subject');
+        setIsValidSubject(false);
+        //console.log(isValidSubject);
+
+      }
+
+      if (!message || validator.isEmpty(message) || !validator.isLength(message, { min: 1, max: 225 })) {
+        emptyValues.push('message');
+        setIsValidMessage(false);
+        //console.log(isValidMessage);
+      }
+
+      if (emptyValues.length === 0 && isValidFirstName && isValidLastName && isValidEmail && isValidSubject && isValidMessage) {
+        sendEmail();
       }
     };
   
@@ -162,11 +162,10 @@ export default function Contact() {
                       name="fname" 
                       value={state.fname}
                       onChange={handleChange}
-                      onFocus={() => handleOnFocus('fname')} 
+                      onFocus={() => setIsValidFirstName(true)} 
                     />
                     <br />
-                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
-                    {!isValidFirstName && <span className={Styles.error}>Contains only letters.</span>}
+                    {!isValidFirstName && <span className={Styles.error}>Please enter your first name.</span>}
                   </div>
 
                   <div className={Styles.input_control}>
@@ -176,11 +175,10 @@ export default function Contact() {
                       name="lname"  
                       value={state.lname}
                       onChange={handleChange}
-                      onFocus={() => handleOnFocus('lname')}
+                      onFocus={() => setIsValidLastName(true)}
                     />
                     <br />
-                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
-                    {!isValidLastName && <span className={Styles.error}>Contains only letters.</span>}
+                    {!isValidLastName && <span className={Styles.error}>Please enter your last name.</span>}    
                   </div>
 
                   <div className={Styles.input_control}>
@@ -190,11 +188,10 @@ export default function Contact() {
                       name="email" 
                       value={state.email}
                       onChange={handleChange}
-                      onFocus={() => handleOnFocus('email')}
+                      onFocus={() => setIsValidEmail(true)}
                     />
                     <br />
-                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
-                    {!isValidEmail && <span className={Styles.error}>example@gmail.com</span>}
+                    {!isValidEmail && <span className={Styles.error}>Please enter your email.</span>}
                   </div>
 
                   <div className={Styles.input_control}>
@@ -204,11 +201,10 @@ export default function Contact() {
                       name="subject" 
                       value={state.subject}
                       onChange={handleChange}
-                      onFocus={() => handleOnFocus('subject')}
+                      onFocus={() => setIsValidSubject(true)}
                     />
                     <br />
-                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
-                    {!isValidSubject && <span className={Styles.error}>The subject must be clear</span>}
+                    {!isValidSubject && <span className={Styles.error}>Please enter a clear subject.</span>}
                   </div>
 
                   <div className={Styles.input_control}>
@@ -218,11 +214,10 @@ export default function Contact() {
                       name="message" 
                       value={state.message}
                       onChange={handleChange}
-                      onFocus={() => handleOnFocus('message')}
+                      onFocus={() => setIsValidMessage(true)}
                     ></textarea>
                     <br />
-                    {emptyFields && <span className={Styles.error}>{emptyFields}</span>}
-                    {!isValidMessage && <span className={Styles.error}>The message must be clear</span>}
+                    {!isValidMessage && <span className={Styles.error}>Please enter a clear message.</span>}
                   </div>
 
                   <button className={Styles.contact_btn}>Send</button>  

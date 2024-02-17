@@ -1,0 +1,38 @@
+.dashboard_widget {
+    position: relative;
+    border-radius: 12px;
+}
+
+.subContainer_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px ;
+    color: var(--light);
+}
+
+.subContainer_content p {
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.subContainer_content span {
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+.subContainer_image {
+    display: flex;
+    justify-content: end;
+    text-align: end;
+}
+.subContainer_image img {
+    width: 200px;
+    position: absolute;
+    height: 200px;
+    bottom: -71%;
+    transform: rotate(5deg);
+}
+

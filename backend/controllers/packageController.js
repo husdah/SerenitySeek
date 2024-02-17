@@ -4,6 +4,7 @@ const CompanyModel = require("../models/Company");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const fs = require("fs").promises;
+
 // Access ObjectId through mongoose.Types
 const { ObjectId } = mongoose.Types;
 // Now you can use ObjectId to create new ObjectId instances
@@ -13,7 +14,7 @@ const newObjectId = new ObjectId();
 // Add Package
 const addPackage = async (req, res) => {
     const { hotelId, name, country, destinations, pricePerOne, discount, description, type, startDate, duration } = req.body;
-    console.log('Request Body:', req.body);
+    //console.log('Request Body:', req.body);
     /*console.log('Received destination array:', destinations);
     console.log('Processed destination array:', destinations.map(dest => ({
         name: dest.destinationName,
@@ -37,7 +38,7 @@ const addPackage = async (req, res) => {
 
     try {
         const hotelIds = hotelId.split(',').map(id => new mongoose.Types.ObjectId(id)); 
-        console.log('Parsed hotel IDs:', hotelIds);
+        //console.log('Parsed hotel IDs:', hotelIds);
         const addPackage = await packageModel.create({
             companyId: req.user.id,
             hotelId: hotelIds,
@@ -115,9 +116,9 @@ const updatePackageById = async (req, res) => {
     if(!companyId){
         return res.status(400).json({message : "companyId is required"});
     }
-    if(companyId != companyIdToken){
+    /*if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
-    }
+    }*/
     try{
         const updatePackage = await packageModel.findOneAndUpdate( {_id : id}, {...req.body});
         if(!updatePackage){
@@ -254,7 +255,6 @@ const getPackageTypes = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
-
 
 module.exports = {
     addPackage,
