@@ -1,0 +1,9 @@
+.companies h1
+{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    text-align: center;
+    color: #0a2342;
+    text-shadow: 1px 1px 2px rgb(47, 47, 47);
+}

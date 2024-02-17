@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PackageBanner from '../components/PackagesBanner';
 import PackagesBody from '../components/PackagesBody';
 
+
 export default function Packages() {
   const [packages, setPackages]           = useState([]);
   const [countryFilter, setCountryFilter] = useState('');
@@ -14,7 +15,6 @@ export default function Packages() {
       try {
         const response = await fetch('http://localhost:4000/api/packages');
         const json = await response.json();
-        /* console.log(json); */
         if (response.ok) {
           setPackages(json);
         }

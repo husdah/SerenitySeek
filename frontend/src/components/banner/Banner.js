@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Slider from './Slider';
 import Navbar from '../navbar/Navbar'
 import 'swiper/css';
@@ -19,12 +20,12 @@ const Banner = () => {
   );
   const [selectedData, setSelectedData] = useState({ title: 'Explore Britain', description: 'Britain, a tapestry of tradition and innovation, boasts iconic landmarks, rich history, and diverse culture. From historic sites like Stonehenge to the bustling streets of London, every corner tells a story of heritage and modernity intertwining seamlessly.' });
   const sliderData = [
-    { src: londonImage, title: 'Explore Britain', description: 'Britain, a tapestry of tradition and innovation, boasts iconic landmarks, rich history, and diverse culture. From historic sites like Stonehenge to the bustling streets of London, every corner tells a story of heritage and modernity intertwining seamlessly.' },
-    { src: dubaiImage, title: 'Explore Dubai', description: 'Description for Slider 2' },
-    { src: franceImage, title: 'Explore France', description: 'Description for Slider 4' },
-    { src: greeceImage, title: 'Explore Greece', description: 'Description for Slider 1' },
-    { src: dubaiImage, title: 'Explore Dubai', description: 'Description for Slider 2' },
-    { src: franceImage, title: 'Explore France', description: 'Description for Slider 4' }
+    { src: londonImage,countryName:'london',title: 'Explore Britain', description: 'Britain, a tapestry of tradition and innovation, boasts iconic landmarks, rich history, and diverse culture. From historic sites like Stonehenge to the bustling streets of London, every corner tells a story of heritage and modernity intertwining seamlessly.' },
+    { src: dubaiImage, countryName:'dubai',title: 'Explore Dubai', description: 'Description for Slider 2' },
+    { src: franceImage,countryName:'france', title: 'Explore France', description: 'Description for Slider 4' },
+    { src: greeceImage,countryName:'greece', title: 'Explore Greece', description: 'Description for Slider 1' },
+    { src: dubaiImage,countryName:'dubai', title: 'Explore Dubai', description: 'Description for Slider 2' },
+    { src: franceImage,countryName:'india', title: 'Explore France', description: 'Description for Slider 4' }
   
   ];
 
@@ -55,7 +56,10 @@ const Banner = () => {
                 <>
                     <p>{selectedData.title}</p>
                     <p className={styles.desc}>{selectedData.description}</p>
-                    <button className={styles.explore}>Explore</button>
+                    <Link to={`/Package`} state="india">
+                      <button className={styles.explore}>Explore</button>
+                    </Link>
+                  
                 </>
                 )}
             </div>

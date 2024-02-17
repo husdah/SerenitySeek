@@ -1,0 +1,71 @@
+.travelers {
+    position: relative;
+    height: 550px;
+    background-color: #d8dbdd;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    margin-top: 5rem;
+    position: relative;
+   
+}
+/* 
+.travelers::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../images/night.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7; 
+    z-index: -99;
+} */
+.travelers h1{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    text-align: center;
+    color: #0a2342;
+    padding: 1rem;
+    padding-top: 2rem;
+    text-shadow: 1px 1px 2px rgb(47, 47, 47);
+    
+}
+.travelers .travelers_photos
+{
+    display: flex;
+    justify-content: space-around;
+    padding-left: 8rem;
+    padding-right: 8rem;
+    padding-top: 1rem;
+}
+.travelers .travelers_photos img
+{
+    width: 200px;
+    height: 350px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: transform 0.3s ease;
+}
+.travelers .travelers_photos img:hover
+{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+.travelers .airplane
+{
+    position: absolute;
+    top: 17px;
+    left: 140px;
+}
+.travelers .airplane img
+{
+    width: 200px;
+    height: auto;
+    transform: rotate(-11deg) scaleX(-1);
+    /* transform: rotate(30deg); */
+}
