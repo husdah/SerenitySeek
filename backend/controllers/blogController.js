@@ -1,41 +1,38 @@
 const blogModel = require('../models/Blog');
+const userModel = require('../models/User');
 const validator = require('validator');
 const fs = require('fs').promises;
 const {default:mongoose} = require('mongoose');
 
-//Add Blog
-const addBlog = async (req,res) => {
-    const {userId, location , companyId, caption, comments} = req.body;
-    let gallery=req.files;
+const addBlog = async (req, res) => {
+    const { location, caption } = req.body;
+    const gallery = req.files;
 
     if (!validator.isLength(caption, { min: 1, max: 255 })) {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
     }
-    if (!Array.isArray(gallery)) {
-        return res.status(400).json({ message: 'Invalid gallery format' });
-    }
 
-    try{
+    if (!userId || !location || !caption || !Array.isArray(gallery)) {
+        return res.status(400).json({ message: 'Missing or invalid blog data' });
+    }
+    try {
         const addedBlog = await blogModel.create({
-            userId : userId,
-            location : location,
-            companyId : companyId,
-            caption : caption,
-            gallery : req.files,
-            comments: comments || [],
+            userId: req.user.id,
+            location: location,
+            caption: caption,
+            gallery: gallery,
         });
 
-        res.status(201).json({message:'Blog added successfully!'});
-
-    }catch(error){
-        res.status(400).json({error:error.message});
+        res.status(201).json({ message: 'Blog added successfully!', blog: addedBlog });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-}
+};
 
 //Get All Blogs
 const getAllBlogs = async (req,res) => {
     try{
-        const blogs = await blogModel.find();
+        const blogs = await blogModel.find().populate('userId', 'Fname Lname');
         if (blogs.length === 0) {
             return res.status(204).json({ message: 'No available blogs' });
         }
@@ -87,7 +84,7 @@ const getBlogById = async (req, res) =>{
 //Update a Blog
 const updateBlog = async (req,res) => {
     const {id} = req.params;
-    const {location,companyId,caption,likes,comments} = req.body;
+    const {location,caption,likes,comments} = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         res.status(400).json({message: "Id is not valid!"});
@@ -100,7 +97,6 @@ const updateBlog = async (req,res) => {
         }
 
         blog.location = location || blog.location;
-        blog.companyId = companyId || blog.companyId;
         blog.caption = caption || blog.caption;
         blog.likes = likes || blog.likes;
     
@@ -181,6 +177,33 @@ const deleteBlog = async (req,res) => {
     }
 }
 
+//get user from blog
+const getUserByBlogId = async (req, res) => {
+    try {
+        const blogId = req.params.blogId; 
+        const blog = await blogModel.find({ _id: blogId });
+
+        if (!blog || blog.length === 0) {
+            return res.status(404).json({ error: 'Blog not found' });
+        }
+
+        const userId = blog[0].userId; // Assuming userId is in the first blog found
+
+        const user = await userModel.find({ _id: userId });
+
+        if (!user || user.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error('Error in getUserByBlogId controller:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 
 module.exports = {
     addBlog,
@@ -189,5 +212,6 @@ module.exports = {
     getBlogById,
     updateBlog,
     updateBlogLikes,
-    deleteBlog
+    deleteBlog,
+    getUserByBlogId
 };

@@ -10,10 +10,10 @@ const blogSchema=new Schema({
         type:String,
         trim:true
     },
-    companyId:{
+    /*companyId:{
         type:mongoose.Types.ObjectId,
         ref:"Company"
-    },
+    },*/
     caption:{
         type:String,
         required:true,

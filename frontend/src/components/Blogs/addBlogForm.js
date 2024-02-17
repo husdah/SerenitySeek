@@ -26,46 +26,80 @@ const countries = [
 ];
 
 const AddBlogForm = () => {
-  const [caption, setCaption] = useState('');
-  const [location, setLocation] = useState('');
-  const [image, setImage] = useState(null);
+    const [ formData, setFormData ] = useState({
+    location: '',
+    caption:'',
+    gallery: null,
+  });
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+        ...prev,
+        [name]: value
+    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('image', image);
-      formData.append('caption', caption);
-      formData.append('location', location);
 
-      await axios.post('http://localhost:4000/blogs/blog', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      alert('Blog added successfully!');
-      // Optionally, you can redirect the user or perform any other action after successful submission
-    } catch (error) {
-      console.error('Error adding blog:', error);
-      alert('Error adding blog. Please try again.');
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, gallery: e.target.files });
+  };
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const formDataObj = new FormData(); 
+    console.log(formData);
+    formDataObj.append('location', formData.location);
+    formDataObj.append('caption', formData.caption);
+    for (let i = 0; i < formData.gallery.length; i++) {
+      formDataObj.append(`gallery`, formData.gallery[i]);
     }
-  };
+
+    const response = await fetch('http://localhost:4000/blogs/blog', {
+      method: 'POST',
+      headers: {
+      Authorization: `Bearer ${user.accessToken}`,
+      },
+      body: formDataObj,
+      credentials: 'include',
+    });
+
+    const responseData = await response.json();
+    if (response.ok) {
+      console.log(responseData.message);
+    } 
+    else {
+      console.error(responseData.message);
+    }
+  }  
+  catch (error) {
+    console.error('Error while adding Blogs:', error);
+  }
+}
+
 
   return (
     <div>
     <h1 className={styles['title']}>Share your moment</h1>
     <form onSubmit={handleSubmit} className={styles['form-container']}>
     <div className={styles['caption_input']}>
-      <input type="text" placeholder="Type your caption here..." id="caption" value={caption} onChange={(e) => setCaption(e.target.value)} />
+    <input
+            type="text"
+            name="caption"
+            placeholder="Type your caption here..."
+            value={formData.caption}
+            onChange={handleChange}
+          />
     </div>
     <div className={styles['location-group']}>
       <div className={styles['input-group']}>
-        <select id="location" value={location} onChange={(e) => setLocation(e.target.value)}>
-          <option value="">Select Country</option>
+      <select
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+            >
+         <option value="">Select Country</option>
           {countries.map((country, index) => (
             <option key={index} value={country.code}>
               {country.name}
@@ -74,7 +108,7 @@ const AddBlogForm = () => {
         </select>
       </div>
       <div className={styles['input-group']}>
-        <input type="file" id="image" onChange={handleImageChange} />
+        <input type="file" id="image" onChange={handleFileChange} />
       </div>
     </div>
     <div className={styles['button-group']}>

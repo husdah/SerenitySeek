@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/multerMiddleware');
 
-const { addBlog, getAllBlogs, getBlogsByUserId, getBlogById, updateBlog,updateBlogLikes ,deleteBlog } = require('../controllers/blogController');
+const { addBlog, getAllBlogs, getBlogsByUserId, getBlogById, updateBlog,updateBlogLikes ,deleteBlog ,getUserByBlogId} = require('../controllers/blogController');
 const validateToken = require('../middlewares/validateTokenHandler');
 const {isUser} = require('../middlewares/roleHandler');
 
@@ -14,6 +14,7 @@ router.get("/blogSingle/:id", getBlogById);
 router.put("/blog/:id", updateBlog);
 router.put("/blogLikes/:id",updateBlogLikes);
 router.delete("/blog/:id/:userId", validateToken, deleteBlog);
+router.get("/blogUser/:blogId/user", getUserByBlogId);
 
 
 module.exports = router;

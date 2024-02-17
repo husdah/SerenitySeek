@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { FaCommentDots } from 'react-icons/fa';
 import { IoHeart } from 'react-icons/io5';
 import { SiYourtraveldottv } from 'react-icons/si';
 import AddBlogForm from './addBlogForm';
 import './blogs.css'
 
+
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [liked, setLiked] = useState(false);
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get('http://localhost:4000/blogs/blog');
         setBlogs(response.data);
-      } catch (error) {
+        } catch (error) {
         console.error('Error fetching blogs:', error);
       }
     };
 
     fetchBlogs();
   }, []);
-
-  const fetchUserData = async (userId) => {
-    try {
-      const response = await axios.get(`http://localhost:4000/users/${userId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      return null;
-    }
-  };
+  
 
   const handleLike = async (blogId) => {
     try {
@@ -72,12 +66,14 @@ const Blogs = () => {
           <div className='content'>
             <p className='date'>{new Date(blog.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</p>
             <p className="location-icon"><span className="icon-wrapper"><SiYourtraveldottv /></span>{blog.location}</p>
-            {blog.userId && (
-              <p className="username-caption">
-                <span className="username">{blog.user ? blog.user.username : 'Loading...'}</span>
-                <span className="caption">{blog.caption}</span>
-              </p>
-            )}
+            <p className="username-caption">
+            <Link to={`/userBlog?userId=${encodeURIComponent(blog.userId && blog.userId._id)}`}>
+              {blog.userId && blog.userId.Fname} {blog.userId.Lname}
+            </Link>
+
+           <span className="caption">{blog.caption}</span>
+           </p>
+
             <div className='icons'>
               <div className="row">
                 <div className="heart-container" onClick={() => handleLike(blog._id)}>
