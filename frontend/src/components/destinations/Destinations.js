@@ -42,7 +42,7 @@ export default function Destinations() {
                   <img src= {`http://localhost:4000/uploads/${packageItem.coverImg}`} crossOrigin="anonymous" alt=""/>
               </div>
               <div className={styles.card__body}>
-                  <h1>{packageItem.country}</h1>
+              <h1>{packageItem.country}</h1>
                   <div className={styles.info}>
                   <p className={styles.info__highlight}>{packageItem.pricePerOne} $</p>
                   <Link to={`/SinglePackage/${packageItem._id}`}>
