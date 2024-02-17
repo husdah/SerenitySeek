@@ -166,7 +166,7 @@ export default function PackagePage() {
   return (
     <div className={Styles.content}>
       <div>
-        <Typography.Title level={4}>Add Package Page</Typography.Title>
+        <Typography.Title level={4}>Manage Package</Typography.Title>
       </div>
       <div className={Styles.packageHeader}>
         <div className={`${Styles.input_control}`}>
@@ -191,7 +191,7 @@ export default function PackagePage() {
         <table className={Styles.table}>
           <thead>
             <tr>
-              <th>Name</th>
+              <th className={Styles.rowName}>Name</th>
               <th>Image</th>
               <th>Country</th>
               <th>Type</th>
@@ -205,8 +205,8 @@ export default function PackagePage() {
           <tbody>
             {searchQuery.discount || searchQuery.date ? (
               filteredPackages.map((packageItem) => (
-                <tr key={packageItem.id}>
-                  <td>{packageItem.name}</td>
+                <tr key={packageItem._id}>
+                  <td className={Styles.nameCell}>{packageItem.name}</td>
                   <td><img src={`http://localhost:4000/uploads/${packageItem.coverImg}`} className={Styles.packageImg} alt='package_logo' crossOrigin="anonymous" /></td>
                   <td>{packageItem.country}</td>
                   <td>{packageItem.type}</td>
