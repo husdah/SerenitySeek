@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import styles from "../assets/css/companyProfile.module.css";
-import { useUpdatePassword } from '../hooks/useUpdateCompanyPassword'; 
+import styles from "../../assets/css/companyProfile.module.css";
+import { useUpdatePassword } from '../../hooks/useUpdateCompanyPassword'; 
 import validator from 'validator';
 
 function CompanyAccountForm() {

@@ -1,8 +1,8 @@
 import axios from "axios";
-import styles from '../assets/css/chatApp.module.css';
+import styles from '../../assets/css/chatApp.module.css';
 
 import {jwtDecode} from 'jwt-decode';
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useAuthContext } from '../../hooks/useAuthContext'
 import { useEffect, useState } from "react";
 
 const ChatAuthPage = (props) => {
