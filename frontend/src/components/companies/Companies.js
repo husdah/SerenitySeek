@@ -27,7 +27,7 @@ export default function Companies() {
             </div>
             <div className={styles.company_info}>
               <h4>{company.name}</h4>
-              <Link to={`/CompanyInfo/${company._id}`}>
+              <Link to={`/companyInfo?companyName=${encodeURIComponent(company.name)}`}>
                  <button>View Details</button>
               </Link>
             </div>
