@@ -17,7 +17,7 @@ import Packages from "./components/Packages";
 import SinglePackage from "./components/SinglePackage";
 import Table from "./components/Table";
 import Blogs from "./components/Blogs/Blogs";
-
+import AllBlogs from "./components/Blogs/AllBlog";
 
 function App() {
   const { user } = useAuthContext()
@@ -40,6 +40,7 @@ function App() {
       <Route path="/Table" element={<Table/>} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
       <Route path="/blogs" element={<Blogs/>} />
+      <Route path="/allBlogs" element={< AllBlogs />} />
     </Routes>
     </>
   );

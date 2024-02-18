@@ -1,37 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FaCommentDots } from 'react-icons/fa';
 import { IoHeart } from 'react-icons/io5';
 import { SiYourtraveldottv } from 'react-icons/si';
-import AddBlogForm from './addBlogForm';
-import { jwtDecode } from 'jwt-decode';
-import { useAuthContext } from '../../hooks/useAuthContext';
-import './blogs.css'
+import React, { useState, useEffect } from 'react';
 
-
-const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
+const AllBlogs = () => {
+  const [allBlogs, setAllBlogs] = useState([]);
   const [liked, setLiked] = useState(false);
-  const [users, setUsers] = useState({});
-  const { user, dispatch } = useAuthContext();
-  //const { userId } = useParams();
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchAllBlogs = async () => {
       try {
-        let userId = jwtDecode(user.accessToken).user.id;
-        const response = await axios.get(`http://localhost:4000/blogs/userBlog?userId=${userId}`);
-        setBlogs(response.data);
-        } catch (error) {
-        console.error('Error fetching blogs:', error);
+        const response = await axios.get('http://localhost:4000/blogs/blog');
+        setAllBlogs(response.data);
+      } catch (error) {
+        console.error('Error fetching all blogs:', error);
       }
     };
 
-    fetchBlogs();
+    fetchAllBlogs();
   }, []);
-  
 
   const handleLike = async (blogId) => {
     try {
@@ -40,7 +29,7 @@ const Blogs = () => {
       if (response && response.data) {
         setLiked(true);
         const updatedBlogResponse = await axios.get(`http://localhost:4000/blogs/blog`);
-        setBlogs(updatedBlogResponse.data);
+        setAllBlogs(updatedBlogResponse.data);
       }
     } catch (error) {
       console.error('Error occurred while handling like action:', error);
@@ -49,11 +38,9 @@ const Blogs = () => {
 
   return (
     <div className="blogs_page">
-      <Link to="/allBlogs">View All Blogs</Link>
-      < AddBlogForm />
-      <div className='banner_blogs'><h1> Your Blogs </h1></div>
-    <div className="blogs-section">
-      {blogs.map((blog, blogIndex) => (
+    <div className='banner_blogs'><h1> Explore Others' Experiences </h1></div>
+      <div className="blogs-section">
+      {allBlogs.map((blog, blogIndex) => (
         <div className='blog-container' key={blogIndex}>
           {blog.gallery && blog.gallery.length > 0 && (
             <div>
@@ -74,8 +61,8 @@ const Blogs = () => {
             <p className='date'>{new Date(blog.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</p>
             <p className="location-icon"><span className="icon-wrapper"><SiYourtraveldottv /></span>{blog.location}</p>
             <p className="username-caption">
-            <Link to={`/userBlog?userId=${encodeURIComponent(blog.userId && blog.userId._id)}`}>
-              {blog.userId && blog.userId.Fname} {blog.userId.Lname}
+            <Link to={`/userBlogs/${encodeURIComponent(blog.userId && blog.userId._id)}`}>
+                {blog.userId && blog.userId.Fname} {blog.userId && blog.userId.Lname} 
             </Link>
 
            <span className="caption">{blog.caption}</span>
@@ -94,10 +81,10 @@ const Blogs = () => {
             </div>
           </div>
         </div>
-      ))}
-    </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default Blogs;
+export default AllBlogs;

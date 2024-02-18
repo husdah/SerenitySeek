@@ -7,7 +7,7 @@ const validateToken = require('../middlewares/validateTokenHandler');
 const {isUser} = require('../middlewares/roleHandler');
 
 
-router.post("/blog", upload.array('gallery') ,addBlog);
+router.post("/blog", validateToken,upload.array('gallery') ,addBlog);
 router.get("/blog", getAllBlogs);
 router.get("/userBlog", getBlogsByUserId);
 router.get("/blogSingle/:id", getBlogById);

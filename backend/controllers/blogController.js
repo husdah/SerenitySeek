@@ -12,7 +12,7 @@ const addBlog = async (req, res) => {
         return res.status(400).json({ message: 'Caption must be between 1 and 255 characters long' });
     }
 
-    if (!userId || !location || !caption || !Array.isArray(gallery)) {
+    if (!location || !caption || !Array.isArray(gallery)) {
         return res.status(400).json({ message: 'Missing or invalid blog data' });
     }
     try {
@@ -32,7 +32,7 @@ const addBlog = async (req, res) => {
 //Get All Blogs
 const getAllBlogs = async (req,res) => {
     try{
-        const blogs = await blogModel.find().populate('userId', 'Fname Lname');
+        const blogs = await blogModel.find().populate('userId', 'Fname Lname') .sort({ createdAt: -1 });
         if (blogs.length === 0) {
             return res.status(204).json({ message: 'No available blogs' });
         }
@@ -53,12 +53,12 @@ const getBlogsByUserId = async (req, res) => {
             return res.status(400).json({message:"userId parameter is required"});
         }
 
-        const blogs = await blogModel.find({ userId: userId }).sort({ createdAt: -1 });
+        const blogs = await blogModel.find({ userId: userId }).populate('userId', 'Fname Lname') .sort({ createdAt: -1 });
 
         if(blogs.length == 0){
             res.status(204).json({ message: 'No available blogs for the specified user' });
         }else{
-            res.status(200).json({blogs});
+            res.status(200).json(blogs);
         }
     }catch(error){
         res.status(500).json({ error: error.message });
@@ -71,7 +71,7 @@ const getBlogsByUserId = async (req, res) => {
 const getBlogById = async (req, res) =>{
     const {id} = req.params;
     try{
-        const blog = await blogModel.find({_id : id});
+        const blog = await blogModel.find({_id : id}).populate('userId', 'Fname Lname') .sort({ createdAt: -1 });
         if(!blog){
             return res.status(404).json({message : "Blog Not Found"});
         }

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import styles from './AddBlogForm.module.css';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 
 const countries = [
   { name: 'United States', code: 'US' },
@@ -26,6 +30,7 @@ const countries = [
 ];
 
 const AddBlogForm = () => {
+    const { user, dispatch } = useAuthContext();
     const [ formData, setFormData ] = useState({
     location: '',
     caption:'',
@@ -65,23 +70,52 @@ const AddBlogForm = () => {
       credentials: 'include',
     });
 
+    const newAccessToken = response.headers.get('New-Access-Token');
+    // Check if a new access token is present
+    if (newAccessToken) {
+      // Update the access token in LocalStorage
+      user.accessToken = newAccessToken;
+      localStorage.setItem('user', JSON.stringify(user));
+      dispatch({type: 'LOGIN', payload: user})
+      console.log('New access token savedddddd:', newAccessToken);
+    }
+
     const responseData = await response.json();
+
     if (response.ok) {
       console.log(responseData.message);
-    } 
-    else {
+      // Show SweetAlert success message
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: responseData.message,
+      }).then(() => {
+        // Reload the page
+        window.location.reload();
+      });
+    } else {
       console.error(responseData.message);
+      // Show SweetAlert error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: responseData.message,
+      });
     }
-  }  
-  catch (error) {
+  } catch (error) {
     console.error('Error while adding Blogs:', error);
+    // Show SweetAlert error message
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'An error occurred while adding the blog. Please try again later.',
+    });
   }
 }
 
-
   return (
     <div>
-    <h1 className={styles['title']}>Share your moment</h1>
+    <h1 className={styles['title']}>Share your moments</h1>
     <form onSubmit={handleSubmit} className={styles['form-container']}>
     <div className={styles['caption_input']}>
     <input
@@ -101,7 +135,7 @@ const AddBlogForm = () => {
             >
          <option value="">Select Country</option>
           {countries.map((country, index) => (
-            <option key={index} value={country.code}>
+            <option key={index} value={country.name}>
               {country.name}
             </option>
           ))}
