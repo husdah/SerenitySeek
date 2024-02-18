@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PackageBanner from '../components/PackagesBanner';
 import PackagesBody from '../components/PackagesBody';
+import { useLocation } from 'react-router-dom';
 
 
 export default function Packages() {
@@ -8,6 +9,10 @@ export default function Packages() {
   const [countryFilter, setCountryFilter] = useState('');
   const [selectedDate, setSelectedDate]   = useState('');
   const [maxPrice, setMaxPrice]           = useState(2000);
+
+  /*to filter packages for this country*/
+  const location=useLocation();
+  const country=location.state;
 
   /* Fetch Packages */
   useEffect(() => {
@@ -57,6 +62,7 @@ export default function Packages() {
       countryFilter={countryFilter}
       selectedDate={selectedDate}
       maxPrice={maxPrice}
+      country={country}
       setCountryFilter={setCountryFilter}
       setSelectedDate={setSelectedDate}
       setMaxPrice={setMaxPrice}
