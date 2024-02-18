@@ -3,7 +3,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-    width: 100vw;
+    
     margin: 0px;
 
     overflow: auto;
@@ -92,24 +92,8 @@
     background: rgb(43, 47, 60);
   }
 
-  .flex{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 10px;
-    color: white;
-  }
-
   .flex_username{
-    font-weight: bold;
-  }
-
-  .flex_link{
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-  }
-
-  .flex_link:hover{
+    font-size: .8rem;
     color: var(--dark);
+    font-weight: bold;
   }

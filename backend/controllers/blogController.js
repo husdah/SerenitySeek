@@ -37,7 +37,7 @@ const getAllBlogs = async (req,res) => {
     try{
         const blogs = await blogModel.find();
         if (blogs.length === 0) {
-            return res.status(204).json({ message: 'No available blogs' });
+            return res.status(404).json({ message: 'No available blogs' });
         }
         res.status(200).json(blogs);
     }catch(error){
