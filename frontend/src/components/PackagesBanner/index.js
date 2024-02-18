@@ -3,7 +3,11 @@ import Styles from './PackagesBanner.module.css';
 import video from '../../assets/videos/splash.mp4';
 import { FaLocationDot } from "react-icons/fa6"
 
-export default function PackagesBanner({ countryFilter, selectedDate, maxPrice, setCountryFilter, setSelectedDate, setMaxPrice }) {
+export default function PackagesBanner({ countryFilter, selectedDate, maxPrice, country,setCountryFilter, setSelectedDate, setMaxPrice }) {
+    if(country)
+    {
+        setCountryFilter(country)
+    }
 
     return (
         <section className={Styles.package_banner}>
