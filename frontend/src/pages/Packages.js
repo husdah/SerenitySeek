@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PackageBanner from '../components/PackagesBanner';
 import PackagesBody from '../components/PackagesBody';
 import { useLocation } from 'react-router-dom';
+import Footer from '../components/Footer/Footer';
+import Navbar from '../components/navbar/Navbar';
 
 
 export default function Packages() {
@@ -58,25 +60,27 @@ export default function Packages() {
 
   return (
     <div className='container'>
-    <PackageBanner 
-      countryFilter={countryFilter}
-      selectedDate={selectedDate}
-      maxPrice={maxPrice}
-      country={country}
-      setCountryFilter={setCountryFilter}
-      setSelectedDate={setSelectedDate}
-      setMaxPrice={setMaxPrice}
-    />
-    <PackagesBody
-      packages={packages}
-      filteredPackages={filteredPackages}
-      countryFilter={countryFilter}
-      selectedDate={selectedDate}
-      maxPrice={maxPrice}
-      setCountryFilter={setCountryFilter}
-      setSelectedDate={setSelectedDate}
-      setMaxPrice={setMaxPrice}
-    />
-  </div>
+      <Navbar nothome= 'true' />
+      <PackageBanner 
+        countryFilter={countryFilter}
+        selectedDate={selectedDate}
+        maxPrice={maxPrice}
+        country={country}
+        setCountryFilter={setCountryFilter}
+        setSelectedDate={setSelectedDate}
+        setMaxPrice={setMaxPrice}
+      />
+      <PackagesBody
+        packages={packages}
+        filteredPackages={filteredPackages}
+        countryFilter={countryFilter}
+        selectedDate={selectedDate}
+        maxPrice={maxPrice}
+        setCountryFilter={setCountryFilter}
+        setSelectedDate={setSelectedDate}
+        setMaxPrice={setMaxPrice}
+      />
+      <Footer />
+    </div>
   );
 }

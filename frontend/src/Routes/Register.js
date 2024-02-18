@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import SignUpForm from "../components/addCompanyForm";
-import SignInForm from "../components/addTravelerForm";
+import SignUpForm from "../components/Register/addCompanyForm";
+import SignInForm from "../components/Register/addTravelerForm";
 import styles from "../assets/css/Register.module.css";  // Import the CSS module
 
 const Register = () => {

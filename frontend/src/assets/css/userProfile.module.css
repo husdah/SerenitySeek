@@ -138,6 +138,7 @@ html {
 }
 
 .up_labelError{
+    font-size: .8rem;
     color: red !important;
 }
 

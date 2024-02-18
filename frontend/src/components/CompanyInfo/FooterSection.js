@@ -5,7 +5,7 @@ function FooterSection() {
   return (
     <footer className={styles.footer}>
         <p className={styles.center}>
-        Made by <a href="" alt="<!-- Insert link to your profile -->">Serenity Seek</a>.
+        To report this company, contact <a href="/contact" alt="<!-- Insert link to your profile -->">Serenity Seek</a>.
         </p>
     </footer>
   )

@@ -14,6 +14,7 @@ const newObjectId = new ObjectId();
 // Add Package
 const addPackage = async (req, res) => {
     const { hotelId, name, country, destinations, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    const oldImagePath = './uploads/' + req.file.filename;
     //console.log('Request Body:', req.body);
     /*console.log('Received destination array:', destinations);
     console.log('Processed destination array:', destinations.map(dest => ({
@@ -24,15 +25,24 @@ const addPackage = async (req, res) => {
         })),
     })));*/
     if (!hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({ message: "All fields are required!" });
     }
 
     if (validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration)) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({ message: "All fields are required!" });
     }
 
     const checkName = await packageModel.findOne({ name: name });
     if (checkName) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({ message: "Name Already Exists" });
     }
 
@@ -62,6 +72,9 @@ const addPackage = async (req, res) => {
 
         res.status(201).json({ message: "Package Added Successfully!" });
     } catch (error) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         console.error("Error adding package:", error);
         return res.status(400).json({ error: "Failed to add the package. Please try again." });
     }

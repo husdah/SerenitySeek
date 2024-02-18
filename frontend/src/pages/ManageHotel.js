@@ -230,7 +230,7 @@ export default function HotelPage() {
               <th className={Styles.nameCell}>Name</th>
               <th className={Styles.locationCell}>Location</th>
               <th className={Styles.ratingCell}>Rating</th>
-              <th className={Styles.actionCell}>Actions</th>
+              <th className={Styles.actionCell}>Action</th>
             </thead>
             <tbody>
               {hotelItems.map(hotelItem => (
@@ -262,7 +262,7 @@ export default function HotelPage() {
                 onChange={handleChange}
                 onFocus={() => setIsValidName(true)}
               />
-              {!isValidName && <p className={Styles.error}> Please enter a valid Name.</p> } 
+              {!isValidName && <span className={Styles.error}> Please enter a valid Name.</span> } 
             </div>
             <div className={Styles.form_group}>
               <label htmlFor='location'>Location</label>
@@ -273,7 +273,7 @@ export default function HotelPage() {
                 onChange={handleChange}
                 onFocus={() => setIsValidLocation(true)}
               />
-              {!isValidLocation && <p className={Styles.error}> Please enter a valid location.</p> } 
+              {!isValidLocation && <span className={Styles.error}> Please enter a valid location.</span> } 
             </div>
             <div className={Styles.form_group}>
               <label htmlFor='rating'>Rating</label>

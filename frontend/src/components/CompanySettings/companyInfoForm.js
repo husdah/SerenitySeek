@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
-import styles from "../assets/css/companyProfile.module.css";
+import styles from "../../assets/css/companyProfile.module.css";
 import validator from 'validator';
-import { useUpdateCompanyInfo } from '../hooks/useUpdateCompanyInfo';
-import { useAuthContext } from '../hooks/useAuthContext'
+import { useUpdateCompanyInfo } from '../../hooks/useUpdateCompanyInfo';
+import { useAuthContext } from '../../hooks/useAuthContext'
 import {jwtDecode} from 'jwt-decode';
 import Swal from 'sweetalert2';
 
