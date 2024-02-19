@@ -79,7 +79,9 @@
 		transition: 1s;
 	}
     .responsive_nav {
+        background: #0a2342;
         transform: translateY(100vh);
+        z-index: 10000;
 	}
 
 	.nav .nav_close_btn {
@@ -89,6 +91,11 @@
 	}
 
 	.nav .a {
+        color: var(--light);
 		font-size: 1.5rem;
 	}
+
+    .nav .a:hover{
+        color: var(--danger);
+    }
 }
