@@ -21,42 +21,6 @@ const HandlerPayment = async (req, res) => {
 
         // Extract the charge ID from the response
         chargeId = charge.id;
-        async function sendPaymentConfirmationEmail() {
-            const user = await accountModel.findOne({ userId: userId });
-                
-            if (!user) {
-             return res.status(400).json("user is not valid");
-            }
-        
-            const userEmail = user.email;
-            // Create a nodemailer transporter
-            let transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: "serenityseek2024@gmail.com",
-                    pass: "vlub ghpe zoxn jjxy",
-                },
-            });
-        
-        
-            let mailOptions = {
-                from: "serenityseek2024@gmail.com",
-                to: userEmail,
-                subject: "Confirmation Email",
-                text: "Thank you for your payment! Your payment was successful. Charge ID: ${chargeId}",
-            };
-        
-            try {
-                // Send email
-                await transporter.sendMail(mailOptions);
-                console.log('Email sent successfully');
-            } catch (error) {
-                console.error('Error sending email:', error);
-            }
-        
-        }
-
-        await sendPaymentConfirmationEmail();
       
        
         status = 'success';
