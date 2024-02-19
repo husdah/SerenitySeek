@@ -115,41 +115,41 @@ const AddBlogForm = () => {
 
   return (
     <div>
-    <h1 className={styles['title']}>Share your moments</h1>
-    <form onSubmit={handleSubmit} className={styles['form-container']}>
-    <div className={styles['caption_input']}>
-    <input
+      <h1 className={styles['title']}>Share your moments</h1>
+      <form onSubmit={handleSubmit} className={styles['form_container']}>
+        <div className={styles['caption_input']}>
+          <input
             type="text"
             name="caption"
             placeholder="Type your caption here..."
             value={formData.caption}
             onChange={handleChange}
           />
-    </div>
-    <div className={styles['location-group']}>
-      <div className={styles['input-group']}>
-      <select
+        </div>
+        <div className={styles['location_group']}>
+          <div className={styles['input_group']}>
+            <select
               name="location"
               value={formData.location}
               onChange={handleChange}
             >
-         <option value="">Select Country</option>
-          {countries.map((country, index) => (
-            <option key={index} value={country.name}>
-              {country.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className={styles['input-group']}>
-        <input type="file" id="image" onChange={handleFileChange} />
-      </div>
+              <option value="">Select Country</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country.name}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles['input_group']}>
+            <input type="file" id="image" onChange={handleFileChange} />
+          </div>
+        </div>
+        <div className={styles['button_group']}>
+          <button type="submit">Add Blog</button>
+        </div>
+      </form>
     </div>
-    <div className={styles['button-group']}>
-      <button type="submit">Add Blog</button>
-    </div>
-  </form>
-  </div>
   );
 };
 
