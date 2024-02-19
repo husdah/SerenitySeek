@@ -97,7 +97,7 @@ export default function SinglePackage() {
   };
 
   return (
-    <div className={Styles.container}>
+    <div className={Styles.singlePackagePage}>
       <Navbar nothome='true' />
       {packageData.map((packageItem) => {
           let imageUrl = `http://localhost:4000/uploads/${packageItem.coverImg}`;

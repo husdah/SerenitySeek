@@ -19,6 +19,7 @@
     width: 85px;
     height: 55px;
     background-color: var(--danger);
+    /*background-color: var(--primary);*/
     top: 50px;
     left: -13px;
     clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
@@ -26,6 +27,7 @@
 
 .package_body .discountText {
     color: var(--dark);
+    /*color: white;*/
     display: flex;
     justify-content: center;
     font-weight: bold;
@@ -61,7 +63,7 @@
 } 
 
 .packageDestination h1 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     font-style: normal;
     text-transform: capitalize;
