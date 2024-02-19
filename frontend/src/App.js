@@ -19,6 +19,9 @@ import CompanyDashboard from "./Routes/CompanyDashboard";
 import NotFoundPage from "./Routes/404NotFound";
 import ChatApp from "./Routes/ChatApp";
 import CompanyInfo from "./Routes/CompanyInfo";
+import Blogs from "./components/Blogs/Blogs";
+import AllBlogs from "./components/Blogs/AllBlog";
+import UserBlogs from "./components/Blogs/userBlogs";
 
 function App() {
   const { user } = useAuthContext()
@@ -53,6 +56,9 @@ function App() {
       <Route path="/Package" element={<Packages/>} />
       <Route path="/Dashboard/*" element={user && jwtDecode(user.accessToken).user.role === 2  ? <CompanyDashboard /> : <Navigate to="/" />} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
+      <Route path="/blogs" element={<Blogs/>} />
+      <Route path="/allBlogs" element={< AllBlogs />} />
+      <Route path="/userBlogs/*" element={< UserBlogs />} />
       <Route path="/TermsOfServices" element={<TermsOfServices/>} />
       <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
       <Route path="/ChatApp" element={user ? <ChatApp/> : <Navigate to="/Login" />} />

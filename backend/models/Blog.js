@@ -10,10 +10,10 @@ const blogSchema=new Schema({
         type:String,
         trim:true
     },
-    companyId:{
+    /*companyId:{
         type:mongoose.Types.ObjectId,
         ref:"Company"
-    },
+    },*/
     caption:{
         type:String,
         required:true,
@@ -42,6 +42,8 @@ const blogSchema=new Schema({
     }
    ]
 },{timestamps:true})
+
+
 
 const blogModel=mongoose.model("Blog",blogSchema);
 module.exports=blogModel;
