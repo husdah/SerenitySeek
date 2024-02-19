@@ -37,3 +37,15 @@
   .SuccessPage_text .SuccessPage_linkPath{
     color: var(--danger);
   }
+
+  @media(max-width: 375px) {
+    .SuccessPage_content {
+      font-size: 25px;
+    }
+  }
+
+  @media(max-width: 320px) {
+    .SuccessPage_content {
+      font-size: 22px;
+    }
+  }

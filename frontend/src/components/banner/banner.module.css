@@ -1,0 +1,119 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+.banner {
+  height: 100vh;
+  justify-content: space-between;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.banner_section2 {
+  display: flex;
+}
+
+.banner_section2 > div:nth-child(1) {
+  margin-left: 100px;
+  margin-top: 100px;
+  width: 50%;
+  color: white;
+  font-weight: 600;
+  font-size: 40px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 0.5s;
+}
+
+.banner_section2 > div:nth-child(2) {
+  width: 50%;
+  margin-right: 100px;
+  margin-top: 200px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 1s;
+}
+.banner_section2 .desc
+{
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+.banner_section2 .explore {
+  padding: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #FFB100;
+  border: none;
+  margin-top: 5px;
+  border-radius: 10px;
+  opacity: 0;
+  animation: fadeIn 1s forwards 1.5s;
+}
+
+
+.banner_section2 .explore:hover {
+  cursor: pointer;
+  background-color: #FFA000;
+}
+
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+@media(max-width:1000px)
+{
+  .banner_section2 > div:nth-child(1) {
+    margin-left: 70px;
+    margin-top: 70px;
+    font-size: 35px;
+  }
+  
+  .banner_section2 > div:nth-child(2) {
+    
+    margin-right: 70px;
+    margin-top: 200px;
+  }
+  .banner_section2 .desc
+  {
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+@media(max-width:700px)
+{
+  .banner_section2 > div:nth-child(1) {
+    margin-left: 30px;
+    margin-top: 80px;
+    font-size: 35px;
+  }
+  
+  .banner_section2 > div:nth-child(2) {
+    
+    margin-right: 30px;
+    margin-top: 170px;
+  }
+  .banner_section2 .desc
+  {
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display:none;
+  }
+  .banner_section2 .explore {
+    padding: 7px;
+    font-size: 16px;
+    color: white;
+    background-color: #FFB100;
+    border: none;
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 1s forwards 1.5s;
+  }
+}

@@ -1,0 +1,164 @@
+.aboutUs
+{
+}
+.aboutUs h1
+{
+    margin-top: 2rem;
+    font-size: 3rem;
+    text-align: center;
+    color: #0a2342;
+    text-shadow: 1px 1px 2px rgb(47, 47, 47);
+}
+.content
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4rem 6rem;
+}
+.aboutustext
+{
+    width:45%;
+    text-align: start;
+    font-size: 1.1rem;
+    color: #0a2342;
+}
+.aboutustext p
+{
+    font-size: 1rem;
+    color: #0a2342c6;
+}
+.forimg
+{
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.forimg img
+{
+    width: 49%;
+    height: 390px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow:-1px 1px 62px -18px rgb(0,0,0.0.19);
+}
+.forimg img:nth-child(2)
+{
+    position: absolute;
+    top:-10%;
+    right: 0;
+}
+.aboutUs .fortitles
+{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding-top: 5px;
+}
+.fortitles div
+{
+    display: flex;
+}
+.aboutUs .fortitles .icon
+{
+   font-size: 40px;
+   color: #FFB100;
+   padding-right: 6px;
+}
+.aboutUs .fortitles span
+{
+    font-size: 15px;
+    color: #0a2342;
+}
+@media(max-width:790px)
+{
+    .content
+    {
+        margin: 1.5rem 2.5rem;
+    }
+    .aboutustext
+    {
+        width:45%;
+        font-size: 0.9rem;
+    }
+    .aboutustext p
+    {
+        font-size: 0.8rem;
+    }
+    .aboutUs .fortitles span
+    {
+        font-size: 12px;
+    }
+    .aboutUs .fortitles .icon
+    {
+    font-size: 30px;
+    }
+
+}
+@media(max-width:490px)
+{
+    .aboutUs h1
+   {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+    }
+    .content
+    {
+        margin: 2rem 1rem;
+        flex-direction:column;
+    }
+    .aboutustext
+    {
+        width:90%;
+       
+    }
+    .aboutustext p
+    {
+        font-size: 1rem;
+        color: #0a2342c6;
+    }
+    .forimg
+    {
+        width: 100%;
+        margin-top: 4rem;
+    }
+    .forimg img
+    {
+        width: 49%;
+        height: 240px;
+    }
+}
+@media(max-width:390px)
+{
+    .aboutUs h1
+   {
+    margin-top: 1.8rem;
+    font-size: 2.2rem;
+    }
+    .content
+    {
+        margin: 0.3rem 0.5rem;
+        flex-direction:column;
+    }
+    .aboutustext
+    {
+        width:90%;
+        font-size: 0.8rem;
+       
+    }
+    .aboutustext p
+    {
+        font-size: 0.8rem;
+        color: #0a2342c6;
+    }
+    .forimg
+    {
+        width: 100%;
+        margin-top: 2.5rem;
+    }
+    .forimg img
+    {
+        width: 49%;
+        height: 190px;
+    }
+}

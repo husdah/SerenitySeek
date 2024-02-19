@@ -16,8 +16,11 @@ const verifyEmail = async (email, link) =>{
             subject: "Account Verification",
             text: "Welcome",
             html: `
-            <div>
-            <a href="${link}">Click here to activate your account</a>
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #3498db;">Welcome to Serenity Seek!</h2>
+                <p>Thank you for signing up. To activate your account, please click the link below:</p>
+                <a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #fff; text-decoration: none; border-radius: 5px;">Activate Account</a>
+                <p style="color: #888; font-size: 12px;">This email was sent from SerenitySeek Website. If you did not sign up, please ignore this email.</p>
             </div>`
         });
         console.log("mail send successfuly");

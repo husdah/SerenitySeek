@@ -1,0 +1,163 @@
+.package_banner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.package_banner .overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(47, 106, 127);
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    mix-blend-mode: hard-light;
+}
+
+.package_banner video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    object-fit: cover;
+}
+
+.package_banner .homeContent {
+    width: 100%;
+    height: max-content;
+    padding: 8rem 3rem 3rem;
+    display: flex;
+    row-gap: 3rem;
+    flex-direction: column;
+    align-items: Stretch;
+    justify-content: center;
+    margin: auto;
+    color: var(--light);
+    z-index: 100;
+}
+
+.package_banner .homeContent .textDiv .smallText { 
+    font-size: 13px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+.package_banner .homeContent .textDiv .homeTitle {
+    position: relative;
+    font-size: 1.8rem;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+}
+
+.package_banner .homeContent .cardDiv {
+    position: relative;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    gap: 0.2rem;
+}
+
+.package_banner .homeContent .grid {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+}
+
+.package_banner .flex {
+    display: flex;
+}
+
+.cardDiv label,
+.cardDiv .label_total .total {
+    display: block;
+    color: var(--dark);
+    padding-bottom: 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.cardDiv .label_total {
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+
+}
+ 
+.cardDiv .input {
+    width: 80%;
+    padding: 0 1rem;
+    height: 40px;
+    background: #ccc;
+    border-radius: 3rem;
+}
+
+.cardDiv input {
+    background: none;
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.cardDiv input::placeholder {
+    font-size: 13px;
+    color: var(--dark) !important;
+}
+
+.icon, 
+.locationIcon {
+    color: var(--dark);
+    font-size: 18px;
+}
+
+.locationIcon {
+    margin-top: 7px;
+}
+
+input[type=range] {
+    background-color: var(--primary);
+}
+
+.cardDiv .searchOptions {
+    position: absolute;
+    background-color: var(--primary);
+    width: max-content;
+    bottom: -0.7rem;
+    column-gap: 0.8rem;
+    padding: 5px 1rem;
+    border-radius: 3rem;
+    left: 55%;
+    cursor: pointer;
+    transform: translate(-50%);
+    justify-content: center;
+}
+
+.cardDiv .searchOptions .icon {
+    font-size: 18px;
+}
+
+.cardDiv .searchOptions span{
+    font-size: 13px;
+}
+
+/* Responsive on width 600px */
+@media(max-width:600px) {
+    .package_banner .homeContent .grid {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+

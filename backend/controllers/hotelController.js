@@ -3,24 +3,43 @@ const mongoose   = require("mongoose");
 const validator  = require("validator");
 const fs         = require("fs").promises;
 
+
+// Function to remove uploaded files
+const removeUploadedFiles = async (filePaths) => {
+    try {
+        for (const filePath of filePaths) {
+            await fs.unlink(filePath);
+        }
+    } catch (err) {
+        console.error("Error while deleting files:", err);
+    }
+}
+
 // add hotel
 const addHotel = async (req, res) => {
     const companyId = req.user.id;
     const { name, location, rating } = req.body;
+    const oldImagePaths = req.files.map(file => file.path);
+    
     if(!companyId){
+        await removeUploadedFiles(oldImagePaths);
         return res.status(400).json({message : "You are not authorized to access this request"});
     }
-    if( !name || !location || !rating || !req.files) {
+    if( !name || !location || !rating ) {
+        await removeUploadedFiles(oldImagePaths);
         return res.status(400).json({message: "All Fields are required!"});
     }
     if(validator.isEmpty(name) || validator.isEmpty(location) || validator.isEmpty(rating) ) {
+        await removeUploadedFiles(oldImagePaths);
         return res.status(400).json({message: "All Fields are required!"});
     }
     if (!validator.isNumeric(rating) || rating < 0 || rating > 5){
+        await removeUploadedFiles(oldImagePaths);
         return res.status(400).json({message: "Rating must be a number between 0 and 5!"});
     }
     const checkName = await hotelModel.findOne({name : name});
     if(checkName){
+        await removeUploadedFiles(oldImagePaths);
         return res.status(400).json({message: "Name Already Exist"});
     }
     try{
@@ -34,6 +53,7 @@ const addHotel = async (req, res) => {
         res.status(201).json({message:'Hotel added successfully!'});
     }
     catch(error){
+        await removeUploadedFiles(oldImagePaths);
         return res.status(500).json({error:error.message});
     }
 }

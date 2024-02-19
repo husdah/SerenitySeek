@@ -1,0 +1,358 @@
+:root{
+  --googleplus_color: #dd4b39;
+  --facebook_color: #3b5998;
+  --twitter_color: #55acee;
+  --email_color: #9F0303;
+  --primary-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  --primary-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* --dark-grey: #263238; */
+  /* --light-grey: #455a64; */
+  --dark-grey: var(--dark);
+  --light-grey: var(--dark);
+  --lite-text: 0.7;
+  --accent-color: #0f9d58;
+  --icon_color: #fff;
+  --icon_color_hover: #fff;
+  /* --theme_accent_color: #FFCC11; */
+  --theme_accent_color: var(--danger);
+}
+
+.title {
+  font-weight: 700;
+ /*  background-color: var(--dark-grey); */
+ background-image: url('../images/bg.png');
+  color: #fff;
+  padding: .9375em;
+  margin-bottom: .9375em;
+  text-align: center;
+}
+.title a {
+  text-decoration: none;
+  color: inherit;
+}
+.title a:hover {
+  cursor: pointer;
+}
+.title img {
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 50%;
+}
+
+.menu li {
+  display: inline-block;
+}
+.ul {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 500;
+  padding: 0;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  text-align: center;
+}
+.ul li {
+  display: inline-flex;
+  width: 8.5em;
+  height: 2.25em;
+  line-height: 2.25em;
+  color: var(--dark-grey);
+  background-color: var(--theme_accent_color);
+  box-shadow: var(--primary-box-shadow);
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  margin: 5px;
+  border-radius: .5rem;
+}
+.ul li a {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  font-size: .9rem;
+  /* font-weight: bold; */
+}
+.ul li:hover {
+  color: #fff;
+  background-color: var(--light-grey);
+  box-shadow: var(--primary-hover-shadow);
+  cursor: pointer;
+}
+
+.center {
+  text-align: center;
+}
+
+.main {
+  text-align: center;
+  width: 100%;
+}
+.page_content {
+  width: 80%;
+  margin: 0 auto;
+  padding: 1.0em;
+  margin-bottom: 2.0em;
+  color: #fff;
+  background-color: var(--light-grey);
+ /*  box-shadow: var(--primary-box-shadow); */
+  box-shadow: 0 .5rem 0.8rem rgba(0 0 0 / .4);
+  border-radius: .5rem;
+}
+.page_content h2 {
+  font-family: 'Roboto Slab', serif;
+  position: relative;
+}
+.para_text {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  text-align: justify;
+  padding: 0em 1em;
+}
+
+.lite_text {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+  opacity: --lite-text;
+}
+
+.team_main {
+  height: 100%;
+  width: 100%;
+  padding-bottom: 1em;
+  text-align: center;
+}
+.team_wrap {
+  width: 100%;
+  display: inline-block;
+}
+.bio {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  width: 20%;
+  margin: 0 auto;
+  display: inline-block;
+  padding: 1em 4%;
+  text-align: center;
+  vertical-align: top;
+}
+.bio .bio_text {
+  height: 11em;
+}
+
+.person1_pic {
+  background: url("https://www.materialui.co/materialIcons/action/face_white_192x192.png");
+  background-size: cover;
+  overflow: hidden;
+  height: 5em;
+  width: 5em;
+  margin: 0 auto;
+  border-radius: 50%;
+  box-shadow: inset -1px -1px 10px #000;
+}
+
+.person1_pic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.section_header {
+  padding: 0.3em 0em;
+}
+
+.clear {
+  clear: both;
+}
+
+.sns_wrap {
+  display: inline-block;
+}
+
+.sns_btn {
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  color: var(--icon_color);
+  font-size: 1.0em;
+  text-decoration: none;
+  height: 2.0em;
+  width: 2.0em;
+  position: relative;
+  border-radius: 0.3125em;
+  box-shadow: 0 0.1875em 0.3125em 0 rgba(0, 0, 0, 0.35);
+  margin: 0.2em;
+  overflow: hidden;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.sns_btn:hover {
+  color: var(--icon_color_hover);
+  transform: scale(1.2);
+  box-shadow: 0 0.3125em 0.9375em 0 rgba(0, 0, 0, 0.4);
+}
+.sns_btn:active {
+  color: var(--icon_color);
+  transform: scale(0.9);
+  box-shadow: 0 0.125em 0.1875em 0 rgba(0, 0, 0, 0.4);
+}
+
+.btn_facebook {
+  background: var(--theme_accent_color);
+}
+.btn_facebook:hover {
+  background: var(--facebook_color);
+}
+.btn_twitter {
+  background: var(--theme_accent_color);
+}
+.btn_twitter:hover {
+  background: var(--twitter_color);
+}
+.btn_googleplus {
+  background: var(--theme_accent_color);
+}
+.btn_googleplus:hover {
+  background: var(--googleplus_color);
+}
+.btn_email {
+  background: var(--theme_accent_color);
+}
+.btn_email:hover {
+  background: var(--email_color);
+}
+
+.grid_wrap {
+  padding-top: 2em;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* .twobytwo {
+  box-sizing: border-box;
+  width: 48%;
+  float: left;
+  text-align: center;
+  padding: 1.0em;
+  margin: 1%;
+} */
+
+.box {
+  box-sizing: border-box;
+  width: 48%;
+  float: left;
+  text-align: center;
+  padding: 1.0em;
+  margin: 1%;
+}
+.box > p {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+}
+
+.box_icon {
+  font-size: 4em;
+  text-shadow: var(--primary-hover-shadow);
+}
+
+.box {
+  box-sizing: border-box;
+  width: 48%;
+  float: left;
+  text-align: center;
+  padding: 1.0em;
+  margin: 1%;
+}
+.box > p {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+}
+
+/* Media Queries */
+
+@media only screen and (min-width: 1000px) {
+  .bio .bio_text {
+    height: 9.6em;
+  }
+}
+@media only screen and (min-width: 1260px) {
+  .bio .bio_text {
+    height: 7.6em;
+  }
+}
+@media only screen and (max-width: 726px) {
+  .bio .bio_text {
+    height: 12.3em;
+  }
+}
+@media only screen and (max-width: 701px) {
+  .menu li {
+    margin: 0 auto;
+    margin-bottom: .4em;
+  }
+  .ul {
+    margin: 0 auto;
+    padding: 0;
+    width: 59%;
+    text-align: none;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .ul li {
+    box-sizing: border-box;
+    text-align: center;
+    margin: 2%;
+  }
+  .bio {
+    width: 80%;
+    padding: 2em 0;
+  }
+  .sns_wrap {
+    display: block;
+  }
+  .sns_btn {
+    font-size: 1.5em;
+  }
+  /* article {
+    display: block;
+  } */
+  .bio {
+    display: block;
+  }
+  .bio_text {
+    height: 14vh;
+  }
+  .box {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .ul {
+    width: 85%;
+  }
+}
+@media only screen and (max-width: 408px) {
+  .main .page_content {
+    width: 100%;
+  }
+  .bio .bio_text {
+    height: 20vh;
+  }
+
+  .title {
+    width: 100%;
+  }
+}
+.footer {
+  color: var(--light-grey);
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+}
+.footer a:hover {
+  color: var(--theme_accent_color);
+}
+.footer a {
+  text-decoration: none;
+  color: var(--light-grey);
+}

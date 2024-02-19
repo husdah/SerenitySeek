@@ -1,0 +1,158 @@
+.addPackage_container {
+    margin: 55px auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 1000px;
+    max-width: 100%;
+    min-height: 600px;
+}
+
+.addPackage_form {
+    padding: 0 20px;
+}
+
+.addPackage_Heading {
+    color: var(--dark);
+}
+
+.form_sectionOne,
+.form_sectionTwo {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.addPackage_contianer input[type='text'],
+.addPackage_contianer input[type='number'],
+.addPackage_contianer textarea,
+.addPackage_contianer select,
+.addPackage_contianer input[type='date'],
+.addPackage_contianer input[type='checkbox'] { 
+    background-color: #eee;
+    color: #333;
+    border: none;
+    padding: 12px 15px;
+    width: 50%;
+    border-radius: 0.5rem;
+    font-weight: 600;
+} 
+
+.addPackage_contianer select {
+    width: 56%; 
+}
+
+.addPackage_contianer input[type='checkbox'] {
+    padding: 0;
+    width: 8%;
+}
+
+.addPackage_contianer input[type='text']::placeholder,
+.addPackage_contianer input[type='number']::placeholder,
+.addPackage_contianer textarea::placeholder,
+.addPackage_contianer select::placeholder,
+.addPackage_contianer input[type='date']::placeholder { 
+    color: #333;
+    opacity: 0.8;
+}
+
+.addPackage_contianer textarea {
+    height: 80px;
+}
+
+.addPackage_contianer input[type="file"] {
+    color: var(--dark);
+}
+
+.addPackage_contianer input[type='checkbox'] {
+    margin-right: 8px;
+}
+
+.hotelDisplay {
+    margin-bottom: 20px;
+}
+
+.addPackage_contianer input[type='text']:focus,
+.addPackage_contianer input[type='number']:focus,
+.addPackage_contianer textarea:focus,
+.addPackage_contianer select:focus,
+.addPackage_contianer input[type='date']:focus { 
+    outline: 0;
+}
+
+.addPackage_destinationInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.addPackage_activityInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.Btn {
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: var(--dark);
+}
+
+.addActivityBtn,
+.addDestinationBtn {
+    width: 40%;
+}
+
+.addPackageBtn {
+    width: 10%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.addPackageBtn:active,
+.addActivityBtn:active,
+.addDestinationBtn:active {
+    transform: scale(0.95);
+}
+
+.addPackageBtn:hover,
+.addActivityBtn:hover,
+.addDestinationBtn:hover {
+    box-shadow: 0 1px 10px 0 var(--dark);
+}
+
+.location_container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.error {
+    font-size: 13px;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.packageName,
+.packagePrice,
+.packageDescription,
+.packageType,
+.packageDate,
+.packageDuration,
+.packageImage {
+    margin-bottom: 20px;
+}
+

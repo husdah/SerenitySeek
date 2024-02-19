@@ -2,34 +2,63 @@ const packageModel = require("../models/Package");
 const hotelModel = require("../models/Hotel");
 const CompanyModel = require("../models/Company");
 const validator = require("validator");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const fs = require("fs").promises;
 
-// add a package
-const addPackage = async (req, res) => {
-    const { hotelId, name, country, destination, pricePerOne, discount, description, type, startDate, duration } = req.body;
+// Access ObjectId through mongoose.Types
+const { ObjectId } = mongoose.Types;
+// Now you can use ObjectId to create new ObjectId instances
+const newObjectId = new ObjectId();
 
+
+// Add Package
+const addPackage = async (req, res) => {
+    const { hotelId, name, country, destinations, pricePerOne, discount, description, type, startDate, duration } = req.body;
+    const oldImagePath = './uploads/' + req.file.filename;
+    //console.log('Request Body:', req.body);
+    /*console.log('Received destination array:', destinations);
+    console.log('Processed destination array:', destinations.map(dest => ({
+        name: dest.destinationName,
+        activities: dest.activities.map(activity => ({
+            name: activity.name,
+            description: activity.description,
+        })),
+    })));*/
     if (!hotelId || !name || !country || !pricePerOne || !description || !type || !startDate || !duration) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({ message: "All fields are required!" });
-    } 
+    }
+
     if (validator.isEmpty(name) || validator.isEmpty(country) || validator.isEmpty(pricePerOne) || validator.isEmpty(description) || validator.isEmpty(type) || validator.isEmpty(startDate) || validator.isEmpty(duration)) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         return res.status(400).json({ message: "All fields are required!" });
     }
-    const checkName = await packageModel.findOne({name : name});
-    if(checkName){
-        return res.status(400).json({message: "Name Already Exist"});
+
+    const checkName = await packageModel.findOne({ name: name });
+    if (checkName) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
+        return res.status(400).json({ message: "Name Already Exists" });
     }
+
     try {
+        const hotelIds = hotelId.split(',').map(id => new mongoose.Types.ObjectId(id)); 
+        //console.log('Parsed hotel IDs:', hotelIds);
         const addPackage = await packageModel.create({
             companyId: req.user.id,
-            hotelId: hotelId,
+            hotelId: hotelIds,
             name: name,
             country: country,
-            destination: destination.map(dest => ({
-                name: dest.name,
+            destination: destinations.map(dest => ({
+                name: dest.destinationName,
                 activities: dest.activities.map(activity => ({
-                    name: activity.name,
-                    description: activity.description
+                    name: activity.activityName,
+                    description: activity.activityDescription,
                 })),
             })),
             pricePerOne: pricePerOne,
@@ -40,12 +69,17 @@ const addPackage = async (req, res) => {
             startDate: startDate,
             duration: duration,
         });
+
         res.status(201).json({ message: "Package Added Successfully!" });
     } catch (error) {
+        if (req.file) {
+            await fs.unlink(oldImagePath);
+        }
         console.error("Error adding package:", error);
         return res.status(400).json({ error: "Failed to add the package. Please try again." });
     }
 }
+
 
 //delete a specific package by using its Id
 const deletePackage = async (req, res) => {
@@ -95,9 +129,9 @@ const updatePackageById = async (req, res) => {
     if(!companyId){
         return res.status(400).json({message : "companyId is required"});
     }
-    if(companyId != companyIdToken){
+    /*if(companyId != companyIdToken){
         return res.status(400).json({message : "You are not authorized to access this request"});
-    }
+    }*/
     try{
         const updatePackage = await packageModel.findOneAndUpdate( {_id : id}, {...req.body});
         if(!updatePackage){
@@ -113,7 +147,9 @@ const updatePackageById = async (req, res) => {
 //select all packages to display them in package page
 const getAllPackages = async (req, res) => {
     try{
-        const packages = await packageModel.find();
+        const today = new Date();
+        const packages = await packageModel.find({ startDate: { $gte: today } });
+        /* const packages = await packageModel.find(); */
         if(!packages){
             res.status(404).json({message: "No Available Packages!"});
         }
@@ -124,11 +160,26 @@ const getAllPackages = async (req, res) => {
 }
 
 //select packages to display them in home page 
+// const getHomePackages = async (req, res) => {
+//     try {
+//         const count = 4; // Set the default value to 5
+//         const packages = await packageModel.find().limit(count);
+       
+//         if (!packages || packages.length === 0) {
+//             return res.status(404).json({ message: "No Available Packages!" });
+//         }
+//         res.status(200).json(packages);
+//     } catch (error) {
+//         return res.status(400).json({ error: error.message });
+//     }
+// }
 const getHomePackages = async (req, res) => {
     try {
-        const count = 4; // Set the default value to 5
-        const packages = await packageModel.find().limit(count);
-
+        const count = 4; 
+        const packages = await packageModel
+            .find()
+            .limit(count)
+            .populate('companyId', 'name');
         if (!packages || packages.length === 0) {
             return res.status(404).json({ message: "No Available Packages!" });
         }
@@ -206,7 +257,17 @@ const getPackageDetailsById = async (req, res) => {
     }
 };
 
-
+// get the types of package
+const getPackageTypes = async (req, res) => {
+    try {
+      const packageTypes = await packageModel.schema.path('type').enumValues;
+      //console.log(packageTypes);
+      res.status(200).json(packageTypes);
+    } 
+    catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
 module.exports = {
     addPackage,
@@ -215,6 +276,6 @@ module.exports = {
     getAllPackages,
     getHomePackages,
     getPackagesByCompanyId,
-    getPackageDetailsById
-    
+    getPackageDetailsById,
+    getPackageTypes
 }

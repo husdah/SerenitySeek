@@ -1,0 +1,94 @@
+.navbar
+{
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+.navbarNotHome
+{
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 75px;
+    padding: 0 2rem;
+    background:white;
+    border-radius: 15px;
+}
+.nav .a
+{
+    margin: 0 2rem;
+    text-decoration: none;
+    color: #0a2342;
+    font-weight: 600;
+    font-size: 17px;
+}
+.nav .a:hover
+{
+    
+    color: #0a234296;
+}
+.header .nav_btn
+{
+    padding: 5px;
+    color:  #FFB100;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    visibility: hidden;
+    opacity: 0;
+}
+.header button
+{
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    background-color: #FFB100;
+    border: none;
+    margin-top: 5px;
+    border-radius: 10px;
+}
+
+.header img{
+    width: 75px;
+    height: 75px;
+}
+
+@media(max-width:1024px){
+    .header .nav_btn{
+        visibility: visible;
+        opacity: 1;
+    }
+    .header .nav {
+		position: fixed;
+		top: -100vh;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+		transition: 1s;
+	}
+    .responsive_nav {
+        transform: translateY(0);
+	}
+
+	.nav .nav_close_btn {
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+	}
+
+	.nav .a {
+		font-size: 1.5rem;
+	}
+}

@@ -1,0 +1,10 @@
+.PageContent{
+    padding: 0 12px;
+    position: absolute;
+    left: 15%;
+    top: 4px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    width: 81%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}

@@ -1,0 +1,92 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans",sans-serif;
+}
+
+body{
+    height: 100vh;
+    background: url(bg.jpg) no-repeat center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+} */
+
+.contact_info{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card{
+    position: relative;
+    flex: 1;
+    max-width: 300px;
+    height: 140px;
+    background-color: transparent;
+    margin: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   /*  box-shadow: 0 .5rem 0.8rem var(--danger); */
+    border-radius: .5rem;
+}
+
+.icon{
+    font-size: 32px;
+    color: var(--danger);
+    transition: .3s linear;
+}
+
+.card:hover{
+    box-shadow: 0 .5rem 0.8rem var(--danger);
+}
+
+.card:hover .icon{
+    transform: scale(4);
+    opacity: 0;
+}
+
+.card_content h3,
+.card_content span{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    opacity: 0;
+}
+
+.card_content h3{
+    top: 20px;
+    text-transform: uppercase;
+    color: var(--danger);
+}
+
+.card_content span{
+    bottom: 20px;
+    color: #fff;
+    font-weight: 500;
+}
+
+.card:hover h3{
+    opacity: 1;
+    top: 40px;
+    transition: .3s linear .3s;
+}
+
+.card:hover span{
+    opacity: 1;
+    bottom: 40px;
+    transition: .3s linear .3s;
+}
+
+
+@media screen and (max-width:900px){
+    .card{
+        flex: 100%;
+        max-width: 500px;
+    }
+}

@@ -35,6 +35,10 @@ export const useUpdateUserInfo = () => {
             }
 
             const json = await response.json();
+            if (json.expired) {
+                // Handle expiration of refreshToken on the client side
+                window.location.href = 'http://localhost:3000/LogoutAndRedirect';
+            }
 
             if (!response.ok) {
                 setError(json.error);

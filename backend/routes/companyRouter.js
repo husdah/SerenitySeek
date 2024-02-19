@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { 
     createCompany, 
-    getCompanyById, 
+    getCompanyById,
+    getCompanyByName,
     getAllCompanies, 
     getHomeCompanies, 
     updateCompanyInfo, 
     acceptCompany, 
     deleteCompany,
-    rateCompany 
+    rateCompany ,
+    updatePassword
 } = require("../controllers/companyController");
 const upload = require('../middlewares/multerMiddleware');
 const validateToken = require('../middlewares/validateTokenHandler');
@@ -19,9 +21,11 @@ router.post("/company", ifHaveToken , upload.single("license"), createCompany);
 router.get("/companies", getAllCompanies);
 router.get("/homeCompanies", getHomeCompanies);
 router.get("/company/:id", getCompanyById);
+router.get("/companyInfo/:Cname", getCompanyByName);
 router.put("/company/:id", validateToken , isCompany , updateCompanyInfo);
 router.put("/companyAccept/:id", validateToken, isAdmin , acceptCompany);
 router.put("/companyRate", validateToken , isUser , rateCompany);
+router.put("/companyUpdatePassword/:id", validateToken , isCompany , updatePassword);
 router.delete("/company/:id", validateToken, isAdmin , deleteCompany);
 
 module.exports = router;

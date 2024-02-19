@@ -1,0 +1,12 @@
+.dashboard_container {
+    background-color: var(--dark);
+}
+
+.SideMenuAndPageContent{
+    display: flex;
+    flex: 1;
+    height: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+}    
