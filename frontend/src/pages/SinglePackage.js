@@ -10,11 +10,13 @@ import SliderHotel from '../components/SliderHotel';
 import { Link } from 'react-router-dom'; 
 import Navbar from '../components/navbar//Navbar';
 import Footer from '../components/Footer/Footer';
+import PopUpPay from '../components/popUpPay/PopUpPay'
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
     const { packageId } = useParams();
     const [ packageData, setPackageData] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
       /* Byn3mla render lal function kel ma yt8yar dependency */
@@ -43,6 +45,9 @@ export default function SinglePackage() {
     const starCount = Math.round(rating); 
     return Array.from({ length: starCount }, (_, index) => <FaStar key={index} className={Styles.hotel_star} />);
   }
+  const handleBook = () => {
+    setIsPopupOpen(true);
+  };
 
   /* Function to generate class name based on the type of the package */
   const getBannerClassName = (packageType) => {
@@ -121,7 +126,15 @@ export default function SinglePackage() {
               </div>
               
               <div className={Styles.singlePackage_BtnDiv}>
-                <button className={Styles.singlePackage_button}><FaBookmark className={Styles.bookIcon} /></button>
+        
+
+                <button className={Styles.singlePackage_button} onClick={handleBook}><FaBookmark className={Styles.bookIcon} /></button>
+                {packageItem.discount ?
+                    <PopUpPay isOpen={isPopupOpen} price={Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)} packageId={packageItem._id}  companyId={packageItem.companyId} onClose={() => setIsPopupOpen(false)} />
+                    :
+                    <PopUpPay isOpen={isPopupOpen} price={packageItem.pricePerOne } packageId={packageItem._id}  companyId={packageItem.companyId} onClose={() => setIsPopupOpen(false)} />
+                  }
+                
               </div> 
 
               <div className={Styles.singlePackage_container_1}>

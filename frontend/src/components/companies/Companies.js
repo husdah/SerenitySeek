@@ -23,7 +23,7 @@ export default function Companies() {
         {companies && companies.map(company=>(
           <div className={styles.company_card}>
               <div className={styles.company_img}>
-                <img src={`http://localhost:4000/uploads/${company.logo}`} alt="" crossOrigin='anonymous'/>
+                <img src={ company.logo ?`http://localhost:4000/uploads/${company.logo}`:londonImage} alt="" crossOrigin='anonymous'/>
             </div>
             <div className={styles.company_info}>
               <h4>{company.name}</h4>

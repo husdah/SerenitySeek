@@ -79,7 +79,7 @@
 		transition: 1s;
 	}
     .responsive_nav {
-        transform: translateY(0);
+        transform: translateY(100vh);
 	}
 
 	.nav .nav_close_btn {

@@ -9,7 +9,7 @@ function Navbar(props) {
 
 	const showNavbar = () => {
 		navRef.current.classList.toggle(
-			"responsive_nav"
+			styles.responsive_nav
 		);
 	};
 

@@ -1,5 +1,7 @@
 const bookPackageModel=require("../models/BookPackageModel")
+const nodemailer = require('nodemailer');
 const companyModel=require("../models/Company")
+const accountModel=require("../models/Account")
 const mongoose=require("mongoose")
 
 //get all books
@@ -20,7 +22,7 @@ const bookPackage = async (req, res) => {
     const { companyId, packageId, userId, nbPeople, paidAmount } = req.body;
   
     if (!companyId || !packageId || !userId || !nbPeople || !paidAmount) {
-      return res.status(400).json({ message: "All fields are required!" });
+      return res.status(400).json({ msg: "All fields are required!" });
     }
   
     if (
@@ -39,7 +41,7 @@ const bookPackage = async (req, res) => {
   
       if (existingBooking) {
         return res.status(400).json({
-          message: "User has already booked this package.",
+          msg: "You already booked this package.",
         });
       }
   
@@ -63,6 +65,41 @@ const bookPackage = async (req, res) => {
             { $push: { customers: userId } }
           );
         }
+        async function sendPaymentConfirmationEmail() {
+          const user = await accountModel.findOne({ userId: userId });
+              
+          if (!user) {
+           return res.status(400).json({msg:"user is not valid"});
+          }
+      
+          const userEmail = user.email;
+          let transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                  user: "serenityseek2024@gmail.com",
+                  pass: "vlub ghpe zoxn jjxy",
+              },
+          });
+      
+      
+          let mailOptions = {
+              from: "serenityseek2024@gmail.com",
+              to: userEmail,
+              subject: "Confirmation Email",
+              text: "Thank you for your payment! Your payment was successful.",
+          };
+      
+          try {
+              // Send email
+              await transporter.sendMail(mailOptions);
+              console.log('Email sent successfully');
+          } catch (error) {
+              console.error('Error sending email:', error);
+          }
+      
+      }
+
+      await sendPaymentConfirmationEmail();
   
         return res.status(200).json(newBooking);
       } catch (error) {
