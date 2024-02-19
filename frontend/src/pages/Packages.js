@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PackageBanner from '../components/PackagesBanner';
 import PackagesBody from '../components/PackagesBody';
-import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer/Footer';
 import Navbar from '../components/navbar/Navbar';
 
-
 export default function Packages() {
+  // Initialize useState
   const [packages, setPackages]           = useState([]);
   const [countryFilter, setCountryFilter] = useState('');
   const [selectedDate, setSelectedDate]   = useState('');
   const [maxPrice, setMaxPrice]           = useState(2000);
 
-  /*to filter packages for this country*/
+  // To filter packages for this country
   const location=useLocation();
   const country=location.state;
 
-  /* Fetch Packages */
+  // Fetch Packages 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
@@ -33,7 +33,7 @@ export default function Packages() {
     fetchPackages();
   }, []);
 
-  /* Function to check if the selected date is exactly in mongodb */
+  // Function to check if the selected date is exactly in mongodb 
   const isSameDay = (date1, date2) => {
     return (
       date1.getFullYear() === date2.getFullYear() &&
@@ -42,7 +42,7 @@ export default function Packages() {
     );
   };
 
-  /* Filter Packages*/
+  // Filter Packages
   const filteredPackages = packages.filter((packageItem) => {
     const packagePriceWithDiscount = packageItem.discount
       ? packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100

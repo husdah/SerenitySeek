@@ -7,8 +7,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 export default function Contact() {
-
-    /* const [Fname, setFname] = useState('') can I do this for all inputs or set them in object as below */
+    // Initialize State Variable
     const [ state, setState ] = useState({
       fname: '',
       lname: '',
@@ -17,22 +16,22 @@ export default function Contact() {
       message: ''
     });
 
-    /* For validation state - type of useState boolean and initial state true */
+    // Initialize state variable for validation
     const [ isValidFirstName, setIsValidFirstName ] = useState(true);
     const [ isValidLastName, setIsValidLastName ]   = useState(true);
     const [ isValidEmail, setIsValidEmail ]         = useState(true);
     const [ isValidSubject, setIsValidSubject ]     = useState(true);
     const [ isValidMessage, setIsValidMessage ]     = useState(true);
     
+    // Handle change on input
     const handleChange = (e) => {
       const { name, value } = e.target;
-      /* ...prev if we have sentence and change one word only this word will change while the other remain the same  */
       setState((prev) => ({ ...prev, [name]: value }));
     };
     
-    const sendEmail = async() => {
+    // Function to send email 
+    const sendEmail = async () => {
       const MySwal = withReactContent(Swal);
-
       const handleSuccess = (responseData) => {
         MySwal.fire({
           icon: 'success',
@@ -41,7 +40,7 @@ export default function Contact() {
         });
       };
 
-      /* Clear form fields */
+      // Clear form fields 
       const handleClearForm = () => {
         setState({
           fname: '',
@@ -51,6 +50,7 @@ export default function Contact() {
           message: '',
         });
       }
+
       try {
         const response = await fetch('http://localhost:4000/api/contact', {
           method: 'POST',
@@ -76,10 +76,9 @@ export default function Contact() {
       }
     }
 
-    /* Action on submit  */
+    // Action on submit  
     const handleSubmit = async (e) => {
       e.preventDefault();
-
       // Reset validation states
       setIsValidFirstName(true);
       setIsValidLastName(true);
@@ -87,6 +86,7 @@ export default function Contact() {
       setIsValidSubject(true);
       setIsValidMessage(true);
 
+      // Destruct the properties(fname, lname, ...) from the state
       const { fname, lname, email, subject, message } = state;
 
       let emptyValues = [];

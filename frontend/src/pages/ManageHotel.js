@@ -170,9 +170,15 @@ export default function HotelPage() {
         setFormData({
           name: '',
           location: '',
-          gallery: null,
+          gallery: [],
           rating: '',
         });
+
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+          fileInput.value = ''; 
+        }
+
       }
 
       try {
@@ -205,6 +211,7 @@ export default function HotelPage() {
         if (response.ok) {
           handleSuccess(responseData);
           handleClearForm();
+          fetchHotelData();
           console.log(responseData.message);
         } 
         else {

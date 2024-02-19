@@ -309,6 +309,12 @@ export default function AddPackage() {
           startDate: '',
           duration: '',
         });
+
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+          fileInput.value = ''; 
+        }
+
       }
 
       try {
