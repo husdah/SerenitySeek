@@ -56,7 +56,7 @@ function App() {
       <Route path="/Package" element={<Packages/>} />
       <Route path="/Dashboard/*" element={user && jwtDecode(user.accessToken).user.role === 2  ? <CompanyDashboard /> : <Navigate to="/" />} />
       <Route path="/SinglePackage/:packageId" element={<SinglePackage />} />
-      <Route path="/blogs" element={<Blogs/>} />
+      <Route path="/blogs" element={user && jwtDecode(user.accessToken).user.role === 1  ? <Blogs/> : <Navigate to="/" />} />
       <Route path="/allBlogs" element={< AllBlogs />} />
       <Route path="/userBlogs/*" element={< UserBlogs />} />
       <Route path="/TermsOfServices" element={<TermsOfServices/>} />
