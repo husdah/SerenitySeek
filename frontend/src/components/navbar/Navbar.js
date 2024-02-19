@@ -20,7 +20,7 @@ function Navbar(props) {
                   <nav className={styles.nav} ref={navRef}>
                       <Link to="/" className={styles.a}>Home</Link>
                       <Link to="/Package" className={styles.a}>Packages</Link>
-                      <Link to="/blogs" className={styles.a}>Blogs</Link>
+                      <Link to="/allBlogs" className={styles.a}>Blogs</Link>
                       <Link to="/contact" className={styles.a}>Contact us</Link>
 
               <button
