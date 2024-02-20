@@ -139,22 +139,28 @@ export default function DashboardPage() {
             </div>
 
             <div className={Styles.statistic_values}>
-              <span>Turkey</span>
-              <span>250</span>
-              <span>230</span>
-              <span>900</span>
+              <span>France</span>
+              <span>500</span>
+              <span>500</span>
+              <span>1200</span>
             </div>
             <div className={Styles.statistic_values}>
-              <span>Turkey</span>
-              <span>250</span>
-              <span>230</span>
-              <span>900</span>
+              <span>Maldive</span>
+              <span>200</span>
+              <span>1300</span>
+              <span>2000</span>
             </div>
             <div className={Styles.statistic_values}>
-              <span>Turkey</span>
+              <span>Switzerland</span>
               <span>250</span>
-              <span>230</span>
-              <span>900</span>
+              <span>600</span>
+              <span>1100</span>
+            </div>
+            <div className={Styles.statistic_values}>
+              <span>Bali</span>
+              <span>100</span>
+              <span>1800</span>
+              <span>2000</span>
             </div>
           </div>
         </div>

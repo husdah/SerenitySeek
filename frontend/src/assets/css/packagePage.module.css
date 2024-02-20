@@ -45,6 +45,10 @@
     width: 10%;
 }
 
+.rowType {
+    width: 9%;
+}
+
 .packageHeader input[type='text'] {
     background-color:#f0f0f0;
     border-radius: 24px;
