@@ -98,3 +98,23 @@
 .form_container button:hover {
   background-color: #0a2342c9;
 }
+
+
+@media (max-width: 456px) {
+
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+  }
+
+  .input_group {
+    width: 50%;
+  }
+
+  .input_group select,
+  .input_group input[type='file'] {
+    width: 80%;
+  }
+}

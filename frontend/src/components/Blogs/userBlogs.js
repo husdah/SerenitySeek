@@ -36,7 +36,7 @@ const UserBlogs = () => {
       const response = await axios.put(`http://localhost:4000/blogs/blogLikes/${blogId}`, { action: 'like' });
       if (response && response.data) {
         setLiked(true);
-        const updatedBlogResponse = await axios.get(`http://localhost:4000/blogs/blog`);
+        const updatedBlogResponse = await axios.get(`http://localhost:4000/blogs/userBlog?userId=${userId}`);
         setUserBlogs(updatedBlogResponse.data);
       }
     } catch (error) {
