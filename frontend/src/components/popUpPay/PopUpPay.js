@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PaymentTest from '../../Routes/PaymentTest';
+import styles from './popUpPay.module.css'
 
 export default function PopUpPay(props) {
   const [inputValue, setInputValue] = useState('');
@@ -24,18 +25,19 @@ export default function PopUpPay(props) {
             borderRadius: '8px',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
           }}
-          className="popup"
+          className={styles.popup}
         >
-          <div className="popup-content">
+          <div className={styles.popup_content}>
             <label htmlFor="">Enter Number of people</label>
             <input
-              type="text"
+              type="number"
               value={inputValue}
               onChange={handleInputChange}
               placeholder="Enter something..."
+              className={styles.nbppl}
             />
            <PaymentTest nbPeople={inputValue} price={props.price} packageId={props.packageId} companyId={props.companyId}/>
-            <button onClick={props.onClose}>Close</button>
+            <button onClick={props.onClose} className={styles.close}>Close</button>
           </div>
         </div>
       )}

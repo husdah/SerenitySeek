@@ -7,10 +7,7 @@ import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content'
 
 const PaymentTest = (props) => {
-    const [product, setProduct] = useState({
-        name: "laptop",
-        price: 650,
-    });
+  
     const {user}=useAuthContext();
     const userId = jwtDecode(user.accessToken).user.id;
     
