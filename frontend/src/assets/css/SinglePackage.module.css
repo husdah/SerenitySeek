@@ -343,7 +343,7 @@ p.companyLink {
 
 .hotelDetails {
     display: grid;
-    grid-template-columns: 70% 30%; 
+    grid-template-columns: 60% 40%; 
     margin: -15px auto 0;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(140, 140, 141, 0.549);
@@ -539,6 +539,10 @@ p.companyLink {
         grid-template-columns: 100%;
     }
     
+    .twoHotels {
+        margin-bottom: 200px;
+    }
+
     .hotel_Container,
     .twoHotels.hotel_Container,
     .threeHotels.hotel_Container,
@@ -559,6 +563,13 @@ p.companyLink {
 @media(max-width:740px) {
     .singlePackage_group p {
         font-size: 13px;
+    }
+}
+
+/* Responsive on width 729px */
+@media(max-width:729px) {
+    .singlePackage_container_1 {
+        margin-bottom: 10px;
     }
 }
 

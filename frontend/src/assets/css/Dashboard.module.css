@@ -1,6 +1,6 @@
 .dashbaord_content {
     height: 97vh;
-    padding: 0 12px;
+    padding-right: 21px;
 }
 
 .dashboard_header {
@@ -43,13 +43,12 @@
 
 .statistic_banner {
     display: grid;
-    grid-template-columns: 64% 36%;
-    border: 1px solid red;
+    grid-template-columns: 68% 32%;
 }
 
 .statistic_section,
 .statistic_table {
-    width: 100%;
+    width: 94%;
     background-color: white;
     border-radius: 12px;
     padding: 10px 20px;
@@ -64,6 +63,15 @@
     margin-bottom: 10px;
 }
 
+.statistic_table {
+    width: 96%;
+}
+
+.statistic_banner_left {
+    max-height: 350px;
+    width:100%;
+}
+
 .statistic_head {
     font-size: 16px;
     font-weight: bold;
@@ -72,7 +80,7 @@
 
 .statistic_table {
     height: 250px;
-    padding: 25px 0;
+    padding: 25px 0 25px 25px;
 }
 
 .statistic_heading,
@@ -81,7 +89,25 @@
     grid-template-columns: 25% 25% 25% 25%;
 }
 
+.statistic_values {
+    padding: 0.8em 0;
+    margin-top: 15px;
+}
+
 .statistic_heading {
     font-weight: bold;
 }
 
+.statistic_banner_right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboardBanner_image {
+    border-radius: 50px;
+    width: 350px;
+    height: 370px;
+    margin-left: 25px;
+}
+    

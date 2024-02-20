@@ -193,8 +193,8 @@ export default function PackagePage() {
             <tr>
               <th className={Styles.rowName}>Name</th>
               <th>Image</th>
-              <th>Country</th>
-              <th>Type</th>
+              <th className={Styles.rowCountry}>Country</th>
+              <th className={Styles.rowType}>Type</th>
               <th>Price</th>
               <th>discount</th>
               <th>Date</th>
@@ -240,7 +240,14 @@ export default function PackagePage() {
                   <td><img src={`http://localhost:4000/uploads/${packageItem.coverImg}`} className={Styles.packageImg} alt='package_logo' crossOrigin="anonymous" /></td>
                   <td>{packageItem.country}</td>
                   <td>{packageItem.type}</td>
-                  <td>{packageItem.pricePerOne}</td>
+                  {/*<td>{packageItem.pricePerOne}</td>*/}
+                  <td>
+                  {packageItem.discount ?
+                      Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)
+                    :
+                      packageItem.pricePerOne
+                  }  
+                  </td>
                   { packageItem.discount  ? <td>{packageItem.discount}</td>: <td> NULL</td> }
                   <td>{new Date(packageItem.startDate).toLocaleDateString("en-US")}</td>
                   <td>{packageItem.duration}</td>

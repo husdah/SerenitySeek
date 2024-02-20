@@ -132,7 +132,7 @@ export default function Contact() {
         <div className={Styles.contact}>
             <div className={Styles.contactContainer}>
               <div className={Styles.contactInfo}>
-                <h3 className={Styles.title}> Let's Get In touch</h3>
+                <h3 className={Styles.title}> Let's Get In Touch</h3>
                 <div className={Styles.contactDetails}>
                   <img src={image} alt='image_2' />
                 </div>

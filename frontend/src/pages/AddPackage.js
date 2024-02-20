@@ -95,7 +95,7 @@ export default function AddPackage() {
     setFormData({ ...formData, coverImg: e.target.files[0] });
   };
 
-  const handleHotelChange = (e) => {
+  /*const handleHotelChange = (e) => {
     const { value, checked } = e.target;
     if (checked) {
       setFormData((prevFormData) => ({
@@ -110,7 +110,24 @@ export default function AddPackage() {
       }));
     }
   };
-  
+  */
+  const handleHotelChange = (e) => {
+    const { value, checked } = e.target;
+    const isHotelSelected = formData.hotelId.includes(value);
+    if (checked && formData.hotelId.length < 4 && !isHotelSelected) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        hotelId: [...prevFormData.hotelId, value],
+      }));
+    } 
+    else if (!checked && isHotelSelected) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        hotelId: prevFormData.hotelId.filter((id) => id !== value),
+      }));
+    }
+  };
+
   const fetchPackageTypes = async () => {
     try {
       const response = await fetch(`http://localhost:4000/api/packageTypes`
@@ -240,7 +257,7 @@ export default function AddPackage() {
       })
     })
 
-    if (!formData.pricePerOne || validator.isEmpty(formData.pricePerOne) || !validator.isNumeric(formData.pricePerOne)) {
+    if (!formData.pricePerOne || validator.isEmpty(formData.pricePerOne) || !validator.isNumeric(formData.pricePerOne) || parseInt(formData.pricePerOne) > 2000) {
       setIsValidPrice(false);
       isValidForm = false;
     }
@@ -305,7 +322,7 @@ export default function AddPackage() {
           pricePerOne: '',
           coverImg: null,
           description: '',
-          type: '',
+          type: 'Type',
           startDate: '',
           duration: '',
         });
@@ -343,8 +360,8 @@ export default function AddPackage() {
         formDataForApi.append('duration', formData.duration);
   
         // Log formDataForApi for debugging
-        console.log('name:', formDataForApi.get('name'));
-        console.log('Destinations Array:', formData.destinations);
+        // console.log('name:', formDataForApi.get('name'));
+        // console.log('Destinations Array:', formData.destinations);
 
         const response = await fetch('http://localhost:4000/api/package', {
           method: 'POST',
@@ -416,7 +433,7 @@ export default function AddPackage() {
                     onFocus={() => setIsValidPrice(true)}
                   />
                   <br />
-                  {!isValidPrice && <span className={Styles.error}> Please enter a valid price. </span>}
+                  {!isValidPrice && <span className={Styles.error}> Please enter a price less than 2000. </span>}
                 </div>
                 <div className={Styles.packageDescription}>
                   <textarea
