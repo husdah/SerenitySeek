@@ -37,9 +37,23 @@
     padding-bottom:1rem;
 }
 
-.forservices div:empty
+.forservices div:empty:nth-child(5)
 {
- background-image: url('../../images/london.jpg');
+ background-image: url('../../images/flightBooking.jpg');
+ background-position: center;
+ background-size: cover;
+ /* transition: transform 0.3s ease; */
+}
+.forservices div:empty:nth-child(1)
+{
+ background-image: url('../../images/hotel-reservation-system.jpg');
+ background-position: center;
+ background-size: cover;
+ /* transition: transform 0.3s ease; */
+}
+.forservices div:empty:nth-child(3)
+{
+ background-image: url('../../images/travel_insurence.jpg');
  background-position: center;
  background-size: cover;
  /* transition: transform 0.3s ease; */

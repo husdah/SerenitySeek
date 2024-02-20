@@ -1,0 +1,173 @@
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    perspective: 1000px;
+    z-index: 100; 
+ }
+ 
+ .dropdown:hover .dropdown_menu li{
+     display: block;
+  }
+ 
+  .dropdown_menu{
+     position: absolute;
+     top: 65%;
+     /* left: 0; */
+     width: 100%;
+     perspective: 1000px;
+     z-index: -1;
+
+     width: fit-content;
+  }
+  
+  .dropdown_menu li{
+     display: none;
+     color: white;
+     background-color: var(--dark);
+     padding: 10px 20px;
+     font-size: 1rem;
+     opacity: 0;
+     cursor: pointer;
+     text-transform: none !important;
+
+     width: 75px;
+ }
+
+ .dropdown_menu li:hover{
+    background-color: var(--danger) ;
+ }
+    
+  .dropdown_menu li:hover .link{
+    color:  var(--dark);
+    font-weight: bold;
+ }
+ 
+  /* Menu as a whole animated */
+ .dropdown:hover .dropdown_menu__animated{
+     display: block;
+ }
+     
+ .dropdown_menu__animated{
+     display: none;
+ }
+   
+ .dropdown_menu__animated li{
+     display: block;
+     opacity: 1;
+ }
+       
+ 
+ .dropdown_menu_6{
+     animation: growDown 300ms ease-in-out forwards;
+     transform-origin: top center;
+ }
+
+ .accountCont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--dark);
+    border-radius: .8rem;
+    height: fit-content;
+    padding: 5px;
+ }
+
+ .accountCont2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: .8rem;
+    height: fit-content;
+    padding: 5px;
+ }
+
+ .fa{
+    color: #0a2342;
+    font-size: 25px;
+ }
+
+ .initials{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #0a2342;
+    margin-left: 5px;
+ }
+
+ .link{
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+ }
+ 
+ @keyframes growDown {
+     0% {
+         transform: scaleY(0);
+     }
+     80% {
+         transform: scaleY(1.1);
+     }
+     100% {
+         transform: scaleY(1);
+     }
+ }
+
+ 
+ @keyframes rotateY {
+      0% {
+         transform: rotateY(90deg);
+     }
+     80% {
+         transform: rotateY(-10deg);
+     }
+     100% {
+         transform: rotateY(0);
+     }
+ }
+
+ @media(max-width:1024px){
+    .accountCont{
+        border: 2px solid white;
+     }
+    
+     .fa{
+        color: white;
+     }
+    
+     .initials{
+        color: white;
+     }
+
+     .dropdown_menu li{
+        color: var(--dark);
+        font-weight: bold;
+        background-color: white;
+     }
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
