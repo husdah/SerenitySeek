@@ -193,7 +193,7 @@ export default function PackagePage() {
             <tr>
               <th className={Styles.rowName}>Name</th>
               <th>Image</th>
-              <th>Country</th>
+              <th className={Styles.rowCountry}>Country</th>
               <th>Type</th>
               <th>Price</th>
               <th>discount</th>

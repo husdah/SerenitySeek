@@ -41,6 +41,10 @@
     width: 20%;
 }
 
+.rowCountry {
+    width: 10%;
+}
+
 .packageHeader input[type='text'] {
     background-color:#f0f0f0;
     border-radius: 24px;
