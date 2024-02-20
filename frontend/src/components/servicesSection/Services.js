@@ -10,18 +10,18 @@ export default function Services() {
         <div className={styles.forservices}>
             <div></div>
             <div>
-                <span>Transposition</span>
-                <p>Lorem ipsum dolor sit amet  Sint.Lorem ipsum dolor sit amet  Sint</p>
+                <span>Flight Booking Services</span>
+                <p>Provide a user-friendly platform for customers to search, compare, and book flights to various destinations.</p>
             </div>
             <div></div>
             <div>
-                <span>Transposition</span>
-                <p>Lorem ipsum dolor sit amet  Sint.Lorem ipsum dolor sit amet  Sint</p>
+                <span>Accommodation Reservation</span>
+                <p>Facilitate hotel and accommodation bookings with a wide range of options, from budget to luxury.</p>
             </div>
             <div></div>
             <div>
-                <span>Transposition</span>
-                <p>Lorem ipsum dolor sit amet  Sint.Lorem ipsum dolor sit amet  Sint</p>
+                <span>Travel Insurance Services</span>
+                <p>Provide clear information on coverage options, terms, and conditions.</p>
             </div>
         </div>
     </div>

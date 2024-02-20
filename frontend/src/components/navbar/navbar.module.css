@@ -20,6 +20,14 @@
     background:white;
     border-radius: 15px;
 }
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    /* border: 1px solid red; */
+    margin-left: 50px;
+}
 .nav .a
 {
     margin: 0 2rem;
@@ -60,6 +68,11 @@
     height: 75px;
 }
 
+.links{
+    margin-left: 50px;
+    /* border: 1px solid red; */
+}
+
 @media(max-width:1024px){
     .header .nav_btn{
         visibility: visible;
@@ -77,6 +90,8 @@
 		justify-content: center;
 		gap: 1.5rem;
 		transition: 1s;
+
+        margin: 0 !important;
 	}
     .responsive_nav {
         background: #0a2342;
@@ -97,5 +112,12 @@
 
     .nav .a:hover{
         color: var(--danger);
+    }
+
+    .links{
+        display: flex;
+        flex-direction: column;
+		justify-content: center;
+		gap: 1.5rem;
     }
 }
