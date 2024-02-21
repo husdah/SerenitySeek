@@ -22,6 +22,7 @@ import CompanyInfo from "./Routes/CompanyInfo";
 import Blogs from "./Routes/blogs";
 import AllBlogs from "./Routes/allBlogs";
 import UserBlogs from "./Routes/userBlog";
+import ManageCompanies from "./components/adminDashboard/companies";
 
 function App() {
   const { user } = useAuthContext()
@@ -63,6 +64,7 @@ function App() {
       <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
       <Route path="/ChatApp" element={user ? <ChatApp/> : <Navigate to="/Login" />} />
       <Route path="/CompanyInfo/*" element={<CompanyInfo/>} />
+      <Route path="manageCompanies" element={< ManageCompanies/>} />
       
       {/* last route */}
       <Route path="*" element={<NotFoundPage/>} />
