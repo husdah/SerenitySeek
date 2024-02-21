@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/navbar//Navbar';
 import Footer from '../components/Footer/Footer';
 import PopUpPay from '../components/popUpPay/PopUpPay'
+import bookImg from '../assets/images/booking.png'
 
 export default function SinglePackage() {
     // useParams(): It is used to access the parameters from the URL in a React component.
@@ -128,7 +129,7 @@ export default function SinglePackage() {
               <div className={Styles.singlePackage_BtnDiv}>
         
 
-                <button className={Styles.singlePackage_button} onClick={handleBook}><FaBookmark className={Styles.bookIcon} /></button>
+                <button className={Styles.singlePackage_button} onClick={handleBook}><img src={bookImg} alt="booking" /></button>
                 {packageItem.discount ?
                     <PopUpPay isOpen={isPopupOpen} price={Math.ceil(packageItem.pricePerOne - (packageItem.pricePerOne * packageItem.discount) / 100)} packageId={packageItem._id}  companyId={packageItem.companyId} onClose={() => setIsPopupOpen(false)} />
                     :

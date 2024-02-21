@@ -129,14 +129,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 25px;
-    border: 1px solid var(--danger);
-    background-color: var(--danger);
-    cursor: pointer;
-    /*background-image: url('../images/booking.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    object-fit: fill;*/
+    border: none;
+    background-color: transparent;
+}
+.singlePackage_button img {
+    width: 90px;
+    height: 90px;
 }
 
 .bookIcon {
@@ -309,14 +307,12 @@ p.companyLink {
 
 /* Hotel */
 .singlePackage_container_3 {
-    height: 450px;
     margin-bottom: 20px;
 }
 
 .hotel_Container {
     margin: 50px auto;
     width: 30%;
-    height: 360px;
     padding-bottom: 50px;
 }
 
@@ -539,10 +535,6 @@ p.companyLink {
         grid-template-columns: 100%;
     }
     
-    .twoHotels {
-        margin-bottom: 200px;
-    }
-
     .hotel_Container,
     .twoHotels.hotel_Container,
     .threeHotels.hotel_Container,
