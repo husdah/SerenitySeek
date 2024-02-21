@@ -70,28 +70,35 @@ const getBlogsByUserId = async (req, res) => {
 
 const getBlogById = async (req, res) =>{
     const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        res.status(400).json({error: "not a valid Id!"});
+    }
     try{
-        const blog = await blogModel.find({_id : id}).populate('userId', 'Fname Lname') .sort({ createdAt: -1 });
+        const blog = await blogModel.findOne({_id : id}).populate('userId', 'Fname Lname').populate({
+            path: 'comments.userId',
+            select: 'Fname Lname'
+        }) .sort({ createdAt: -1 });
         if(!blog){
             return res.status(404).json({message : "Blog Not Found"});
         }
+        console.log(blog);
         res.status(200).json(blog);
     }catch(error){
-        return res.status(500).json({error : error.message});
+        return res.status(500).json({message:"controller error"});
     }
 }
 
-//Update a Blog
-const updateBlog = async (req,res) => {
-    const {id} = req.params;
-    const {location,caption,likes,comments} = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        res.status(400).json({message: "Id is not valid!"});
+const updateBlog = async (req, res) => {
+    const { id } = req.params;
+    const { location, caption, likes, message } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Id is not valid!" });
     }
-    
-    try{
-        const blog = await blogModel.findById(id);
+
+    try {
+        const blog = await blogModel.findById(id).populate('userId', 'Fname Lname');
         if (!blog) {
             return res.status(404).json({ message: "Blog not found!" });
         }
@@ -99,22 +106,29 @@ const updateBlog = async (req,res) => {
         blog.location = location || blog.location;
         blog.caption = caption || blog.caption;
         blog.likes = likes || blog.likes;
-    
-        if (comments && comments.length > 0) {
-            blog.comments.push(...comments);
+
+        const userId = req.user.id; 
+        // Adding a new comment
+        if (message) {
+            blog.comments.push({
+                message,
+                userId
+            });
         }
 
         const updatedBlog = await blog.save();
+        console.log(updatedBlog);
 
-        if(!updatedBlog){
-            return res.status(404).json({message: "Not Found!"});
+        if (!updatedBlog) {
+            return res.status(404).json({ message: "Not Found!" });
         }
 
-        res.status(201).json({message: "Blog Updated Succssfully!"});
-    }catch(error){
-        res.status(400).json({error: error.message});
+        res.status(201).json({ message: "Blog Updated Successfully!", data: updatedBlog });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 }
+
 
 //Update nb of likes
 
@@ -128,7 +142,7 @@ const updateBlogLikes = async (req, res) => {
     }
 
     try {
-        const blog = await blogModel.findById(id);
+        const blog = await blogModel.findById(id).populate('userId','Fname Lname');
         if (!blog) {
             return res.status(404).json({ message: "Blog not found!" });
         }
@@ -213,5 +227,5 @@ module.exports = {
     updateBlog,
     updateBlogLikes,
     deleteBlog,
-    getUserByBlogId
+    getUserByBlogId,
 };

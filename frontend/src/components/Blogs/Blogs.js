@@ -6,19 +6,24 @@ import { IoHeart } from 'react-icons/io5';
 import { SiYourtraveldottv } from 'react-icons/si';
 import { IoHeartOutline } from 'react-icons/io5';
 import AddBlogForm from './addBlogForm';
+import UpdateBlog from './updateBlog';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import styles from './blog.module.css';
 import { FaPen, FaTrash, FaEllipsisV } from 'react-icons/fa';
 import Swal from 'sweetalert2';
+import AddComments from './addComments';
 
-import Navbar from '../navbar/Navbar'
-import Footer from '../Footer/Footer'
+import Navbar from '../navbar/Navbar';
+import Footer from '../Footer/Footer';
 
 const Blogs = () => {
   const [myBlogs, setMyBlogs] = useState([]);
   const [liked, setLiked] = useState(false);
   const { user, dispatch } = useAuthContext();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen2, setModalOpen2] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -56,9 +61,17 @@ const Blogs = () => {
 
     fetchBlogs();
   }, []);
-  
-  const handleUpdate = (blogId) => {
-    // Implement logic to handle the update action
+
+  const handleEditBlog = async (blogId) => {
+    console.log("edit clicked");
+    setSelectedBlogId(blogId);
+    setModalOpen(true);
+  };
+
+  const handleBlog = async (blogId) => {
+    console.log("edit clicked");
+    setSelectedBlogId(blogId);
+    setModalOpen2(true);
   };
 
   const handleDelete = async (blogId) => {
@@ -122,9 +135,6 @@ const Blogs = () => {
 
 
   return (
-    <>
-      <Navbar nothome='true' />
-    
       <div className={styles.blogs_page}>
         <AddBlogForm />
         <div className={styles.banner_blogs}><h1>Your Blogs</h1></div>
@@ -152,7 +162,7 @@ const Blogs = () => {
                     <p className={styles.date}>{new Date(blog.createdAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</p>
                     <p className={styles.location_icon}><span className={styles.icon_wrapper}><SiYourtraveldottv /></span>{blog.location}</p>
                     <div className={styles.icons_row}>
-                        <FaPen className={styles.icon} onClick={() => handleUpdate(blog._id)} />
+                        <FaPen className={styles.icon} onClick={() => handleEditBlog(blog._id)} />
                         <FaTrash className={styles.icon} onClick={() => handleDelete(blog._id)} />
                       </div>
                     <p className={styles.username_caption}>
@@ -174,7 +184,7 @@ const Blogs = () => {
                         </div>
                       </div>
                       <div className={styles.row}>
-                        <i className={styles.comments_icon}><FaCommentDots /></i>
+                        <i className={styles.comments_icon} onClick={() => handleBlog(blog._id)}><FaCommentDots /></i>
                       </div>
                     </div>
                   </div>
@@ -182,11 +192,27 @@ const Blogs = () => {
               ))}
             </div>
           )}
+           {modalOpen &&  (
+          <UpdateBlog
+            closeModal={() => {
+              setModalOpen(false);
+              //fetchPackagesForCompany();
+            }}
+            blogId = { selectedBlogId }
+          />
+           )}
+          {modalOpen2 && (
+          <AddComments
+            closeModal={() => {
+              setModalOpen2(false);
+              //fetchPackagesForCompany();
+            }}
+            blogId = { selectedBlogId }
+          />
+        )}
         </div>
       </div>
-
-      <Footer />
-    </>
+     
   );
 };
 

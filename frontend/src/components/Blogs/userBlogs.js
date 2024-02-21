@@ -6,6 +6,7 @@ import { SiYourtraveldottv } from 'react-icons/si';
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './blog.module.css';
+import AddComments from './addComments';
 
 import Navbar from '../navbar/Navbar'
 import Footer from '../Footer/Footer'
@@ -16,6 +17,8 @@ const UserBlogs = () => {
   const Username = location.state;
   const [liked, setLiked] = useState(false);
   const userId = new URLSearchParams(location.search).get('userId');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
 
   useEffect(() => {
     const fetchUserBlogs = async () => {
@@ -29,6 +32,13 @@ const UserBlogs = () => {
   
       fetchUserBlogs();
   }, [userId]);
+
+  const handleEditBlog = async (blogId) => {
+    console.log("edit clicked");
+    setSelectedBlogId(blogId);
+    setModalOpen(true);
+  };
+
 
   const handleLike = async (blogId) => {
     try {
@@ -46,9 +56,6 @@ const UserBlogs = () => {
 
 
   return (
-    <>
-    <Navbar nothome='true' />
-
       <div className={styles.blogs_page}>
         <div className={styles.banner_blogs}>
           {<h1>{Username}'s Blogs</h1>}
@@ -91,17 +98,25 @@ const UserBlogs = () => {
                     </div>
                   </div>
                   <div className={styles.row}>
-                    <i className={styles.comments_icon}><FaCommentDots /></i>
+                    <i className={styles.comments_icon} onClick={() => handleEditBlog(blog._id)}><FaCommentDots /></i>
                   </div>
                 </div>
               </div>
             </div>
           ))}
+
+           {modalOpen &&  (
+          <AddComments
+            closeModal={() => {
+              setModalOpen(false);
+              //fetchPackagesForCompany();
+            }}
+            blogId = { selectedBlogId }
+          />
+        )}
+          
         </div>
       </div>
-
-      <Footer />
-    </>
   );
 };
 

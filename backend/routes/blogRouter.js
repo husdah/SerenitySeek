@@ -11,10 +11,11 @@ router.post("/blog", validateToken,upload.array('gallery') ,addBlog);
 router.get("/blog", getAllBlogs);
 router.get("/userBlog", getBlogsByUserId);
 router.get("/blogSingle/:id", getBlogById);
-router.put("/blog/:id", updateBlog);
+router.get("/blogUser/:blogId/user", getUserByBlogId);
+router.put("/blog/:id", validateToken ,updateBlog);
 router.put("/blogLikes/:id",updateBlogLikes);
 router.delete("/blog/:id/:userId", validateToken, deleteBlog);
-router.get("/blogUser/:blogId/user", getUserByBlogId);
+
 
 
 module.exports = router;
