@@ -5,13 +5,13 @@ import { IoHeart } from 'react-icons/io5';
 import { SiYourtraveldottv } from 'react-icons/si';
 import React, { useState, useEffect } from 'react';
 import styles from './blog.module.css';
-
-import Navbar from '../navbar/Navbar'
-import Footer from '../Footer/Footer'
+import AddComments from './addComments';
 
 const AllBlogs = () => {
   const [allBlogs, setAllBlogs] = useState([]);
   const [liked, setLiked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
 
   useEffect(() => {
     const fetchAllBlogs = async () => {
@@ -25,6 +25,13 @@ const AllBlogs = () => {
 
     fetchAllBlogs();
   }, []);
+
+  const handleEditBlog = async (blogId) => {
+    console.log("edit clicked");
+    setSelectedBlogId(blogId);
+    setModalOpen(true);
+  };
+
 
   const handleLike = async (blogId) => {
     try {
@@ -43,8 +50,6 @@ const AllBlogs = () => {
   
 
   return (
-    <>
-    <Navbar nothome='true' />
       <div className={styles.blogs_page}>
         <div className={styles.banner_blogs}><h1>Explore Others' Experiences</h1></div>
         <div className={styles.blogs_section}>
@@ -84,17 +89,24 @@ const AllBlogs = () => {
                     </div>
                   </div>
                   <div className={styles.row}>
-                    <i className={styles.comments_icon}><FaCommentDots /></i>
+                    <i className={styles.comments_icon} onClick={() => handleEditBlog(blog._id)}><FaCommentDots /></i>
                   </div>
                 </div>
               </div>
             </div>
           ))}
+          {modalOpen &&  (
+          <AddComments
+            closeModal={() => {
+              setModalOpen(false);
+              //fetchPackagesForCompany();
+            }}
+            blogId = { selectedBlogId }
+            
+          />
+        )}
         </div>
       </div>
-
-       <Footer />               
-    </>
   );
 };
 

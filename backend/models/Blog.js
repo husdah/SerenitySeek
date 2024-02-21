@@ -30,14 +30,14 @@ const blogSchema=new Schema({
     },
    comments:[
     {
-        userId:{
-            type:mongoose.Types.ObjectId,
-            ref:"User"
-        },
         message:{
             type:String,
             required:true,
             trim:true
+        },
+        userId:{
+            type:mongoose.Types.ObjectId,
+            ref:"User"
         }
     }
    ]

@@ -19,9 +19,9 @@ import CompanyDashboard from "./Routes/CompanyDashboard";
 import NotFoundPage from "./Routes/404NotFound";
 import ChatApp from "./Routes/ChatApp";
 import CompanyInfo from "./Routes/CompanyInfo";
-import Blogs from "./components/Blogs/Blogs";
-import AllBlogs from "./components/Blogs/AllBlog";
-import UserBlogs from "./components/Blogs/userBlogs";
+import Blogs from "./Routes/blogs";
+import AllBlogs from "./Routes/allBlogs";
+import UserBlogs from "./Routes/userBlog";
 
 function App() {
   const { user } = useAuthContext()

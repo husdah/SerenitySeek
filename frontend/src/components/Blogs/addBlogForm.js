@@ -114,7 +114,7 @@ const AddBlogForm = () => {
 }
 
   return (
-    <div>
+    <div className={styles['container']}>
       <h1 className={styles['title']}>Share your moments</h1>
       <form onSubmit={handleSubmit} className={styles['form_container']}>
         <div className={styles['caption_input']}>
