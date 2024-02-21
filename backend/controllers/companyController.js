@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const companyModel = require("../models/Company");
 const accountModel = require("../models/Account");
 const userModel = require('../models/User');
+const packageModel = require('../models/Package');
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const fs = require("fs").promises;
@@ -409,6 +410,23 @@ const updatePassword=async (req, res) =>{
 }
 
 
+const getAnalytics= async (req, res) =>{
+    try{
+        const companies = await companyModel.find();
+        const travelers = await userModel.find();
+        const packages = await packageModel.find();
+        const analytics = {
+            companies : companies.length,
+            travelers: travelers.length,
+            packages: packages.length
+        }
+        res.status(200).json({analytics: analytics});
+    }catch(error){
+        return res.status(500).json({error : error.message});
+    }
+}
+
+
 module.exports = 
 {
     createCompany,
@@ -421,5 +439,6 @@ module.exports =
     acceptCompany,
     deleteCompany,
     rateCompany,
-    updatePassword
+    updatePassword,
+    getAnalytics
 };
