@@ -184,9 +184,9 @@ const ManageCompanies = () => {
                         <MdDashboard/>
                         <h3 className={styles.h3}>Dashboard</h3>
                     </a>
-                    <a href="#" className={styles.a}> 
+                    <a href="/AdminDashboard/companyPayments" className={styles.a}> 
                         <MdAnalytics/>
-                        <h3 className={styles.h3}>Analytics</h3>
+                        <h3 className={styles.h3}>Payments</h3>
                     </a>
                     <a className={styles.a} href="#">
                         <MdOutlineSettings/>
@@ -253,7 +253,7 @@ const ManageCompanies = () => {
                 </div>
 
                 <div className={styles['recent_orders']}> {/* Use CSS module */}
-                    <h2 className={styles.h2}>Recent Orders</h2>
+                    <h2 className={styles.h2}>Companies' Requests</h2>
                     <table>
                         <thead>
                             <tr>
