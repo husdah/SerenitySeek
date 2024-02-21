@@ -22,7 +22,7 @@ import CompanyInfo from "./Routes/CompanyInfo";
 import Blogs from "./Routes/blogs";
 import AllBlogs from "./Routes/allBlogs";
 import UserBlogs from "./Routes/userBlog";
-import ManageCompanies from "./components/adminDashboard/companies";
+import AdminDashboard from "./Routes/AdminDashboard";
 
 function App() {
   const { user } = useAuthContext()
@@ -34,11 +34,11 @@ function App() {
       const role = jwtDecode(user.accessToken).user.role;
       if(role === 2){
         return <Navigate to="/Dashboard"/>;
+      }else if(role === 0){
+        return <Navigate to="/AdminDashboard"/>;
       }else{
         return <Navigate to="/" />;
       }
-
-      //add codition if admin
     }
   };
 
@@ -64,7 +64,7 @@ function App() {
       <Route path="/LogoutAndRedirect" element={user ? <Logout/> : <Navigate to="/Login" />} />
       <Route path="/ChatApp" element={user ? <ChatApp/> : <Navigate to="/Login" />} />
       <Route path="/CompanyInfo/*" element={<CompanyInfo/>} />
-      <Route path="manageCompanies" element={< ManageCompanies/>} />
+      <Route path="/AdminDashboard/*" element={user && jwtDecode(user.accessToken).user.role === 0  ?< AdminDashboard/> : <Navigate to="/" />} />
       
       {/* last route */}
       <Route path="*" element={<NotFoundPage/>} />
