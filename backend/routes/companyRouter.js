@@ -4,7 +4,8 @@ const {
     createCompany, 
     getCompanyById,
     getCompanyByName,
-    getAllCompanies, 
+    getAllCompanies,
+    getCompaniesRequest, 
     getHomeCompanies, 
     updateCompanyInfo, 
     acceptCompany, 
@@ -20,6 +21,7 @@ const ifHaveToken = require('../middlewares/tokenExist');
 router.post("/company", ifHaveToken , upload.single("license"), createCompany);
 router.get("/companies", getAllCompanies);
 router.get("/homeCompanies", getHomeCompanies);
+router.get("/companiesRequest", validateToken, isAdmin , getCompaniesRequest);
 router.get("/company/:id", getCompanyById);
 router.get("/companyInfo/:Cname", getCompanyByName);
 router.put("/company/:id", validateToken , isCompany , updateCompanyInfo);
