@@ -165,10 +165,94 @@ const updateBookPackage=async(req,res)=>{
     }
 }
 
+//get payments
+
+
+const getCompanyPaidAmounts = async () => {
+  try {
+      const companyPaidAmounts = await BookPackage.aggregate([
+          {
+              $group: {
+                  _id: "$companyId",
+                  totalPaidAmount: { $sum: "$paidAmount" }
+              }
+          },
+          {
+              $lookup: {
+                  from: "companies", 
+                  localField: "_id",
+                  foreignField: "_id",
+                  as: "company"
+              }
+          },
+          {
+              $project: {
+                  companyName: { $arrayElemAt: ["$company.name", 0] },
+                  totalPaidAmount: 1,
+                  _id: 0
+              }
+          }
+      ]);
+
+      return companyPaidAmounts;
+  } catch (error) {
+      console.error("Error getting company paid amounts:", error);
+      throw error; // Forward the error to the caller
+  }
+};
+
+const getAllBookPackages = async (req, res) => {
+  try {
+    // Query all BookPackage documents
+    const bookPackages = await bookPackageModel.find().populate('companyId', 'name');
+
+    // Return the fetched BookPackage documents
+    res.json(bookPackages);
+  } catch (error) {
+    // Handle errors
+    console.error('Error fetching BookPackage documents:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const getPaidAmounts = async (req, res) => {
+  try {
+    // Query all BookPackage documents
+    const bookPackages = await bookPackageModel.find().populate('companyId', 'name');
+
+    const resultObject = {};
+
+    bookPackages.forEach((bookPackage) => {
+      const companyName = bookPackage.companyId.name;
+
+      if (resultObject[companyName] === undefined) {
+        // If companyName is not already a key in the object, initialize it
+        
+        resultObject[companyName] = { total: bookPackage.paidAmount };
+      }
+      // Update the total for the companyName
+      resultObject[companyName].total += bookPackage.paidAmount;
+    });
+
+    const resultArray = Object.keys(resultObject).map((companyName) => ({
+      companyName:companyName,
+      total: resultObject[companyName].total,
+    }));
+    console.log(resultObject);
+    // You can send the resultObject as a response or perform further operations as needed
+    res.status(200).json(resultArray);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 module.exports={
     bookPackage,
     cancelBooking,
     userBookPackages,
     updateBookPackage,
-    companyBooks
+    companyBooks,
+    getAllBookPackages,
+    getPaidAmounts
 };
