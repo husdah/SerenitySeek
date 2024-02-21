@@ -273,6 +273,18 @@ const updateCompanyInfo = async (req, res) =>{
     }
 }
 
+const getCompaniesRequest = async (req, res) =>{
+    try{
+        const companies = await companyModel.find({active : false});
+        if(!companies || companies.length === 0){
+            return res.status(404).json({message : "No Available Companies"});
+        }
+        res.status(200).json(companies);
+    }catch(error){
+        return res.status(500).json({error : error.message});
+    }
+}
+
 const acceptCompany = async (req, res) =>{
     const {id} = req.params;
 
@@ -404,6 +416,7 @@ module.exports =
     getCompanyByName,
     getAllCompanies,
     getHomeCompanies,
+    getCompaniesRequest,
     updateCompanyInfo,
     acceptCompany,
     deleteCompany,
