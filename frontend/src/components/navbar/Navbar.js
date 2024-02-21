@@ -30,7 +30,7 @@ function Navbar(props) {
   }
 
   useEffect(() =>{
-    if(user){
+    if(user && jwtDecode(user.accessToken).user.role === 1){
       const [firstName, lastName] =jwtDecode(user.accessToken).user.username.split(" ");  
       setFLaccount(getInitials(firstName, lastName));
     }
@@ -57,20 +57,20 @@ function Navbar(props) {
 
               <div className={styles.account}>
               {user && (
-                  <li class={styles2.dropdown +" " +styles2.dropdown_6}>
-                    <div class={styles2.accountCont}>
+                  <li className={styles2.dropdown +" " +styles2.dropdown_6}>
+                    <div className={styles2.accountCont}>
                       <FaUser className={styles2.fa}/>
                       <label className={styles2.initials}>{FLaccount}</label>
                     </div>
-                    <ul class={styles2.dropdown_menu +" " +styles2.dropdown_menu__animated +" " +styles2.dropdown_menu_6}>
-                      <li class={styles2.dropdown_item_1}><Link className={styles2.link} to="/userProfile">Profile</Link></li>
-                      <li class={styles2.dropdown_item_2}><Link className={styles2.link} to="/blogs">My Blogs</Link></li>
+                    <ul className={styles2.dropdown_menu +" " +styles2.dropdown_menu__animated +" " +styles2.dropdown_menu_6}>
+                      <li className={styles2.dropdown_item_1}><Link className={styles2.link} to="/userProfile">Profile</Link></li>
+                      <li className={styles2.dropdown_item_2}><Link className={styles2.link} to="/blogs">My Blogs</Link></li>
                     </ul>
                   </li>
                 )}
                 {!user && (
                   <li class={styles2.dropdown +" " +styles2.dropdown_6}>
-                    <div class={user ? styles2.accountCont : styles2.accountCont2}>
+                    <div className={user ? styles2.accountCont : styles2.accountCont2}>
                       <FaUser className={styles2.fa}/>
                     </div>
                   <ul class={styles2.dropdown_menu +" " +styles2.dropdown_menu__animated +" " +styles2.dropdown_menu_6}>
