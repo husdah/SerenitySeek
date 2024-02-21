@@ -7,14 +7,18 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useLogout } from '../../hooks/useLogout'
-
+import {jwtDecode} from 'jwt-decode';
 
 const ManageCompanies = () => {
 
     const [companies, setCompanies] = useState(null);
     const { user, dispatch } = useAuthContext();
-    const [check, setCheck] = useState(false);
     const { logout } = useLogout()
+    const [analytics, setAnalytics] = useState({
+        companiesNb: 0,
+        travelersNb: 0,
+        packagesNb: 0
+    })
 
     useEffect(() => { 
         const fetchCompanies = async () => {
@@ -37,7 +41,6 @@ const ManageCompanies = () => {
     
             }
     
-              setCheck(false)
               setCompanies(response.data);
             } catch (error) {
               console.error('Error fetching all blogs:', error);
@@ -45,6 +48,54 @@ const ManageCompanies = () => {
           };
 
         fetchCompanies();
+
+
+        const getAnalytics = async () =>{
+            try{
+                const response = await fetch(`http://localhost:4000/api/analytics`, {
+                    method: "GET",
+                    headers: { 
+                        'Authorization': `Bearer ${user.accessToken}`
+                    },
+                    credentials: 'include'
+                })
+    
+                const newAccessToken = response.headers.get('New-Access-Token');
+                // Check if a new access token is present
+                if (newAccessToken) {
+                    // Update the access token in LocalStorage
+                    user.accessToken = newAccessToken;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    dispatch({type: 'LOGIN', payload: user})
+                    console.log('New access token saved:', newAccessToken);
+                }
+    
+                const json = await response.json();
+                if (json.expired) {
+                    // Handle expiration of refreshToken on the client side
+                    window.location.href = 'http://localhost:3000/LogoutAndRedirect';
+                }
+        
+                console.log(json.analytics)
+                if(response.ok){
+                    setAnalytics({
+                        companiesNb: json.analytics.companies,
+                        travelersNb: json.analytics.travelers,
+                        packagesNb: json.analytics.packages
+                    })
+                }
+        
+            }catch(error){
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+          }
+
+          getAnalytics();
       }, []);
 
       const handleAccept = async (companyId) =>{
@@ -136,7 +187,6 @@ const ManageCompanies = () => {
                 }
         
                 if(response.ok){
-                    setCheck(true)
                     Swal.fire({
                         title: 'Success!',
                         text: 'Company Deleted Successfully',
@@ -180,15 +230,15 @@ const ManageCompanies = () => {
                 </div>
 
                 <div className={styles.sidebar}> 
-                    <a className={styles.a} href="/">
+                    <a className={styles.a} href="/AdminDashboard">
                         <MdDashboard/>
                         <h3 className={styles.h3}>Dashboard</h3>
                     </a>
-                    <a href="#" className={styles.a}> 
+                    <a href="/AdminDashboard/companyPayments" className={styles.a}> 
                         <MdAnalytics/>
                         <h3 className={styles.h3}>Analytics</h3>
                     </a>
-                    <a className={styles.a} href="#">
+                    <a className={styles.a} href="/AdminDashboard/settings">
                         <MdOutlineSettings/>
                         <h3 className={styles.h3}>Settings</h3>
                     </a>
@@ -205,8 +255,8 @@ const ManageCompanies = () => {
                     <div className={styles.sales}>
                         <div className={styles.status}> 
                             <div className={styles.info}> 
-                                <h3 className={styles.h3}>Total Sales</h3>
-                                <h1 className={styles.h1}>$65,024</h1>
+                                <h3 className={styles.h3}>Companies</h3>
+                                <h1 className={styles.h1}>{analytics.companiesNb}</h1>
                             </div>
                             <div className={styles.progresss}> 
                                 <svg>
@@ -218,33 +268,33 @@ const ManageCompanies = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.visits}> {/* Use CSS module */}
-                        <div className={styles.status}> {/* Use CSS module */}
-                            <div className={styles.info}> {/* Use CSS module */}
-                                <h3 className={styles.h3}>Site Visit</h3>
-                                <h1 className={styles.h1}>24,981</h1>
+                    <div className={styles.visits}>
+                        <div className={styles.status}>
+                            <div className={styles.info}>
+                                <h3 className={styles.h3}>Travelers</h3>
+                                <h1 className={styles.h1}>{analytics.travelersNb}</h1>
                             </div>
-                            <div className={styles.progresss}> {/* Use CSS module */}
+                            <div className={styles.progresss}>
                                 <svg>
                                     <circle cx="38" cy="38" r="36"></circle>
                                 </svg>
-                                <div className={styles.percentage}> {/* Use CSS module */}
+                                <div className={styles.percentage}>
                                     <p className={styles.p}>-48%</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className={styles.searches}> {/* Use CSS module */}
-                        <div className={styles.status}> {/* Use CSS module */}
-                            <div className={styles.info}> {/* Use CSS module */}
-                                <h3 className={styles.h3}>Searches</h3>
-                                <h1 className={styles.h1}>14,147</h1>
+                    <div className={styles.searches}>
+                        <div className={styles.status}>
+                            <div className={styles.info}>
+                                <h3 className={styles.h3}>Packages</h3>
+                                <h1 className={styles.h1}>{analytics.packagesNb}</h1>
                             </div>
-                            <div className={styles.progresss}> {/* Use CSS module */}
+                            <div className={styles.progresss}>
                                 <svg>
                                     <circle cx="38" cy="38" r="36"></circle>
                                 </svg>
-                                <div className={styles.percentage}> {/* Use CSS module */}
+                                <div className={styles.percentage}>
                                     <p className={styles.p}>+21%</p>
                                 </div>
                             </div>
@@ -252,7 +302,7 @@ const ManageCompanies = () => {
                     </div>
                 </div>
 
-                <div className={styles['recent_orders']}> {/* Use CSS module */}
+                <div className={styles['recent_orders']}>
                     <h2 className={styles.h2}>Recent Orders</h2>
                     <table>
                         <thead>
@@ -283,8 +333,8 @@ const ManageCompanies = () => {
                 </div>
             </main>
 
-            <div className={styles['right_section']}> {/* Use CSS module */}
-                <div className={styles.nav}> {/* Use CSS module */}
+            <div className={styles['right_section']}>
+                <div className={styles.nav}>
                     <button id="menu_btn">
                         <span className="material_icons_sharp">
                             menu
@@ -292,16 +342,16 @@ const ManageCompanies = () => {
                     </button>
 
 
-                    <div className={styles.profile}> {/* Use CSS module */}
-                        <div className={styles.info}> {/* Use CSS module */}
-                            <p className={styles.p}>Hey, <b>Reza</b></p>
+                    <div className={styles.profile}>
+                        <div className={styles.info}>
+                            <p className={styles.p}>Hey, <b>{jwtDecode(user.accessToken).user.username}</b></p>
                             <small className="text_muted">Admin</small>
                         </div>
                     </div>
                 </div>
 
-                <div className={styles['user_profile']}> {/* Use CSS module */}
-                    <div className={styles.logo}> {/* Use CSS module */}
+                <div className={styles['user_profile']}>
+                    <div className={styles.logo}>
                         <img className={styles.img} src={Logo} alt="Logo" />
                         <h2 className={styles.h2}>Serenity Seek</h2>
                         <p className={styles.p}>Travel Agency</p>
