@@ -604,3 +604,54 @@ html{
     }
 
 }
+
+.formInput {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.formInputError {
+    border-color: #ff4d4f;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.labelError {
+    color: #ff4d4f;
+    margin-bottom: 15px;
+}
+
+.h2 {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.bn632_hover {
+    cursor: pointer;
+    background-color: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.bn632_hover:hover {
+    background-color: #0057b386;
+}
