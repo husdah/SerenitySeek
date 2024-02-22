@@ -36,7 +36,7 @@ export default function Destinations() {
         <h1>Most Visited Destinations</h1>
         <div className={styles.cards}>
           {packages && packages.map(packageItem=>(
-              <div className={styles.card}>
+              <div className={styles.card} key={packageItem._id}>
               <div className={styles.card__img}>
                 
                   <img src= {`http://localhost:4000/uploads/${packageItem.coverImg}`} crossOrigin="anonymous" alt=""/>

@@ -161,7 +161,7 @@ const getCompanyByName = async (req, res) =>{
         }
 
         // Fetch customer information from the user model based on customer IDs in the company
-        const customers = await userModel.find({ _id: { $in: company.customers } });
+        let customers = await userModel.find({ _id: { $in: company.customers } });
 
         if(customers.length > 3){
             // Limit to a maximum of 3 customers

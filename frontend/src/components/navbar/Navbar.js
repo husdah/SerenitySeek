@@ -69,13 +69,13 @@ function Navbar(props) {
                   </li>
                 )}
                 {!user && (
-                  <li class={styles2.dropdown +" " +styles2.dropdown_6}>
+                  <li className={styles2.dropdown +" " +styles2.dropdown_6}>
                     <div className={user ? styles2.accountCont : styles2.accountCont2}>
                       <FaUser className={styles2.fa}/>
                     </div>
-                  <ul class={styles2.dropdown_menu +" " +styles2.dropdown_menu__animated +" " +styles2.dropdown_menu_6}>
-                  <li class={styles2.dropdown_item_1}><Link className={styles2.link} to="/login">Login</Link></li>
-                  <li class={styles2.dropdown_item_2}><Link className={styles2.link} to="/Register">Signup</Link></li>
+                  <ul className={styles2.dropdown_menu +" " +styles2.dropdown_menu__animated +" " +styles2.dropdown_menu_6}>
+                  <li className={styles2.dropdown_item_1}><Link className={styles2.link} to="/login">Login</Link></li>
+                  <li className={styles2.dropdown_item_2}><Link className={styles2.link} to="/Register">Signup</Link></li>
                   </ul>
                 </li>
                 )}
