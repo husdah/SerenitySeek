@@ -214,12 +214,38 @@ const updatePassword=async (req, res) =>{
 
 }
 
+const updateAdminPassword=async (req, res) =>{
+    const {password, confirmPassword} = req.body;
+
+    if(!password || !confirmPassword){
+        return res.status(422).json({error: "All fields are required!", body});
+    }
+    if(!validator.isStrongPassword(password)){
+        return res.status(422).json({error: "Please enter a stronger password"});
+    }
+    if(!validator.equals(confirmPassword,password)){
+        return res.status(422).json({error: "Confirmation password is invalid"});
+    }
+    const salt = await bcrypt.genSaltSync(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+   
+    try{
+        const updateAccount = await accountModel.findOneAndUpdate({role: 0},{password: hashedPassword});
+        if(!updateAccount){
+            return res.status(404).json({error: "Account Not Found!"});
+        }
+        res.status(201).json({message: "Password Updated Succssfully!"});
+    }catch(error){
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = 
 {
     signUpUser,
     updateProfile,
     getUserInfoById,
     getAllUsers,
-    updatePassword
-    
+    updatePassword,
+    updateAdminPassword
 };

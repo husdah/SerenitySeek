@@ -6,7 +6,7 @@ import Logo from '../../assets/images/LogoNoBg.png';
 import { MdDashboard, MdAnalytics ,MdOutlineSettings, MdLogout } from 'react-icons/md'; 
 import { useLogout } from '../../hooks/useLogout';
 import styles from './payment.module.css';
-
+import {jwtDecode} from 'jwt-decode';
 
 const CompanyPayments = () => {
     const [companies, setCompanies] = useState(null);
@@ -52,15 +52,15 @@ const CompanyPayments = () => {
                     </div>
 
                     <div className={styles.sidebar}>
-                        <a className={styles.a} href="/">
+                        <a className={styles.a} href="/AdminDashboard">
                             <MdDashboard />
                             <h3 className={styles.h3}>Dashboard</h3>
                         </a>
-                        <a className={styles.a} href="/">
+                        <a className={styles.a} href="/AdminDashboard/companyPayments">
                             <MdAnalytics />
                             <h3 className={styles.h3}>Payments</h3>
                         </a>
-                        <a className={styles.a} href="#">
+                        <a className={styles.a} href="/AdminDashboard/settings">
                             <MdOutlineSettings />
                             <h3 className={styles.h3}>Settings</h3>
                         </a>
@@ -94,6 +94,33 @@ const CompanyPayments = () => {
                         </table>
                     </div>
                 </main>
+
+                <div className={styles['right_section']}>
+                <div className={styles.nav}>
+                    <button id="menu_btn">
+                        <span className="material_icons_sharp">
+                            menu
+                        </span>
+                    </button>
+
+
+                    <div className={styles.profile}>
+                        <div className={styles.info}>
+                            <p className={styles.p}>Hey, <b>{jwtDecode(user.accessToken).user.username}</b></p>
+                            <small className="text_muted">Admin</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={styles['user_profile']}>
+                    <div className={styles.logo}>
+                        <img className={styles.img} src={Logo} alt="Logo" />
+                        <h2 className={styles.h2}>Serenity Seek</h2>
+                        <p className={styles.p}>Travel Agency</p>
+                    </div>
+                </div>
+            </div>
+
             </div>
         </div>
     );
