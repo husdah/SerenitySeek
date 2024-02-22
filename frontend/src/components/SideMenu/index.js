@@ -4,7 +4,7 @@ import { IoMdLogOut, IoIosAddCircle } from 'react-icons/io';
 import { FiPackage } from 'react-icons/fi';
 import { RxDashboard } from 'react-icons/rx';
 import { FaHotel } from 'react-icons/fa6';
-import { IoSettings } from 'react-icons/io5';
+import { IoSettings, IoChatbox } from 'react-icons/io5';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
@@ -68,6 +68,7 @@ export default function SideMenu() {
     ]),
     getItem("Hotel", "hotel", <FaHotel />),
     getItem("Setting", "setting", <IoSettings />),
+    getItem("Customer Support", "/ChatApp", <IoChatbox />),
     getItem("Logout", "logout", <IoMdLogOut />),
   ];
 

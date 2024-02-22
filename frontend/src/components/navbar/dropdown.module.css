@@ -143,9 +143,13 @@
      }
 
      .dropdown_menu li{
-        color: var(--dark);
+        color: var(--dark) !important;
         font-weight: bold;
         background-color: white;
+     }
+
+     .dropdown_menu li .link{
+        color: var(--dark) !important;
      }
  }
  

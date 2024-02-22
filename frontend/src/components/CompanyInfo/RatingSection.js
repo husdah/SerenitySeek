@@ -44,7 +44,7 @@ function RatingSection(props) {
 
         handleRatingChange();
         }
-      },[rating, props])
+      },[rating])
 
   return (
     <section className={styles.page_content +" " +starStyles.conatiner} id="rating">
