@@ -19,3 +19,9 @@ Achievements:
 - Easy navigation through available clinics
 - Seamless feedback process for patients
 - Embrace Innovation for Future Growth
+
+Team:
+- Hussein Daher
+- Haya Tfaily
+- Loreen Baker
+- Zeinab Hijazi
